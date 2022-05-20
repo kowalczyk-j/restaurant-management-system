@@ -1,0 +1,4 @@
+dżem 0
+kakao 10
+jajka 20
+mleko 20
