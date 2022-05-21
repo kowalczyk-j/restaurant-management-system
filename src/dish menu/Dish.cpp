@@ -2,12 +2,12 @@
 #include <iostream>
 #include <map>
 
-Dish::Dish(int i, std::string n, std::string des, double pr,
-    bool veg, std::map<std::string, double> ingr)
+Dish::Dish(int i, std::string n, dish_type t, double pr,
+    bool veg, std::map<std::string, int> ingr)
     {
         id = i;
         name = n;
-        description = des;
+        type = t;
         price = pr;
         is_vegan = veg;
         ingredients = ingr;
