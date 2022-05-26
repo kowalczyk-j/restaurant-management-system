@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 
-Dish::Dish(int i, std::string n, dish_type t, double pr,
+Dish::Dish(int i, std::string n, dish_type t, Money pr,
     bool veg, std::map<std::string, int> ingr)
     {
         id = i;
