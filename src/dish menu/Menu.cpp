@@ -35,3 +35,25 @@ Menu::iterator::iterator(std::vector<Dish>::const_iterator const &cstart,
     { return left.get_dish_type() < right.get_dish_type(); };
     current = std::min_element(start, stop, type_less);
 }
+
+static bool operator==(Dish const& dish, int dish_type)
+{
+    return dish.get_dish_type() == dish_type;
+}
+
+Menu::iterator Menu::iterator::operator++()
+{
+    int cur_val = current->get_dish_type();
+    current = find(current+1, stop, cur_val);
+    if(current == stop) // if no more items of previous dish_type
+    {
+        if(cur_val <= napoje)
+        {
+            cur_val++;
+            current = find(start, stop, cur_val);
+        }
+        else
+            current = stop;
+    }
+    return *this;
+}

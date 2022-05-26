@@ -15,20 +15,28 @@ public:
     void add_dish(Dish const& dish);
     void remove_dish(int dish_idx);
 
-    class iterator {
+    class iterator
+    {
         std::vector<Dish>::const_iterator current;
         std::vector<Dish>::const_iterator start;
         std::vector<Dish>::const_iterator stop;
     public:
         iterator(std::vector<Dish>::const_iterator const &cstart,
                 std::vector<Dish>::const_iterator const &cstop);
-        std::vector<Dish>::const_iterator const& get_current() const
+        bool operator==(iterator const& rt) const
         {
-            return current;
+            return (current == rt.current);
         }
-        bool operator!= (iterator const& rt);
-        iterator operator++(int);
-        int operator*() const;
+        bool operator!=(iterator const& rt) const
+        {
+            return not operator==(rt);
+        }
+        iterator operator++();
+        Dish const& operator*() const
+        {
+            return *current;
+        }
+    };
     };
     iterator begin() const {
         return iterator(dishes.cbegin(), dishes.cend());
