@@ -12,7 +12,8 @@ class Addres{
     double longitude;
 
     public:
-    Addres();
+    Addres(std::string co, std::string r, std::string ci, std::string p_c, std::string s, std::string b):
+    country(co), region(r), city(ci), postal_code(p_c), street(s), building(b){};
     std::string get_country(){return country;}
     std::string get_region(){return region;}
     std::string get_city(){return city;}

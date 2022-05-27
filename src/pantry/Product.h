@@ -1,3 +1,4 @@
+#pragma once
 #include <iomanip>
 #include <iostream>
 #include <unordered_map> //działa szybciej od mapy (nie trzeba sortować)
@@ -8,7 +9,6 @@
 using namespace std;
 
 enum units {ml, g, szt, none};
-unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};
 
 class Product{
 
@@ -25,7 +25,10 @@ class Product{
     }
     string get_name() const{return name;}
     int get_quantity() const{return quantity;}
-    string get_unit() const{return units_map[unit];}
+    string get_unit() const{
+        unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};
+        return units_map[unit];
+    }
     set<string> get_allergen() const {return allergen;}
 
     void set_name(string n){name = n;}
@@ -43,8 +46,6 @@ class Product{
     void operator-=(int quantity_to_sub){
         *this += (-quantity_to_sub);
     }
-
-
 
     void print_product(){
         cout << "Nazwa: " << name << endl;

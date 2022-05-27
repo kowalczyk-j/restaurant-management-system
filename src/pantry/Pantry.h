@@ -1,9 +1,4 @@
-#include <iomanip>
-#include <iostream>
-#include <unordered_map> //działa szybciej od mapy (nie trzeba sortować)
-#include <fstream>
-#include <set>
-#include <exception>
+#pragma once
 #include "Product.h"
 
 using namespace std;

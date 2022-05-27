@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include "../utils/Money.h"
+#include "../pantry/Product.h"
 
 enum dish_type
 {
@@ -19,7 +20,7 @@ class Dish
     // alergeny
     Money price;
     bool is_vegan;
-    std::map<std::string, int> ingredients;
+    std::map<std::string, Product> ingredients;
     // czas przygotowania dania
 
 public:
@@ -29,6 +30,6 @@ public:
     Money get_price() const { return price;};
     void print_ingredients() const;
     Dish(int i, std::string n, dish_type t, Money pr,
-         bool veg, std::map<std::string, int> ingr);
+         bool veg, std::map<std::string, Product> ingr);
     friend std::ostream& operator<<(std::ostream& os, Dish const& dish);
 };

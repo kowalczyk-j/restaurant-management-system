@@ -1,29 +1,18 @@
-#include <iomanip>
-#include <iostream>
-#include <unordered_map> //działa szybciej od mapy (nie trzeba sortować)
-#include <fstream>
-#include <set>
-#include <exception>
-#include "Product.h"
+#include "Pantry.h"
 
 using namespace std;
-class Pantry{
 
-
-    unordered_map<std::string, Product> shell; // unordered_map<product, >
-    public:
-
-    void add_quantity(string name, int quantity){
+    void Pantry::add_quantity(string name, int quantity){
         if (shell.find(name) == shell.end()){throw invalid_argument("Produktu nie ma w spiżarni!");}
         shell[name] += quantity;
     }
 
-    void remove_quantity(string name, int quantity){
+    void Pantry::remove_quantity(string name, int quantity){
         add_quantity(name, -quantity);
     }
 
 
-    void add_product(std::string name, int quantity, units unit, set<string> allergen){//żeby patrzyło też czy laergen jest
+    void Pantry::add_product(std::string name, int quantity, units unit, set<string> allergen){//żeby patrzyło też czy laergen jest
         if (shell.find(name) == shell.end()){
             shell[name] = Product(name, quantity, unit, allergen);
         }
@@ -32,7 +21,7 @@ class Pantry{
     }
     }
 
-    void remove_product(std::string name){
+    void Pantry::remove_product(std::string name){
         // tutaj nie wiem, czy nie będziemy potrzebować tego wyjątku (do GUI)
         try{
             shell.at(name);
@@ -44,13 +33,13 @@ class Pantry{
         shell.erase(name);
 
     }
-    void print_products(){
+    void Pantry::print_products(){
         for(auto it = shell.begin(); it != shell.end(); it++){
             it->second.print_product();
         }
     }
 
-    void print_allergens(){
+    void Pantry::print_allergens(){
         for(auto it = shell.begin(); it != shell.end(); it++){
             cout << it->first << " ";
             for(auto it2 = it->second.get_allergen().begin(); it2 != it->second.get_allergen().end(); it2++){
@@ -60,7 +49,7 @@ class Pantry{
         }
     }
 
-    void write_to_file(){
+    void Pantry::write_to_file(){
         ofstream file;
         file.open("pantry_base.csv", ios::out);
         if (file.is_open()){
@@ -75,7 +64,7 @@ class Pantry{
         file.close();
     }
 
-    void read_from_file_csv(){
+    void Pantry::read_from_file_csv(){
         ifstream file;
         file.open("pantry_base.csv", ios::in);
         if (file.is_open()){
@@ -101,9 +90,9 @@ class Pantry{
         file.close();
     }
 
-    void generate_pretty_raport(){
+    void Pantry::generate_pretty_raport(){
         return;
     }
-};
+
 
 

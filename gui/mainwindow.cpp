@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
     ui->mapa->setSource(QUrl(QStringLiteral("qmlMap.qml")));
     ui->mapa->setResizeMode( QQuickWidget::SizeRootObjectToView );
-    for(int i=0; i<vector.size(); i++){
+    for(unsigned int i=0; i<vector.size(); i++){
         ui->list1->addItem(QString::fromStdString(vector[i]));
     }
 

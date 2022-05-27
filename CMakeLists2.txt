@@ -28,13 +28,23 @@ set(UTILS src/utils/Address.h src/utils/Money.h src/utils/Money.cpp)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_PREFIX_PATH /home/kajotello/Qt/5.15.2/gcc_64/lib/cmake/Qt5)
+set(CMAKE_AUTOUIC ON)
+
+
+find_package(Qt5 5.15 COMPONENTS Quick Gui Widgets QuickWidgets QmlImportScanner Qml REQUIRED)
 
 add_executable(json_reader_example json_example/reader.cpp)
 add_executable(json_writer_example json_example/writer.cpp)
 add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
-add_executable(app main.cpp  ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
+add_executable(app main.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
+add_executable(myapp2 gui/main.cpp gui/mainwindow.cpp)
+
 
 target_link_libraries(tests PUBLIC gtest_main)
 target_link_libraries(app jsoncpp_lib)
 target_link_libraries(json_reader_example jsoncpp_lib)
 target_link_libraries(json_writer_example jsoncpp_lib)
+
+target_link_libraries(myapp2 PRIVATE Qt5::Quick Qt5::Gui Qt5::Widgets Qt5::QuickWidgets)
+qt5_import_qml_plugins(myapp2)

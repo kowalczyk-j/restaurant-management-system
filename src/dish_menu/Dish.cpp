@@ -3,7 +3,7 @@
 #include <map>
 
 Dish::Dish(int i, std::string n, dish_type t, Money pr,
-    bool veg, std::map<std::string, int> ingr)
+    bool veg, std::map<std::string, Product> ingr)
     {
         id = i;
         name = n;
@@ -17,7 +17,7 @@ void Dish::print_ingredients() const
 {
     std::cout << "Lista składników - " << get_name() << ": \n";
     for (const auto& [key, value] : ingredients) {
-        std::cout << key << " - " << value << "; ";
+        std::cout << key << " - " ;//<< value << "; ";
     std::cout << "\n";
     }
 }
