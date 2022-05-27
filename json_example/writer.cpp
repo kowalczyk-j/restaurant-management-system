@@ -6,8 +6,11 @@
 int main() {
 
     Json::Value event;
+    Json::Value test;
+    test["test"] = "Test";
+    test["prapa"] = "ma";
     Json::Value vec(Json::arrayValue);
-    vec.append(Json::Value(1));
+    vec.append(test);
     vec.append(Json::Value(2));
     vec.append(Json::Value(3));
 
