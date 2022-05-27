@@ -5,7 +5,7 @@
 using namespace std;
 
 int main() {
-    ifstream ifs("json_example/alice.json");
+    ifstream ifs("json  _example/alice.json");
 
 
     Json::Reader reader;
