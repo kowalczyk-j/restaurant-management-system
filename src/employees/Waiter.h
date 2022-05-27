@@ -9,7 +9,7 @@ private:
 public:
     Waiter(std::string fname, std::string lname,
            unsigned int e_id, unsigned int r_id,
-           double sal, std::vector<unsigned int> tables) :
+           Money sal, std::vector<unsigned int> tables) :
            Employee(fname, lname, e_id, r_id, sal), tables_to_wait(tables) {};
     void print(std::ostream& os)
     {
