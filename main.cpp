@@ -1,4 +1,6 @@
 #include "src/restaurant/Restaurant.h"
+#include <json/json.h>
+#include <fstream>
 
 using namespace std;
 
@@ -22,6 +24,18 @@ int main(){
     std::vector<Dish> dishes;
     dishes.push_back(d1);
     Menu m = Menu(dishes);
+
+
+    DeliveryOrder oso = DeliveryOrder(1, dishes, a, 10);
+    Json::Value v = oso.parse_to_JSON();
+    std::ofstream file;
+    file.open("file.json");
+
+
+    Json::StyledWriter styledWriter;
+    file << styledWriter.write(v);
+
+    file.close();
 
     //Restaurant r = Restaurant(a, pan, m);
 

@@ -1,4 +1,5 @@
 #include<iostream>
+#include <json/json.h>
 #pragma once
 
 class Addres{
@@ -22,5 +23,19 @@ class Addres{
     std::string get_building(){return building;}
     double get_latitude(){return latitude;}
     double get_longitude(){return longitude;}
+
+    Json::Value parse_to_json(){
+        Json::Value add;
+        add["country"] = country;
+        add["region"] = region;
+        add["city"] = city;
+        add["postal_code"] = postal_code;
+        add["street"] = street;
+        add["building"] = building;
+        add["coordinates"]["latitude"] = latitude;
+        add["coordinates"]["longitude"] = longitude;
+
+        return add;
+    }
 
 };
