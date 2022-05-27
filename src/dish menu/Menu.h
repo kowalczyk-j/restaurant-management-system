@@ -37,7 +37,6 @@ public:
             return *current;
         }
     };
-    };
     iterator begin() const {
         return iterator(dishes.cbegin(), dishes.cend());
     }
