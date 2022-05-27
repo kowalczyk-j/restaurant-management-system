@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.16)
 
 project(app VERSION 1.0 LANGUAGES CXX)
 
+add_compile_options(-Wall -Wextra -pedantic -Werror)
+
 include(FetchContent)
 FetchContent_Declare(
    googletest
@@ -16,17 +18,20 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(jsoncpp)
 
-set(PROJECT_SOURCES Vector.h VectorLib.cpp)
-
+set(MENU src/dish_menu/Dish.h src/dish_menu/Dish.cpp src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
+set(EMPLOYEES src/employees/Employee.h src/employees/Cook.h src/employees/Deliverer.h src/employees/Manager.h src/employees/Staff.h src/employees/Waiter.h)
+set(ORDER src/order/AbstractOrder.h src/order/DeliveryOrder.h src/order/OnSiteOrder.h)
+set(PANTRY src/pantry/Pantry.h src/pantry/Pantry.cpp)
+set(RESTAURANT src/restaurant/Restaurant.h src/restaurant/Restaurant.cpp)
+set(UTILS src/utils/Address.h src/utils/Money.h src/utils/Money.cpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(app src/pantry/Pantry.cpp)
 add_executable(json_reader_example json_example/reader.cpp)
 add_executable(json_writer_example json_example/writer.cpp)
-add_executable(tests test.cpp)
+add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
 
 target_link_libraries(tests PUBLIC gtest_main)
 target_link_libraries(json_reader_example jsoncpp_lib)
