@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <stdexcept>
 
@@ -8,6 +9,7 @@ class Money
 public:
     // constructors
     Money();
+    Money(Money const& m);
     explicit Money(int z, int c);
     explicit Money(int c);
 

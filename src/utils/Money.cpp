@@ -11,12 +11,15 @@
         if(c >= 0) cents = c;
         else throw std::out_of_range("Kwota nie może być ujemna");
     }
+    Money::Money(Money const& m ){
+        cents = m.cents;
+    }
     Money Money::operator=(Money const& m){
         cents = m.cents;
         return *this;
     }
     Money Money::operator+(Money const& m) const{
-        Money rm = Money(cents+m.cents);
+        Money rm (cents+m.cents);
         return rm;
     }
     Money Money::operator-(Money const& m) const{
