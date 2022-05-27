@@ -1,3 +1,4 @@
+#pragma once
 #include "Employee.h"
 #include <vector>
 
@@ -11,9 +12,11 @@ public:
            unsigned int e_id, unsigned int r_id,
            Money sal, std::vector<unsigned int> tables) :
            Employee(fname, lname, e_id, r_id, sal), tables_to_wait(tables) {};
-    void print(std::ostream& os)
+
+    friend std::ostream& operator<<(std::ostream& os, Waiter waiter)
     {
-        Employee::print(os);
+        waiter.print(os);
         os << "\nPosition: Waiter";
+        return os;
     }
 };

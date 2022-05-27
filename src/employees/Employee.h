@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "../utils/Money.h"
 
@@ -19,8 +20,14 @@ public:
     {
         salary = new_sal;
     }
+
     virtual void print(std::ostream& os) const // pozniej zdefiniuje na bazie tego operator<<
     {
         os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/" << restaurant_id;
+    }
+
+    bool operator==(Employee other) const
+    {
+        return employee_id == other.employee_id;
     }
 };

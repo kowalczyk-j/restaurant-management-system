@@ -1,3 +1,4 @@
+#pragma once
 #include "Employee.h"
 
 class Cook : public Employee
@@ -9,9 +10,11 @@ public:
          unsigned int e_id, unsigned int r_id, Money sal, bool chef) :
          Employee(fname, lname, e_id, r_id, sal), is_chef(chef) {};
 
-    void print(std::ostream& os)
+    friend std::ostream& operator<<(std::ostream& os, Cook cook)
     {
-        Employee::print(os);
-        os << "\nPosition: Cook";
+        cook.print(os);
+        os << "\nPosition: ";
+        cook.is_chef?(os << "Chef"):(os << "Cook");
+        return os;
     }
 };

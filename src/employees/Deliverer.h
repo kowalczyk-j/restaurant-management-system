@@ -1,3 +1,4 @@
+#pragma once
 #include "Employee.h"
 
 class Deliverer : public Employee
@@ -9,9 +10,10 @@ public:
               unsigned int e_id, unsigned int r_id, Money sal) :
               Employee(fname, lname, e_id, r_id, sal) {};
 
-    void print(std::ostream& os)
+    friend std::ostream& operator<<(std::ostream& os, Deliverer deli)
     {
-        Employee::print(os);
+        deli.print(os);
         os << "\nPosition: Deliverer";
+        return os;
     }
 };
