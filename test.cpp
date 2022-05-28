@@ -80,3 +80,44 @@ TEST(staff, create_staff)
     EXPECT_EQ(deliverers.size(), staff.number_employed());
     EXPECT_EQ(deliverers, staff.get_staff());
 }
+
+
+TEST(staff, print_staff)
+{
+    Cook c1("name1", "surname", 1, 1, Money(10000), false);
+    Cook c2("name2", "surname", 2, 1, Money(15000), true);
+    Staff<Cook> staff(std::vector<Cook>{c1, c2});
+    testing::internal::CaptureStdout();
+    std::cout << staff;
+    std::string output = testing::internal::GetCapturedStdout();
+    std::string expected = "\nName: name1\nSurname: surname\nID: 1/1\nPosition: Cook\n\nName: name2\nSurname: surname\nID: 2/1\nPosition: Chef\n";
+    EXPECT_EQ(output, expected);
+}
+
+TEST(staff, employ)
+{
+    Waiter w1("name", "surname", 1, 1, Money(10000), std::vector<unsigned int>{1, 2});
+    Waiter w2("name2", "last name", 2, 1, Money(10000), std::vector<unsigned int>{3, 4});
+    Staff<Waiter> staff(std::vector<Waiter>{w1});
+    EXPECT_EQ(1, staff.number_employed());
+    staff.employ(w2);
+    EXPECT_EQ(2, staff.number_employed());
+}
+
+TEST(staff, fire)
+{
+    Waiter w1("name", "surname", 1, 1, Money(10000), std::vector<unsigned int>{1, 2});
+    Waiter w2("name2", "last name", 2, 1, Money(10000), std::vector<unsigned int>{3, 4});
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_EQ(2, staff.number_employed());
+    staff.fire(w2);
+    EXPECT_EQ(1, staff.number_employed());
+}
+
+TEST(staff, fire_person_not_found)
+{
+    Waiter w1("name", "surname", 1, 1, Money(10000), std::vector<unsigned int>{1, 2});
+    Waiter w2("name2", "last name", 2, 1, Money(10000), std::vector<unsigned int>{3, 4});
+    Staff<Waiter> staff(std::vector<Waiter>{w1});
+    EXPECT_THROW(staff.fire(w2), StaffExceptions);
+}

@@ -10,6 +10,8 @@ public:
          unsigned int e_id, unsigned int r_id, Money sal, bool chef) :
          Employee(fname, lname, e_id, r_id, sal), is_chef(chef) {};
 
+    void set_chef() {is_chef = true;}
+
     friend std::ostream& operator<<(std::ostream& os, Cook cook)
     {
         cook.print(os);
