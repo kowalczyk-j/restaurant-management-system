@@ -1,5 +1,7 @@
 #pragma once
+#include <fstream>
 #include <iostream>
+#include <json/json.h>
 #include "../utils/Money.h"
 
 class Employee
@@ -25,10 +27,10 @@ public:
     void set_employee_id(unsigned int id) {employee_id = id;}
     void give_raise(Money new_sal) {salary = new_sal;}
 
-    virtual void print(std::ostream& os) const
-    {
-        os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/" << restaurant_id;
-    }
+    virtual void print(std::ostream& os) const;
+
+    void parse_to_json(std::string path);
+    Json::Value parse_from_json(std::string path);
 
     bool operator==(Employee other) const
     {
