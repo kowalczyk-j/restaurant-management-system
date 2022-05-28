@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ChangeId</class>
- <widget class="QDialog" name="ChangeId">
+ <class>ChangeSalary</class>
+ <widget class="QDialog" name="ChangeSalary">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -94,7 +94,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ChangeId</receiver>
+   <receiver>ChangeSalary</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -110,7 +110,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ChangeId</receiver>
+   <receiver>ChangeSalary</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

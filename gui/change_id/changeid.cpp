@@ -4,11 +4,11 @@
 #include <QVector>
 #include <iostream>
 #include <string>
-#include "ui_changename.h"
-#include "changename.h"
+#include "ui_changeid.h"
+#include "changeid.h"
 
-ChangeName::ChangeName(QWidget *parent) :
+ChangeId::ChangeId(QWidget *parent) :
     QDialog(parent){
-        ui = new Ui::ChangeName;
+        ui = new Ui::ChangeId;
         ui->setupUi(this);
 }

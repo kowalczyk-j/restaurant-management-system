@@ -9,11 +9,11 @@
 #include "ui_changeaddresswindow.h"
 
 
-class ChangeAddressWindow : public QDialog
+class ChangeAddress: public QDialog
 {
     Q_OBJECT
 public:
-	ChangeAddressWindow(QWidget *parent = 0);
+	ChangeAddress(QWidget *parent = 0);
 
 
 private slots:
@@ -26,6 +26,6 @@ QString get_building();
 QString get_postal_code();
 
 private:
-	Ui::Dialog *ui;
+	Ui::ChangeAddress *ui;
 };
 #endif

@@ -1,19 +1,19 @@
-#ifndef CHANGESALARY_H
-#define CHANGESALARY_h
+#ifndef CHANGENAME_H
+#define CHANGENAME_h
 #include <QWidget>
 #include <QDialog>
 #include <QString>
 #include <QVector>
 #include <iostream>
 #include <string>
-#include "ui_changesalary.h"
+#include "ui_changename.h"
 
 
-class ChangeSalary : public QDialog
+class ChangeName : public QDialog
 {
     Q_OBJECT
 public:
-	ChangeSalary(QWidget *parent = 0);
+	ChangeName(QWidget *parent = 0);
 
 
 private slots:
@@ -22,6 +22,6 @@ public slots:
 
 
 private:
-	Ui::ChangeSalary *ui;
+	Ui::ChangeName *ui;
 };
 #endif

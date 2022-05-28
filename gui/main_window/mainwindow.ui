@@ -834,7 +834,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_12">
+         <widget class="QPushButton" name="modifyName">
           <property name="geometry">
            <rect>
             <x>350</x>
@@ -847,7 +847,7 @@
            <string>Modyfikuj</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_13">
+         <widget class="QPushButton" name="modifySurname">
           <property name="geometry">
            <rect>
             <x>350</x>
@@ -925,7 +925,7 @@
            <string>Modyfikuj</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_19">
+         <widget class="QPushButton" name="modifySalary">
           <property name="geometry">
            <rect>
             <x>350</x>

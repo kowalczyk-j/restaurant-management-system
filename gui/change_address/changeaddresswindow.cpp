@@ -13,31 +13,31 @@
 #include <QDebug>
 #include <QDialog>
 
-ChangeAddressWindow::ChangeAddressWindow(QWidget *parent) :
+ChangeAddress::ChangeAddress(QWidget *parent) :
     QDialog(parent){
-        ui = new Ui::Dialog;
+        ui = new Ui::ChangeAddress;
         ui->setupUi(this);
     }
 
-void ChangeAddressWindow::set_current_address(QString street, QString building, QString city, QString postal_code){
+void ChangeAddress::set_current_address(QString street, QString building, QString city, QString postal_code){
     ui->street->setText(street);
     ui->building->setText(building);
     ui->city->setText(city);
     ui->postalCode->setText(postal_code);
 }
 
-QString ChangeAddressWindow::get_city(){
+QString ChangeAddress::get_city(){
     return(ui->city->text());
 }
 
-QString ChangeAddressWindow::get_street(){
+QString ChangeAddress::get_street(){
     return(ui->street->text());
 }
 
-QString ChangeAddressWindow::get_building(){
+QString ChangeAddress::get_building(){
     return(ui->building->text());
 }
 
-QString ChangeAddressWindow::get_postal_code(){
+QString ChangeAddress::get_postal_code(){
     return(ui->postalCode->text());
 }

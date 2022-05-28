@@ -27,7 +27,7 @@ public:
     void set_employee_id(unsigned int id) {employee_id = id;}
     void give_raise(Money new_sal) {salary = new_sal;}
 
-    virtual void print(std::ostream& os) const;
+    void print(std::ostream& os) const;
 
     Json::Value parse_to_json();
     Json::Value parse_from_json(std::string path);
