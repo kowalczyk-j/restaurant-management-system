@@ -8,6 +8,13 @@ public:
             unsigned int e_id, unsigned int r_id, Money sal) :
             Employee(fname, lname, e_id, r_id, sal) {};
 
+    Json::Value parse_to_json()
+    {
+        Json::Value manager = Employee::parse_to_json();
+        manager["position"] = "manager";
+        return manager;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, Manager manager)
     {
         manager.print(os);

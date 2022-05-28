@@ -29,7 +29,7 @@ public:
 
     virtual void print(std::ostream& os) const;
 
-    void parse_to_json(std::string path);
+    Json::Value parse_to_json();
     Json::Value parse_from_json(std::string path);
 
     bool operator==(Employee other) const
