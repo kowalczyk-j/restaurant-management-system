@@ -1,8 +1,9 @@
 #pragma once
 #include "../pantry/Pantry.h"
-#include "../employees/Manager.h"
+#include "../employees/Staff.h"
 #include "../employees/Cook.h"
 #include "../employees/Deliverer.h"
+#include "../employees/Manager.h"
 #include "../employees/Waiter.h"
 #include "../dish_menu/Menu.h"
 #include "../order/DeliveryOrder.h"
@@ -14,18 +15,26 @@ class Restaurant{
     Addres address;
     Pantry pantry;
     Menu  menu;
-    std::vector<Employee> employees;
+    Staff<Cook> cooks;
+    Staff<Deliverer> deliverers;
+    Staff<Manager> managers;
+    Staff<Waiter> waiters;
     std::vector<DeliveryOrder*> orders; // bvć może do zmiany  - obecnie wektor wskaźnikow na zamowienia
 
     public:
-    Restaurant(unsigned int r_id, std::string n, Addres a, Pantry  p, Menu m ,std::vector<Employee>  e, std::vector<DeliveryOrder*> o ):
-    restaurant_id(r_id), name(n), address(a), pantry(p), menu(m),employees(e), orders(o) {};
+    Restaurant(unsigned int r_id, std::string n, Addres a, Pantry  p, Menu m, Staff<Cook> c,
+               Staff<Deliverer> d, Staff<Manager> mng, Staff<Waiter> w, std::vector<DeliveryOrder*> o ):
+               restaurant_id(r_id), name(n), address(a), pantry(p), menu(m), cooks(c), deliverers(d), managers(mng),
+               waiters(w), orders(o) {};
 
     Addres & get_address(){return address;}
     Pantry & get_pantry(){return pantry;}
     Menu & get_menu(){return menu;}
     std::vector<DeliveryOrder*> & get_orders(){return orders;}
-    std::vector<Employee> & get_employees(){return employees;}
+    Staff<Cook>& get_cooks() const {return cooks};
+    Staff<Deliverer>& get_deliverers() const {return deliverers};
+    Staff<Manager>& get_managers() const {return managers};
+    Staff<Waiter>& get_waiters() const {return waiters};
     std::string get_name(){return name;}
 
     void add_delivery_order(unsigned int id, std::vector<Dish> vd, Addres a, unsigned d_id){
