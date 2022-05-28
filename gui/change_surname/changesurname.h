@@ -18,8 +18,9 @@ public:
 
 private slots:
 
-public slots:
-
+public:
+	void set_surname(QString surname){ui->surname->setText(surname);};
+	QString get_surnname(){return ui->surname->text();}
 
 private:
 	Ui::ChangeSurname *ui;

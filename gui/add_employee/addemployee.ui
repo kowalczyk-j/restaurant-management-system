@@ -32,7 +32,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="name">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -42,7 +42,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="surname">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -52,17 +52,17 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="id">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>120</y>
+     <x>210</x>
+     <y>110</y>
      <width>113</width>
      <height>23</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="street">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -72,7 +72,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="building">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -82,7 +82,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_6">
+  <widget class="QLineEdit" name="postal_code">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -92,7 +92,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_7">
+  <widget class="QLineEdit" name="city">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -102,7 +102,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_8">
+  <widget class="QLineEdit" name="zloty">
    <property name="geometry">
     <rect>
      <x>102</x>
@@ -118,7 +118,7 @@
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_9">
+  <widget class="QLineEdit" name="grosze">
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -157,8 +157,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>100</y>
+     <x>210</x>
+     <y>90</y>
      <width>81</width>
      <height>16</height>
     </rect>
@@ -269,6 +269,49 @@
    </property>
    <property name="text">
     <string>gr</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="role">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>111</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Kucharz</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Dostawca</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Manager</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Kelner</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_12">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>90</y>
+     <width>81</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rola:</string>
    </property>
   </widget>
  </widget>

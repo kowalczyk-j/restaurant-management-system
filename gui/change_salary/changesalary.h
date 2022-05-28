@@ -18,8 +18,10 @@ public:
 
 private slots:
 
-public slots:
-
+public:
+	void set_salary(QString zl, QString gr){ui->zloty->setText(zl); ui->grosze->setText(gr);};
+	QString get_salary_zlotys(){return ui->zloty->text();}
+	QString get_salary_grosze(){return ui->grosze->text();}
 
 private:
 	Ui::ChangeSalary *ui;

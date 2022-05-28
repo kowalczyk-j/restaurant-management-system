@@ -5,10 +5,10 @@
 using namespace std;
 class Pantry{
 
+    unordered_map<std::string, Product> shell;
 
-    unordered_map<std::string, Product> shell; // unordered_map<product, >
     public:
-
+    Pantry(){};
     vector<string> get_all_products();
     Product & get_product(std::string name){return shell[name];}
     void add_quantity(string name, int quantity);

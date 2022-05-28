@@ -18,8 +18,9 @@ public:
 
 private slots:
 
-public slots:
-
+public :
+	void set_id(QString id){ui->id->setText(id);};
+	QString get_id(){return ui->id->text();}
 
 private:
 	Ui::ChangeId *ui;

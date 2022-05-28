@@ -4,9 +4,8 @@
 class Manager : public Employee
 {
 public:
-    Manager(std::string fname, std::string lname,
-            unsigned int e_id, unsigned int r_id, Money sal) :
-            Employee(fname, lname, e_id, r_id, sal) {};
+    Manager(unsigned int e_id, std::string fname, std::string lname,  Addres a, Money sal) :
+            Employee(e_id, fname, lname, a, sal) {};
 
     Json::Value parse_to_json()
     {

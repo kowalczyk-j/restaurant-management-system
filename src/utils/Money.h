@@ -16,6 +16,7 @@ public:
     // getters
     unsigned int get_zlotys() const {return int(cents/100);}
     unsigned int get_cents() const {return cents%100;}
+    unsigned int get_in_cents() const {return cents;}
 
     // overloaded operators
     Money operator=(Money const& m);
@@ -28,7 +29,7 @@ public:
     Money & operator*=(unsigned int s);
     Money & operator/=(unsigned int s);
 
-    std::string to_string();
+    std::string to_string() const;
 
 };
 

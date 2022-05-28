@@ -3,37 +3,40 @@
 #include <iostream>
 #include <json/json.h>
 #include "../utils/Money.h"
+#include "../utils/Address.h"
 
 class Employee
 {
 protected:
+    unsigned int employee_id;
     std::string name;
     std::string surname;
-    unsigned int employee_id;
-    unsigned int restaurant_id; // jesli sieciówka
+    Addres address;
     Money salary;
+
 public:
-    Employee(std::string fname, std::string lname,
-             unsigned int e_id, unsigned int r_id, Money sal) :
-             name(fname), surname(lname), employee_id(e_id),
-             restaurant_id(r_id), salary(sal) {};
 
-    std::string get_name() {return name;}
-    std::string get_surname() {return surname;}
-    unsigned int get_employee_id() {return employee_id;}
+    //konstruktor klasy z parametrami
+    Employee(unsigned int e_id=0, std::string fname="", std::string lname="", Addres a = Addres(), Money sal = Money()) :
+             employee_id(e_id),name(fname), surname(lname), address(a), salary(sal){};
 
+    //gettery
+    std::string const& get_name() const {return name;}
+    std::string const& get_surname() const {return surname;}
+    unsigned int get_employee_id() const {return employee_id;}
+    Money const& get_salary() const {return salary;}
+
+    //settery
     void set_name(std::string name) {this->name = name;}
     void set_surname(std::string surname) {this->surname = surname;}
     void set_employee_id(unsigned int id) {employee_id = id;}
-    void give_raise(Money new_sal) {salary = new_sal;}
+    void set_salary(Money new_sal) {salary = new_sal;}
 
-    void print(std::ostream& os) const;
-
+    //konwertery do formatu JSON
     Json::Value parse_to_json();
     Json::Value parse_from_json(std::string path);
 
-    bool operator==(Employee other) const
-    {
-        return (employee_id == other.employee_id && restaurant_id == other.restaurant_id);
-    }
+    bool operator==(Employee other) const {return (employee_id == other.employee_id);}
+
+    void print(std::ostream& os) const;
 };

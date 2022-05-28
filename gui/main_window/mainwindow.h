@@ -23,6 +23,8 @@ private slots:
 	void on_moveMenu_clicked();
 	void on_moveOrders_clicked();
 
+	void on_selectRole_currentIndexChanged();
+
 	void on_orderList_itemClicked();
 	void on_modifyDeliveryAddress_clicked();
 	void on_addDishDeliveryOrder_clicked();
@@ -37,11 +39,17 @@ private slots:
 	void on_modifySurname_clicked();
 	void on_modifyId_clicked();
 	void on_modifySalary_clicked();
+	void on_removeEmployee_clicked();
+
+
+	Employee & get_employee_refernece();
 
 private:
 	Ui::MainWindow *ui;
 	std::vector<Restaurant> restaurant_list;
 	Restaurant *restaurant;
 	Money m;
+	int position1;
+	int position2;
 };
 #endif

@@ -1,8 +1,9 @@
 #include "Employee.h"
 
+
 void Employee::print(std::ostream& os) const
 {
-    os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/" << restaurant_id;
+    os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/";
 }
 
 Json::Value Employee::parse_to_json()
@@ -11,8 +12,8 @@ Json::Value Employee::parse_to_json()
     employee["name"] = name;
     employee["surname"] = surname;
     employee["id"] = employee_id;
-    employee["restaurant id"] = restaurant_id;
-    employee["salary"] = salary.to_string();
+    employee["salary"] = salary.get_in_cents();
+    employee["address"] = address.parse_to_json();
     return employee;
 }
 

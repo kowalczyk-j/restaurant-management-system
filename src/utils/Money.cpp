@@ -51,7 +51,7 @@
         return *this;
     }
 
-    std::string Money::to_string(){
+    std::string Money::to_string() const{
         std::string res;
         if (get_cents() < 10){
             res += std::to_string(get_zlotys());

@@ -1,16 +1,18 @@
 #pragma once
+#include <vector>
 #include "Employee.h"
 
 class Deliverer : public Employee
 {
 private:
-    double tips;
-public:
-    Deliverer(std::string fname, std::string lname,
-              unsigned int e_id, unsigned int r_id, Money sal) :
-              Employee(fname, lname, e_id, r_id, sal) {};
+    Money tips;
+    std::vector<int> orders_to_serve;
 
-    void new_tip(double tip) {tips += tip;}
+public:
+    Deliverer(unsigned int e_id, std::string fname, std::string lname, Addres a, Money sal) :
+              Employee(e_id, fname, lname, a, sal) {};
+
+    void new_tip(Money tip) {tips += tip;}
 
     Json::Value parse_to_json()
     {
