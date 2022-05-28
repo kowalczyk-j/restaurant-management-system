@@ -10,13 +10,8 @@ FetchContent_Declare(
    GIT_REPOSITORY      https://github.com/google/googletest.git
    GIT_TAG main
 )
-FetchContent_Declare(
-   jsoncpp
-   GIT_REPOSITORY      https://github.com/open-source-parsers/jsoncpp
-   GIT_TAG master
-)
+
 FetchContent_MakeAvailable(googletest)
-FetchContent_MakeAvailable(jsoncpp)
 
 set(MENU src/dish_menu/Dish.h src/dish_menu/Dish.cpp src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
 set(EMPLOYEES src/employees/Employee.h src/employees/Cook.h src/employees/Deliverer.h src/employees/Manager.h src/employees/Staff.h src/employees/Waiter.h)
@@ -29,6 +24,11 @@ set(MAINWINDOW gui/main_window/mainwindow.cpp gui/main_window/mainwindow.h)
 set(CHANGEADDRESS gui/change_address/changeaddresswindow.h gui/change_address/changeaddresswindow.cpp)
 set(ADDDISH gui/add_dish/adddish.h gui/add_dish/adddish.cpp)
 set(ADDORDER gui/add_order/addorder.h gui/add_order/addorder.cpp)
+set(ADDEMPLOYEE gui/add_employee/addemployee.h gui/add_employee/addemployee.cpp)
+set(CHANGEID gui/change_id/changeid.h gui/change_id/changeid.cpp)
+set(CHANGENAME gui/change_name/changename.h gui/change_name/changename.cpp)
+set(CHANGESALARY gui/change_salary/changesalary.h gui/change_salary/changesalary.cpp)
+set(CHANGESURNAME gui/change_surname/changesurname.h gui/change_surname/changesurname.cpp)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -38,6 +38,7 @@ set(CMAKE_AUTOUIC ON)
 
 
 find_package(Qt5 5.15 COMPONENTS Quick Gui Widgets QuickWidgets QmlImportScanner Qml REQUIRED)
+find_package(jsoncpp REQUIRED)
 
 add_executable(json_reader_example json_example/reader.cpp)
 add_executable(json_writer_example json_example/writer.cpp)
