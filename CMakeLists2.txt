@@ -25,6 +25,11 @@ set(PANTRY src/pantry/Pantry.h src/pantry/Pantry.cpp src/pantry/Product.h)
 set(RESTAURANT src/restaurant/Restaurant.h  src/restaurant/Restaurant.cpp src/restaurant/RestaurantNet.h)
 set(UTILS src/utils/Address.h src/utils/Money.h src/utils/Money.cpp)
 
+set(MAINWINDOW gui/main_window/mainwindow.cpp gui/main_window/mainwindow.h)
+set(CHANGEADDRESS gui/change_address/changeaddresswindow.h gui/change_address/changeaddresswindow.cpp)
+set(ADDDISH gui/add_dish/adddish.h gui/add_dish/adddish.cpp)
+set(ADDORDER gui/add_order/addorder.h gui/add_order/addorder.cpp)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -38,7 +43,7 @@ add_executable(json_reader_example json_example/reader.cpp)
 add_executable(json_writer_example json_example/writer.cpp)
 add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
 add_executable(app main.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
-add_executable(app2 gui/main.cpp gui/mainwindow.cpp gui/mainwindow.h gui/changeaddresswindow.cpp gui/changeaddresswindow.h ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
+add_executable(app2 gui/main.cpp ${MAINWINDOW} ${CHANGEADDRESS} ${ADDDISH} ${ADDORDER} ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
 
 
 target_link_libraries(tests PUBLIC gtest_main)

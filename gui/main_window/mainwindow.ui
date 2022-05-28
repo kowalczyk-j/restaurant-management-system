@@ -110,7 +110,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QLabel" name="image">
@@ -258,6 +258,12 @@
           <height>15</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>25</string>
         </property>
@@ -270,6 +276,12 @@
           <width>59</width>
           <height>15</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="text">
          <string>1</string>
@@ -284,6 +296,12 @@
           <height>15</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>23</string>
         </property>
@@ -293,12 +311,21 @@
          <rect>
           <x>80</x>
           <y>50</y>
-          <width>59</width>
-          <height>15</height>
+          <width>241</width>
+          <height>31</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
         </property>
         <property name="text">
          <string>plapla</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -355,11 +382,11 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="page_8">
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="productName">
           <property name="geometry">
            <rect>
             <x>120</x>
-            <y>40</y>
+            <y>80</y>
             <width>191</width>
             <height>21</height>
            </rect>
@@ -381,9 +408,9 @@
          <widget class="QLabel" name="label_13">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>70</x>
             <y>160</y>
-            <width>111</width>
+            <width>81</width>
             <height>21</height>
            </rect>
           </property>
@@ -401,7 +428,7 @@
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_14">
+         <widget class="QLabel" name="quantity">
           <property name="geometry">
            <rect>
             <x>140</x>
@@ -413,8 +440,8 @@
           <property name="font">
            <font>
             <pointsize>10</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
+            <weight>75</weight>
+            <bold>true</bold>
            </font>
           </property>
           <property name="text">
@@ -427,8 +454,8 @@
          <widget class="QPushButton" name="pushButton_10">
           <property name="geometry">
            <rect>
-            <x>220</x>
-            <y>140</y>
+            <x>270</x>
+            <y>130</y>
             <width>41</width>
             <height>21</height>
            </rect>
@@ -440,8 +467,8 @@
          <widget class="QPushButton" name="pushButton_11">
           <property name="geometry">
            <rect>
-            <x>220</x>
-            <y>180</y>
+            <x>270</x>
+            <y>200</y>
             <width>41</width>
             <height>21</height>
            </rect>
@@ -450,12 +477,22 @@
            <string>-</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_15">
+         <widget class="QListWidget" name="listWidget">
           <property name="geometry">
            <rect>
-            <x>60</x>
-            <y>230</y>
-            <width>251</width>
+            <x>100</x>
+            <y>290</y>
+            <width>231</width>
+            <height>101</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_14">
+          <property name="geometry">
+           <rect>
+            <x>80</x>
+            <y>260</y>
+            <width>81</width>
             <height>21</height>
            </rect>
           </property>
@@ -467,7 +504,7 @@
            </font>
           </property>
           <property name="text">
-           <string>W ostatnim tygodniu wykorzystano:</string>
+           <string>Alergeny:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -540,7 +577,7 @@
          <string>szukaj...</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="addEmployee">
         <property name="geometry">
          <rect>
           <x>60</x>
@@ -566,7 +603,7 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="page_10">
-         <widget class="QLabel" name="label_16">
+         <widget class="QLabel" name="titleName">
           <property name="geometry">
            <rect>
             <x>120</x>
@@ -901,7 +938,7 @@
            <string>Modyfikuj</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_26">
+         <widget class="QLabel" name="name">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -920,7 +957,7 @@
            <string>Jan</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_27">
+         <widget class="QLabel" name="surname">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -939,7 +976,7 @@
            <string>Kowalski</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_28">
+         <widget class="QLabel" name="id">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -958,7 +995,7 @@
            <string>133234</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_29">
+         <widget class="QLabel" name="birthDate">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -977,7 +1014,7 @@
            <string>23/11/1978</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_30">
+         <widget class="QLabel" name="email">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -996,7 +1033,7 @@
            <string>j.kowalski@gmail.com</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_31">
+         <widget class="QLabel" name="employeeDate">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -1015,7 +1052,7 @@
            <string>09/08/2020</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_32">
+         <widget class="QLabel" name="salary">
           <property name="geometry">
            <rect>
             <x>170</x>
@@ -1034,7 +1071,7 @@
            <string>3500 zł</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_33">
+         <widget class="QLabel" name="address">
           <property name="geometry">
            <rect>
             <x>40</x>
@@ -1054,7 +1091,7 @@
            <string>ul. Chrobrego, 00-00 Magnoliowo</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_20">
+         <widget class="QPushButton" name="removeEmployee">
           <property name="geometry">
            <rect>
             <x>140</x>
@@ -1902,19 +1939,6 @@
       </property>
       <property name="text">
        <string>Powrót</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_27">
-      <property name="geometry">
-       <rect>
-        <x>580</x>
-        <y>530</y>
-        <width>80</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Statystyki</string>
       </property>
      </widget>
      <widget class="QLabel" name="restaurationName">

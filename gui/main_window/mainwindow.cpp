@@ -1,7 +1,8 @@
+#include "../add_dish/adddish.h"
+#include "../add_order/addorder.h"
+#include "../main_window/mainwindow.h"
+#include "../change_address/changeaddresswindow.h"
 #include "mainwindow.h"
-#include "changeaddresswindow.h"
-#include "addorder.h"
-#include "adddish.h"
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <QStringList>
@@ -17,10 +18,9 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-
-    Product p = Product("jablko",670, g);
-    Product p1 = Product("mieso",500, g);
-    Product p2 = Product("sok jablkowy",1000, ml);
+    Product p = Product("Jabłko",670, g);
+    Product p1 = Product("Mięso",500, g);
+    Product p2 = Product("Sok Jabłkowy",1000, ml);
     Product p3 = Product("jajka",60, szt);
     Product p4  = Product("koperek",100, g);
     Product p5 = Product("ziemniaki",4000, g);
@@ -29,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Pantry pan;
     set<string> s;
-    pan.add_product("jablko", 6, g,  s);
-    pan.add_product("mieso",500, g, s);
-    pan.add_product("sok jablkowy",1000, ml, s);
+    pan.add_product("Jabłko", 6, g,  s);
+    pan.add_product("Mięso",500, g, s);
+    pan.add_product("Sok Jabłkowy",1000, ml, s);
 
     Addres a1 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.220154, 21.011968);
     Addres a2 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.216184, 20.239073);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::vector<Dish> dishes;
     dishes.push_back(d1);
     Menu m = Menu(dishes);
-    Cook c = Cook("Jan", "Kowalski", 1, 5, Money(800000), 0);
+    Cook c = Cook("Adam", "Wiśniewski", 1, 5, Money(800000), 0);
     std::vector<Employee> ve;
     ve.push_back(c);
 
@@ -88,6 +88,7 @@ void MainWindow::on_selectRestaurant_clicked(){
         object->setProperty("longitude", restaurant->get_address().get_longitude());
 
         ui->image->setPixmap(QString::fromStdString("rsc/"+restaurant->get_name()+".jpg"));
+        ui->restaurantAddress->setText(QString::fromStdString(restaurant->get_address().to_string()));
         ui->restaurationName->setText(QString::fromStdString(restaurant->get_name()));
         ui->employeesNumber->setText(QString::number(restaurant->get_employees().size()));
         ui->ordersNumber->setText(QString::number(restaurant->get_orders().size()));
@@ -177,7 +178,6 @@ void MainWindow::on_addDishDeliveryOrder_clicked(){
 
 void MainWindow::on_removeDeliveryOrder_clicked(){
     int order_position = ui->orderList->currentRow();
-    std::cout << order_position;
     if(order_position != -1){
         restaurant->remove_delivery_order(order_position);
         ui->orderStack->setCurrentIndex(1);
@@ -192,4 +192,28 @@ void MainWindow::on_addOrder_clicked(){
     AddOrder ao;
     ao.setModal(true);
     ao.exec();
+}
+
+
+
+void MainWindow::on_pantryList_itemClicked(){
+    std::string product = restaurant->get_pantry().get_all_products()[ui->pantryList->currentRow()];
+    ui->productName->setText(QString::fromStdString(product));
+    ui->pantryStack->setCurrentIndex(0);
+    ui->quantity->setText(QString::fromStdString(std::to_string(restaurant->get_pantry().get_product(product).get_quantity())+" "+restaurant->get_pantry().get_product(product).get_unit()));
+}
+
+void MainWindow::on_employeeList_itemClicked(){
+    size_t position = ui->employeeList->currentRow();
+    ui->employeeStack->setCurrentIndex(0);
+    ui->titleName->setText(QString::fromStdString(restaurant->get_employees()[position].get_name() + " " + restaurant->get_employees()[position].get_surname()));
+    ui->name->setText(QString::fromStdString(restaurant->get_employees()[position].get_name()));
+    ui->surname->setText(QString::fromStdString(restaurant->get_employees()[position].get_surname()));
+    ui->id->setText(QString::number(restaurant->get_employees()[position].get_employee_id()));
+    ui->birthDate->setText(QString::fromStdString(""));
+    ui->address->setText(QString::fromStdString(""));
+    ui->employeeDate->setText(QString::fromStdString(""));
+    ui->email->setText(QString::fromStdString(""));
+    ui->salary->setText(QString::fromStdString(Money().to_string()));
+
 }
