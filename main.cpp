@@ -29,10 +29,10 @@ int main(){
     ve.push_back(c);
 
 
-    DeliveryOrder * os = new DeliveryOrder(1, dishes, a, 10);
+    DeliveryOrder oso =  DeliveryOrder(1, dishes, a, 10);
     vector<DeliveryOrder*> vd;
-    vd.push_back(os);
-    /*Json::Value v = oso.parse_to_JSON();
+    //vd.push_back(os);
+    Json::Value v = oso.parse_to_JSON();
     std::ofstream file;
     file.open("file.json");
 
@@ -40,7 +40,7 @@ int main(){
     Json::StyledWriter styledWriter;
     file << styledWriter.write(v);
 
-    file.close();*/
+    file.close();
 
     Restaurant r1 = Restaurant(1, "Magnoliowa", a, pan, m, ve, vd);
     Restaurant r2 = Restaurant(2, "Różana", a, pan, m, ve, vd);
