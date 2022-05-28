@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "Dish.h"
+#include <json/json.h>
 
 class Menu
 {
@@ -16,6 +17,8 @@ public:
     void add_dish(Dish const& dish);
     void remove_dish(unsigned int dish_idx);
 
+    Json::Value parse_menu_to_json();
+    
     class iterator
     {
         std::vector<Dish>::const_iterator current;

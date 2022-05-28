@@ -10,7 +10,6 @@ using namespace std;
 
 enum units {ml, g, szt, none};
 
-
 class Product{
 
     string name;

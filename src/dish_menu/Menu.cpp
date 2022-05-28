@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "Menu.h"
+#include <json/json.h>
 
 std::ostream& operator<<(std::ostream& os, Menu const& menu)
 {
@@ -31,6 +32,15 @@ void Menu::remove_dish(unsigned int dish_idx)
         }
             
     }
+}
+
+Json::Value Menu::parse_menu_to_json()
+{
+    Json::Value root;
+    for(size_t i = 0; i < dishes.size(); i++){
+        root.append(dishes[i].parse_dish_to_json());
+    }
+    return root;
 }
 Menu::iterator::iterator(std::vector<Dish>::const_iterator const &cstart,
  std::vector<Dish>::const_iterator const &cstop) : start(cstart), stop(cstop)
