@@ -31,10 +31,10 @@ class Restaurant{
     Pantry & get_pantry(){return pantry;}
     Menu & get_menu(){return menu;}
     std::vector<DeliveryOrder*> & get_orders(){return orders;}
-    Staff<Cook>& get_cooks() const {return cooks};
-    Staff<Deliverer>& get_deliverers() const {return deliverers};
-    Staff<Manager>& get_managers() const {return managers};
-    Staff<Waiter>& get_waiters() const {return waiters};
+    Staff<Cook>& get_cooks() {return cooks;}
+    Staff<Deliverer>& get_deliverers() {return deliverers;}
+    Staff<Manager>& get_managers() {return managers;}
+    Staff<Waiter>& get_waiters() {return waiters;}
     std::string get_name(){return name;}
 
     void add_delivery_order(unsigned int id, std::vector<Dish> vd, Addres a, unsigned d_id){

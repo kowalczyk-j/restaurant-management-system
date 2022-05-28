@@ -65,19 +65,29 @@ public:
         std::cout << "\n";
     }
 
-    Json::Value parse_to_json(){
+    Json::Value parse_dish_to_json(){
         Json::Value dish;
+        Json::Value names(Json::arrayValue);
+        Json::Value allergens(Json::arrayValue);
+        Json::Value quantities(Json::arrayValue);
+        Json::Value units(Json::arrayValue);
         dish["id"] = id;
         dish["name"] = name;
         dish["type"] = type;
         dish["price"]["zlotys"] = price.get_zlotys();
         dish["price"]["cents"] = price.get_cents();
         dish["is_vegan"] = is_vegan;
-        // Json::Value ingr(Json::arrayValue);
-        // for(const auto& [key, value] : ingredients){
-        //     ingr.append(Json::Value(value.parse_to_json()));
-        // }
-        // dish["ingredients"] = ingr;
+        dish["allergens"] = allergens;
+        for(const auto& [key, value] : ingredients){
+            names.append(value.get_name());
+            allergens.append(value.get_allergen());
+            quantities.append(value.get_quantity());
+            units.append(value.get_unit());
+        }
+        dish["products"]["names"] = names;
+        dish["products"]["allergens"] = allergens;
+        dish["products"]["quantities"] = quantities;
+        dish["products"]["units"] = units;
         return dish;
     };
 

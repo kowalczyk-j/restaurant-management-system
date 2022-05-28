@@ -10,13 +10,6 @@ using namespace std;
 
 enum units {ml, g, szt, none};
 
-units string_to_units(string unit){
-    if (unit == "ml"){return ml;}
-    else if (unit == "g"){return g;}
-    else if (unit == "szt"){return szt;}
-    else {return none;}
-}
-
 class Product{
 
     std::string name;
