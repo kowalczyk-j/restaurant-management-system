@@ -10,6 +10,7 @@ class Pantry{
     public:
 
     vector<string> get_all_products();
+    Product & get_product(std::string name){return shell[name];}
     void add_quantity(string name, int quantity);
     void remove_quantity(string name, int quantity);
 

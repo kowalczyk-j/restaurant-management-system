@@ -16,21 +16,22 @@ public:
              name(fname), surname(lname), employee_id(e_id),
              restaurant_id(r_id), salary(sal) {};
 
-    void give_raise(Money new_sal)
-    {
-        salary = new_sal;
-    }
-    std::string get_name(){return name;}
-    std::string get_surname(){return surname;}
-    unsigned int get_employee_id(){return employee_id;}
+    std::string get_name() {return name;}
+    std::string get_surname() {return surname;}
+    unsigned int get_employee_id() {return employee_id;}
 
-    virtual void print(std::ostream& os) const // pozniej zdefiniuje na bazie tego operator<<
+    void set_name(std::string name) {this->name = name;}
+    void set_surname(std::string surname) {this->surname = surname;}
+    void set_employee_id(unsigned int id) {employee_id = id;}
+    void give_raise(Money new_sal) {salary = new_sal;}
+
+    virtual void print(std::ostream& os) const
     {
         os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/" << restaurant_id;
     }
 
     bool operator==(Employee other) const
     {
-        return employee_id == other.employee_id;
+        return (employee_id == other.employee_id && restaurant_id == other.restaurant_id);
     }
 };

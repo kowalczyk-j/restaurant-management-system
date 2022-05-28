@@ -11,7 +11,9 @@ public:
     std::vector<T> const& get_staff() const {return staff;}
     void fire(const T& staff_member)
     {
-        remove(staff.begin(), staff.end(), staff_member);
+        auto found = find(staff.begin(), staff.end(), staff_member);
+        if(found == staff.end()) throw PersonNotFound;
+        else staff.erase(found);
     }
     void employ(const T& staff_member)
     {

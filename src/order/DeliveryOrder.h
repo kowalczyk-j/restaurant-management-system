@@ -9,9 +9,9 @@ class DeliveryOrder : public AbstractOrder{
 
     public:
     DeliveryOrder(unsigned int id, std::vector<Dish> o_d, Addres a, unsigned int d_id): AbstractOrder(id, o_d), delivery_address(a), deliverer_id(d_id){};
-    Addres get_delivery_address() const{return delivery_address;}
+    Addres & get_delivery_address(){return delivery_address;}
     unsigned int get_deliverer_id() const{return deliverer_id;}
-    virtual Json::Value parse_to_JSON() const{
+    virtual Json::Value parse_to_JSON(){
         Json::Value order;
         Json::Value dishes(Json::arrayValue);
         for(size_t i=0; i<ordered_dishes.size(); i++){
@@ -24,7 +24,7 @@ class DeliveryOrder : public AbstractOrder{
 
         return order;
     }
-    virtual void parse_from_JSON() const{
+    virtual void parse_from_JSON() {
 
     }
 };
