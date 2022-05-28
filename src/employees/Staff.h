@@ -20,7 +20,7 @@ public:
     void employ(const T& staff_member)
     {
         auto found = find(staff.begin(), staff.end(), staff_member);
-        if(found == staff.end()) throw AlreadyStaffMember;
+        if(found != staff.end()) throw AlreadyStaffMember;
         else staff.push_back(staff_member);
     }
     friend std::ostream& operator<<(std::ostream& os, const Staff& staff)

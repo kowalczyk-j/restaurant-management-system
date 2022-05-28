@@ -104,6 +104,14 @@ TEST(staff, employ)
     EXPECT_EQ(2, staff.number_employed());
 }
 
+TEST(staff, employ_already_staff_member)
+{
+    Waiter w1("name", "surname", 1, 1, Money(10000), std::vector<unsigned int>{1, 2});
+    Waiter w2("name2", "last name", 2, 1, Money(10000), std::vector<unsigned int>{3, 4});
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_THROW(staff.employ(w1), StaffExceptions);
+}
+
 TEST(staff, fire)
 {
     Waiter w1("name", "surname", 1, 1, Money(10000), std::vector<unsigned int>{1, 2});
