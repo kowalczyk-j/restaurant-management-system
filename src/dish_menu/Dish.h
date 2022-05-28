@@ -6,7 +6,6 @@
 #include "../utils/Money.h"
 #include "../pantry/Product.h"
 
-//using namespace std;
 
 enum dish_type {przystawka, danie_glowne, deser, napoje};
 

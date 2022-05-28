@@ -18,7 +18,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(jsoncpp)
 
-set(MENU src/dish_menu/Dish.h src/dish_menu/Dish.cpp src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
+set(MENU src/dish_menu/Dish.h src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
 set(EMPLOYEES src/employees/Employee.h src/employees/Cook.h src/employees/Deliverer.h src/employees/Manager.h src/employees/Staff.h src/employees/Waiter.h)
 set(ORDER src/order/AbstractOrder.h src/order/DeliveryOrder.h src/order/OnSiteOrder.h)
 set(PANTRY src/pantry/Pantry.h src/pantry/Pantry.cpp src/pantry/Product.h)
