@@ -51,6 +51,24 @@
         return *this;
     }
 
+    std::string Money::to_string(){
+        std::string res;
+        if (get_cents() < 10){
+            res += std::to_string(get_zlotys());
+            res += ",0";
+            res += std::to_string(get_cents());
+            res += "zł";
+            return res;
+        }
+        else{
+            res += std::to_string(get_zlotys());
+            res += ",";
+            res += std::to_string(get_cents());
+            res += "zł";
+            return res;
+        }
+    }
+
 
 
 std::ostream& operator<<(std::ostream& os, Money const& m){

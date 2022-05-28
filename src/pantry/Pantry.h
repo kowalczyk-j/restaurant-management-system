@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 #include "Product.h"
 
 using namespace std;
@@ -8,6 +9,7 @@ class Pantry{
     unordered_map<std::string, Product> shell; // unordered_map<product, >
     public:
 
+    vector<string> get_all_products();
     void add_quantity(string name, int quantity);
     void remove_quantity(string name, int quantity);
 

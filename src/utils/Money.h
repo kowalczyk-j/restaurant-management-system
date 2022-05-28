@@ -28,6 +28,8 @@ public:
     Money & operator*=(unsigned int s);
     Money & operator/=(unsigned int s);
 
+    std::string to_string();
+
 };
 
 std::ostream& operator<<(std::ostream& os, Money const& m);

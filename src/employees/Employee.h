@@ -20,6 +20,9 @@ public:
     {
         salary = new_sal;
     }
+    std::string get_name(){return name;}
+    std::string get_surname(){return surname;}
+    unsigned int get_employee_id(){return employee_id;}
 
     virtual void print(std::ostream& os) const // pozniej zdefiniuje na bazie tego operator<<
     {

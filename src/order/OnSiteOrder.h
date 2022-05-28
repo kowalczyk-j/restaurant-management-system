@@ -3,7 +3,7 @@
 #include "AbstractOrder.h"
 #include <json/json.h>
 
-class OnSiteOrder : AbstractOrder{
+class OnSiteOrder : public AbstractOrder{
     unsigned int table_id;
     unsigned int waiter_id;
 

@@ -1,6 +1,16 @@
 #include "Pantry.h"
+#include <vector>
 
 using namespace std;
+
+
+    vector<string> Pantry::get_all_products(){
+        vector<string> products;
+        for(auto it = shell.begin(); it != shell.end(); it++){
+            products.push_back(it->first);
+        }
+        return products;
+    }
 
     void Pantry::add_quantity(string name, int quantity){
         if (shell.find(name) == shell.end()){throw invalid_argument("Produktu nie ma w spiżarni!");}

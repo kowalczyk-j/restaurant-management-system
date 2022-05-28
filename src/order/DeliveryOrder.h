@@ -3,7 +3,7 @@
 #include "../utils/Address.h"
 
 
-class DeliveryOrder : AbstractOrder{
+class DeliveryOrder : public AbstractOrder{
     Addres delivery_address;
     unsigned int deliverer_id;
 

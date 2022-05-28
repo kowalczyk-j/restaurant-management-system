@@ -10,11 +10,11 @@ int main() {
 
     Json::Reader reader;
     Json::Value obj;
-    bool parsingSuccessful = reader.parse(ifs, obj);
+    reader.parse(ifs, obj);
     cout << "Book: " << obj["book"].asString() << endl;
     cout << "Year: " << obj["year"].asUInt() << endl;
     const Json::Value& characters = obj["characters"]; // array of characters
-    for (int i = 0; i < characters.size(); i++){
+    for (unsigned int i = 0; i < characters.size(); i++){
         cout << "    name: " << characters[i]["name"].asString();
         cout << " chapter: " << characters[i]["chapter"].asUInt();
         cout << endl;
