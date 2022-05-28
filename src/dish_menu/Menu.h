@@ -8,12 +8,13 @@ class Menu
     std::vector<Dish> dishes;
 
 public:
-    std::vector<Dish> get_dishes() const { return dishes; };
-    size_t size() const { return dishes.size(); };
+    std::vector<Dish> get_dishes() const { return dishes; }
+    void set_dishes(std::vector<Dish> d) { dishes = d; }
+    size_t size() const { return dishes.size(); }
     Menu(std::vector<Dish> di) : dishes(di)
     {}
     void add_dish(Dish const& dish);
-    void remove_dish(int dish_idx);
+    void remove_dish(unsigned int dish_idx);
 
     class iterator
     {

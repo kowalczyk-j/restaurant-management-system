@@ -6,9 +6,13 @@
 std::ostream& operator<<(std::ostream& os, Menu const& menu)
 {
     os << "---Menu---\n";
-    for(size_t i = 0; i < menu.size(); i++)
+    // for(size_t i = 0; i < menu.size(); i++)
+    // {
+    //     os << menu.get_dishes()[i];
+    // }
+    for(auto const &dish : menu)    //dlaczego nie działa?
     {
-        os << menu.get_dishes()[i];
+        os << dish << endl;
     }
     return os;
 }
@@ -16,7 +20,7 @@ void Menu::add_dish(Dish const& dish)
 {
     dishes.push_back(dish);
 }
-void Menu::remove_dish(int dish_idx)
+void Menu::remove_dish(unsigned int dish_idx)
 {
     for(size_t i = 0; i < dishes.size(); i++)
     {
