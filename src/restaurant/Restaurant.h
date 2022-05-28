@@ -28,4 +28,12 @@ class Restaurant{
     std::vector<Employee> & get_employees(){return employees;}
     std::string get_name(){return name;}
 
+    void add_delivery_order(unsigned int id, std::vector<Dish> vd, Addres a, unsigned d_id){
+        DeliveryOrder * delivery_order = new DeliveryOrder(id, vd, a, d_id);
+        orders.push_back(delivery_order);
+    };
+    void remove_delivery_order(unsigned int position){
+        orders.erase(orders.begin()+position); // prawdopodobnie przydałby się jeszcze destruktor, ale musze nad tym jeszcze pomyslec
+    }
+
 };

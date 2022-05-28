@@ -18,9 +18,12 @@ public:
 
 private slots:
 
-public slots:
+public:
 void set_current_address(QString street, QString building, QString city, QString postal_code);
 QString get_city();
+QString get_street();
+QString get_building();
+QString get_postal_code();
 
 private:
 	Ui::Dialog *ui;

@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label">
@@ -110,7 +110,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QLabel" name="image">
@@ -1164,7 +1164,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_12">
          <widget class="QLabel" name="label_34">
@@ -1211,16 +1211,6 @@
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-         <widget class="QListView" name="listView_6">
-          <property name="geometry">
-           <rect>
-            <x>15</x>
-            <y>100</y>
-            <width>261</width>
-            <height>101</height>
-           </rect>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButton_21">
@@ -1378,6 +1368,16 @@
           </property>
           <property name="text">
            <string>Modyfikuj</string>
+          </property>
+         </widget>
+         <widget class="QListWidget" name="DishIngrdidients">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>100</y>
+            <width>271</width>
+            <height>111</height>
+           </rect>
           </property>
          </widget>
         </widget>
@@ -1664,17 +1664,7 @@
         </widget>
         <widget class="QWidget" name="page_16"/>
         <widget class="QWidget" name="page_15">
-         <widget class="QListView" name="listView_8">
-          <property name="geometry">
-           <rect>
-            <x>25</x>
-            <y>100</y>
-            <width>261</width>
-            <height>101</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="pushButton_33">
+         <widget class="QPushButton" name="addDishDeliveryOrder">
           <property name="geometry">
            <rect>
             <x>320</x>
@@ -1723,7 +1713,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_35">
+         <widget class="QPushButton" name="removeDeliveryOrder">
           <property name="geometry">
            <rect>
             <x>100</x>
@@ -1782,7 +1772,7 @@
            <set>Qt::AlignCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_36">
+         <widget class="QPushButton" name="removeDishDeliveryOrder">
           <property name="geometry">
            <rect>
             <x>320</x>
@@ -1864,9 +1854,19 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
+         <widget class="QListWidget" name="orderedDishesDelivery">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>100</y>
+            <width>271</width>
+            <height>111</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
        </widget>
-       <widget class="QPushButton" name="pushButton_32">
+       <widget class="QPushButton" name="addOrder">
         <property name="geometry">
          <rect>
           <x>70</x>

@@ -24,6 +24,9 @@ private slots:
 	void on_moveOrders_clicked();
 	void on_orderList_itemClicked();
 	void on_modifyDeliveryAddress_clicked();
+	void on_addDishDeliveryOrder_clicked();
+	void on_removeDeliveryOrder_clicked();
+	void on_addOrder_clicked();
 private:
 	Ui::MainWindow *ui;
 	std::vector<Restaurant> restaurant_list;

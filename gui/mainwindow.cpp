@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "changeaddresswindow.h"
+#include "addorder.h"
+#include "adddish.h"
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <QStringList>
@@ -31,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     pan.add_product("mieso",500, g, s);
     pan.add_product("sok jablkowy",1000, ml, s);
 
-    Addres a1 = Addres("Polska", "Mazowieckie", "Warszawa", "00-000", "Plac Politechniki", "1", 52.220154, 21.011968);
-    Addres a2 = Addres("Polska", "Mazowieckie", "Warszawa", "00-000", "Plac Politechniki", "1", 52.216184, 20.239073);
+    Addres a1 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.220154, 21.011968);
+    Addres a2 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.216184, 20.239073);
     std::map<std::string, Product> map = {{"jablko", p}};
     Dish d1 = Dish(1, "zupa pomidorowa", przystawka, Money(500), 1, map);
     std::vector<Dish> dishes;
@@ -75,6 +77,7 @@ void MainWindow::on_return_2_clicked(){
     if(ui->restaurantStack->currentIndex() == 0)
     ui->mainStack->setCurrentIndex(0);
     else ui->restaurantStack->setCurrentIndex(0);
+
 }
 void MainWindow::on_selectRestaurant_clicked(){
     if (ui->list1->currentRow() != -1){
@@ -89,10 +92,10 @@ void MainWindow::on_selectRestaurant_clicked(){
         ui->employeesNumber->setText(QString::number(restaurant->get_employees().size()));
         ui->ordersNumber->setText(QString::number(restaurant->get_orders().size()));
         ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
+
         ui->orderList->clear();
         ui->pantryList->clear();
         ui->employeeList->clear();
-
         for(unsigned int i=0; i<restaurant->get_orders().size(); i++){
             ui->orderList->addItem(QString::number(restaurant->get_orders()[i]->get_order_id()));
         }
@@ -126,19 +129,21 @@ void MainWindow::on_moveOrders_clicked(){
 }
 
 void MainWindow::on_orderList_itemClicked(){
+    ui->orderedDishesDelivery->clear();
     size_t position = ui->orderList->currentRow();
     restaurant->get_orders()[position];
     ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_orders()[position]->get_order_id())));
     ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_orders()[position]->get_order_value().to_string()));
     ui->orderDelivery->setText(QString::fromStdString(restaurant->get_orders()[position]->get_delivery_address().to_string()));
-
+    for(unsigned int i=0; i<restaurant->get_orders()[position]->get_ordered_dishes().size(); i++){
+        ui->orderedDishesDelivery->addItem(QString::fromStdString(restaurant->get_orders()[position]->get_ordered_dishes()[i].get_name()));
+    }
     ui->orderStack->setCurrentIndex(2);
 
 }
 
 void MainWindow::on_modifyDeliveryAddress_clicked(){
     size_t position = ui->orderList->currentRow();
-    std::cout << "haha";
     ChangeAddressWindow chaw;
     chaw.set_current_address(
         QString::fromStdString((restaurant->get_orders()[position]->get_delivery_address().get_street())),
@@ -149,8 +154,42 @@ void MainWindow::on_modifyDeliveryAddress_clicked(){
     chaw.setModal(true);
     if (chaw.exec() == QDialog::Accepted)
     {
-        ui->orderDelivery->setText(chaw.get_city());
+
+        std::string city = (chaw.get_city().toStdString());
+        std::string street = (chaw.get_street().toStdString());
+        std::string building = (chaw.get_building().toStdString());
+        std::string postal_code = (chaw.get_postal_code().toStdString());
+        restaurant->get_orders()[position]->get_delivery_address().set_city(city);
+        restaurant->get_orders()[position]->get_delivery_address().set_street(street);
+        restaurant->get_orders()[position]->get_delivery_address().set_building(building);
+        restaurant->get_orders()[position]->get_delivery_address().set_postal_code(postal_code);
+        ui->orderDelivery->setText(QString::fromStdString(restaurant->get_orders()[position]->get_delivery_address().to_string()));
     }
 
 
+}
+
+void MainWindow::on_addDishDeliveryOrder_clicked(){
+    AddDish ad;
+    ad.setModal(true);
+    ad.exec();
+}
+
+void MainWindow::on_removeDeliveryOrder_clicked(){
+    int order_position = ui->orderList->currentRow();
+    std::cout << order_position;
+    if(order_position != -1){
+        restaurant->remove_delivery_order(order_position);
+        ui->orderStack->setCurrentIndex(1);
+        ui->orderList->clear();
+        for(unsigned int i=0; i<restaurant->get_orders().size(); i++){
+            ui->orderList->addItem(QString::number(restaurant->get_orders()[i]->get_order_id()));
+    }
+    }
+}
+
+void MainWindow::on_addOrder_clicked(){
+    AddOrder ao;
+    ao.setModal(true);
+    ao.exec();
 }

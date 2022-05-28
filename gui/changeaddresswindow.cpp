@@ -29,3 +29,15 @@ void ChangeAddressWindow::set_current_address(QString street, QString building, 
 QString ChangeAddressWindow::get_city(){
     return(ui->city->text());
 }
+
+QString ChangeAddressWindow::get_street(){
+    return(ui->street->text());
+}
+
+QString ChangeAddressWindow::get_building(){
+    return(ui->building->text());
+}
+
+QString ChangeAddressWindow::get_postal_code(){
+    return(ui->postalCode->text());
+}
