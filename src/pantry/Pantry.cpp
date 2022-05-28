@@ -30,6 +30,9 @@ using namespace std;
             add_quantity(name, quantity);
     }
     }
+    void Pantry::add_product(const Product& product){
+        add_product(product.get_name(), product.get_quantity(), product.get_enum_unit() , product.get_allergen());
+    }
 
     void Pantry::remove_product(std::string name){
         // tutaj nie wiem, czy nie będziemy potrzebować tego wyjątku (do GUI)
@@ -59,7 +62,40 @@ using namespace std;
         }
     }
 
-    void Pantry::write_to_file(){
+    void Pantry::write_to_file_json(){
+        ofstream file;
+        file.open("src/pantry/pantry_base.json");
+        if (!file.is_open()){
+            cout << "Nie udało się otworzyć pliku" << endl;
+            return;
+        }
+        Json::Value root;
+        for(auto it = shell.begin(); it != shell.end(); it++){
+            root.append(it->second.parse_to_json());
+        }
+        Json::StyledWriter writer;
+        file << writer.write(root);
+        file.close();
+    }
+
+    void Pantry::read_from_file_json(){
+        ifstream file;
+        file.open("src/pantry/pantry_base.json");
+        Json::Value root;
+        Json::Reader reader;
+        if(!reader.parse(file, root, false)){
+            cout << "Nie udało się odczytać pliku" << endl;
+            return;
+        }
+        for(auto it = root.begin(); it != root.end(); it++){
+            Product new_product = Product::json_to_product(*it);
+            this->add_product(new_product);
+        }
+        file.close();
+    }
+
+    /*
+    void Pantry::write_to_file_csv(){
         ofstream file;
         file.open("pantry_base.csv", ios::out);
         if (file.is_open()){
@@ -74,32 +110,32 @@ using namespace std;
         file.close();
     }
 
-    // void Pantry::read_from_file_csv(){
-    //     ifstream file;
-    //     file.open("pantry_base.csv", ios::in);
-    //     if (file.is_open()){
-    //     string line;
-    //     while(getline(file, line)){
-    //         string name;
-    //         int quantity;
-    //         units unit = ml;
-    //         string allergen;
-    //         std::string temp_s;
-    //         stringstream ss(line);
-    //         getline(ss, name, ',');
-    //         getline(ss, temp_s, ',');
-    //         //getline(ss, unit, ',');
-    //         string allergen_string;
-    //         while(getline(ss, allergen_string, ',')){
-    //             allergen.insert(allergen_string);
-    //         }
-    //         quantity = stoi(temp_s);
-    //         add_product(name, quantity, unit, allergen);
-    //     }
-    //     }
-    //     file.close();
-    // }
-
+    void Pantry::read_from_file_csv(){
+        ifstream file;
+        file.open("pantry_base.csv", ios::in);
+        if (file.is_open()){
+        string line;
+        while(getline(file, line)){
+            string name;
+            int quantity;
+            units unit = ml;
+            string allergen;
+            std::string temp_s;
+            stringstream ss(line);
+            getline(ss, name, ',');
+            getline(ss, temp_s, ',');
+            //getline(ss, unit, ',');
+            string allergen_string;
+            while(getline(ss, allergen_string, ',')){
+                allergen.insert(allergen_string);
+            }
+            quantity = stoi(temp_s);
+            add_product(name, quantity, unit, allergen);
+        }
+        }
+        file.close();
+    }
+    */
     void Pantry::generate_pretty_raport(){
         return;
     }

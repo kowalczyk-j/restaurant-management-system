@@ -1,0 +1,32 @@
+[
+   {
+      "allergen" : "orzechy",
+      "name" : "orzechy nerkowca",
+      "quantity" : 3000,
+      "unit" : "g"
+   },
+   {
+      "allergen" : "",
+      "name" : "koperek",
+      "quantity" : 100,
+      "unit" : "g"
+   },
+   {
+      "allergen" : "",
+      "name" : "mieso",
+      "quantity" : 500,
+      "unit" : "g"
+   },
+   {
+      "allergen" : "",
+      "name" : "sok jablkowy",
+      "quantity" : 1000,
+      "unit" : "ml"
+   },
+   {
+      "allergen" : "",
+      "name" : "jablko",
+      "quantity" : 670,
+      "unit" : "g"
+   }
+]

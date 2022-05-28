@@ -10,6 +10,13 @@ using namespace std;
 
 enum units {ml, g, szt, none};
 
+units string_to_units(string unit){
+    if (unit == "ml"){return ml;}
+    else if (unit == "g"){return g;}
+    else if (unit == "szt"){return szt;}
+    else {return none;}
+}
+
 class Product{
 
     std::string name;
@@ -29,6 +36,9 @@ class Product{
         unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};
         return units_map[unit];
     }
+
+    units get_enum_unit() const{return unit;}
+
     string get_allergen() const {return allergen;}
 
     void set_name(string n){name = n;}
@@ -58,8 +68,15 @@ class Product{
         Json::Value add;
         add["name"] = name;
         add["quantity"] = quantity;
-        add["unit"] = unit;
+        add["unit"] = this->get_unit();
         add["allergen"] = allergen;
         return add;
     }
+
+    static Product json_to_product(Json::Value obj){
+        Product product(obj["name"].asString(), obj["quantity"].asInt(), ml, obj["allergen"].asString());
+        return product;
+    }
+
+
 };

@@ -15,13 +15,16 @@ class Pantry{
     void remove_quantity(string name, int quantity);
 
     void add_product(std::string name, int quantity, units unit, string allergen);
+    void add_product(const Product& product);
 
     void remove_product(std::string name);
     void print_products();
     void print_allergens();
 
-    void write_to_file();
+    void write_to_file_json();
+    void read_from_file_json();
 
+    void write_to_file_csv();
     void read_from_file_csv();
 
 
