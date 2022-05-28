@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 #include <set>
-#include <bits/stdc++.h>
+#include <json/json.h>
 #include "../utils/Money.h"
 #include "../pantry/Product.h"
 
@@ -51,6 +51,21 @@ public:
         }
         allergens = allerg;
     }
+    Json::Value parse_to_json(){
+        Json::Value dish;
+        dish["id"] = id;
+        dish["name"] = name;
+        dish["type"] = type;
+        dish["price"]["zlotys"] = price.get_zlotys();
+        dish["price"]["cents"] = price.get_cents();
+        dish["is_vegan"] = is_vegan;
+        Json::Value ingr(Json::arrayValue);
+        for(const auto& [key, value] : ingredients){
+            ingr.append(Json::Value(value.parse_to_json()));
+        }
+        dish["ingredients"] = ingr;
+        return dish;
+    };
     friend std::ostream& operator<<(std::ostream& os, Dish const& dish)
     {
         return os << dish.name << "\t" << dish.price << "\n";

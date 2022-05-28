@@ -3,6 +3,7 @@
 #include <iostream>
 #include <unordered_map> //działa szybciej od mapy (nie trzeba sortować)
 #include <fstream>
+#include <json/json.h>
 #include <exception>
 
 using namespace std;
@@ -51,5 +52,14 @@ class Product{
         cout << "Ilość: " << quantity << " " << unit << endl;
         cout << "Alergen: " << allergen << endl;
         cout << "\n\n";
+    }
+
+    Json::Value parse_to_json(){
+        Json::Value add;
+        add["name"] = name;
+        add["quantity"] = quantity;
+        add["unit"] = unit;
+        add["allergen"] = allergen;
+        return add;
     }
 };
