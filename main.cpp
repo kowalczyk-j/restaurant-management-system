@@ -8,19 +8,20 @@ int main(){
     Product p = Product("jablko",670, g);
     Product p1 = Product("mieso",500, g);
     Product p2 = Product("sok jablkowy",1000, ml);
-    Product p3 = Product("jajka",60, szt);
+    Product p3 = Product("jajka",60, szt, {"jaja"});
     Product p4  = Product("koperek",100, g);
-    Product p5 = Product("ziemniaki",4000, g);
+    Product p5 = Product("orzechy ziemne",4000, g, {"orzechy"});
+    Product p6 = Product("orzechy nerkowca",3000, g, {"orzechy"});
     cout << p.get_name()<< " " << p.get_quantity() << " " << p.get_unit() << endl;
 
 
     Pantry pan;
     set<string> s;
-    pan.add_product("jablko", 6, g,  s);
+    pan.add_product("jablko", 6, g, "");
 
     Addres a = Addres("Polska", "Mazowieckie", "Warszawa", "00-000", "Pl. Politechniki", "1", 53, 20);
-    std::map<std::string, Product> map = {{"jablko", p}};
-    Dish d1 = Dish(1, "zupa pomidorowa", przystawka, Money(500), 1, map);
+    map<string, Product> map = {{"jablko", p}, {"jajka", p3}, {"orzechy ziemne", p5}, {"orzechy nerkowca", p6}};
+    Dish d1 = Dish(1, "jajka z orzechami", przystawka, Money(500), 1, map, {"jaja"});
     std::vector<Dish> dishes;
     dishes.push_back(d1);
     Menu m = Menu(dishes);
@@ -51,5 +52,7 @@ int main(){
 
     RestaurantNet rn = RestaurantNet(vr);
 
+    d1.print_ingredients();
+    d1.print_allergens();
     return 0;
 }

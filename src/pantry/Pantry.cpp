@@ -22,7 +22,7 @@ using namespace std;
     }
 
 
-    void Pantry::add_product(std::string name, int quantity, units unit, set<string> allergen){//żeby patrzyło też czy laergen jest
+    void Pantry::add_product(std::string name, int quantity, units unit, string allergen){//żeby patrzyło też czy laergen jest
         if (shell.find(name) == shell.end()){
             shell[name] = Product(name, quantity, unit, allergen);
         }
@@ -74,31 +74,31 @@ using namespace std;
         file.close();
     }
 
-    void Pantry::read_from_file_csv(){
-        ifstream file;
-        file.open("pantry_base.csv", ios::in);
-        if (file.is_open()){
-        string line;
-        while(getline(file, line)){
-            string name;
-            int quantity;
-            units unit = ml;
-            set<string> allergen;
-            std::string temp_s;
-            stringstream ss(line);
-            getline(ss, name, ',');
-            getline(ss, temp_s, ',');
-            //getline(ss, unit, ',');
-            string allergen_string;
-            while(getline(ss, allergen_string, ',')){
-                allergen.insert(allergen_string);
-            }
-            quantity = stoi(temp_s);
-            add_product(name, quantity, unit, allergen);
-        }
-        }
-        file.close();
-    }
+    // void Pantry::read_from_file_csv(){
+    //     ifstream file;
+    //     file.open("pantry_base.csv", ios::in);
+    //     if (file.is_open()){
+    //     string line;
+    //     while(getline(file, line)){
+    //         string name;
+    //         int quantity;
+    //         units unit = ml;
+    //         string allergen;
+    //         std::string temp_s;
+    //         stringstream ss(line);
+    //         getline(ss, name, ',');
+    //         getline(ss, temp_s, ',');
+    //         //getline(ss, unit, ',');
+    //         string allergen_string;
+    //         while(getline(ss, allergen_string, ',')){
+    //             allergen.insert(allergen_string);
+    //         }
+    //         quantity = stoi(temp_s);
+    //         add_product(name, quantity, unit, allergen);
+    //     }
+    //     }
+    //     file.close();
+    // }
 
     void Pantry::generate_pretty_raport(){
         return;

@@ -13,7 +13,7 @@ class Pantry{
     void add_quantity(string name, int quantity);
     void remove_quantity(string name, int quantity);
 
-    void add_product(std::string name, int quantity, units unit, set<string> allergen);
+    void add_product(std::string name, int quantity, units unit, string allergen);
 
     void remove_product(std::string name);
     void print_products();
