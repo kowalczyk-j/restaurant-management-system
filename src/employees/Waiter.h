@@ -16,6 +16,13 @@ public:
     void new_tip(double tip) {tips += tip;}
     void set_tables_to_wait(std::vector<unsigned int> tables) {tables_to_wait = tables;}
 
+    Json::Value parse_to_json()
+    {
+        Json::Value waiter = Employee::parse_to_json();
+        waiter["position"] = "waiter";
+        return waiter;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, Waiter waiter)
     {
         waiter.print(os);

@@ -12,6 +12,13 @@ public:
 
     void new_tip(double tip) {tips += tip;}
 
+    Json::Value parse_to_json()
+    {
+        Json::Value deliverer = Employee::parse_to_json();
+        deliverer["position"] = "deliverer";
+        return deliverer;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, Deliverer deli)
     {
         deli.print(os);

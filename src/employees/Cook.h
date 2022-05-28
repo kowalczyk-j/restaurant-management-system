@@ -12,6 +12,13 @@ public:
 
     void set_chef() {is_chef = true;}
 
+    Json::Value parse_to_json()
+    {
+        Json::Value cook = Employee::parse_to_json();
+        cook["position"] = is_chef?"chef":"cook";
+        return cook;
+    }
+
     friend std::ostream& operator<<(std::ostream& os, Cook cook)
     {
         cook.print(os);
