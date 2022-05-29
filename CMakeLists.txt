@@ -34,7 +34,7 @@ add_executable(json_writer_example json_example/writer.cpp)
 add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
 add_executable(app main.cpp  ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
 
-target_link_libraries(tests PUBLIC gtest_main)
+target_link_libraries(tests PUBLIC gtest_main jsoncpp_lib)
 target_link_libraries(app jsoncpp_lib)
 target_link_libraries(json_reader_example jsoncpp_lib)
 target_link_libraries(json_writer_example jsoncpp_lib)

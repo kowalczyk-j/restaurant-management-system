@@ -2,7 +2,7 @@
 #include <fstream>
 #include <vector>
 
-enum StaffExceptions { AlreadyStaffMember};
+enum StaffExceptions {AlreadyStaffMember, PositionOutOfBounds};
 
 template <typename T> class Staff
 {
@@ -12,13 +12,27 @@ public:
     Staff(std::vector<T> s) : staff(s) {}
     size_t number_employed() const {return staff.size();}
     std::vector<T> const& get_staff() const {return staff;}
-
-
     size_t size(){return staff.size();}
-    T & operator[](size_t pos){return staff[pos];}
-    void fire(int position)
+
+    T & operator[](size_t pos)
     {
-        staff.erase(staff.begin() + position);
+        if(pos<=number_employed())
+            return staff[pos];
+        else throw PositionOutOfBounds;
+    }
+
+    T const& operator[](size_t pos) const
+    {
+        if(pos<=number_employed())
+            return staff[pos];
+        else throw PositionOutOfBounds;
+    }
+
+    void fire(size_t position)
+    {
+        if(position<=number_employed())
+            staff.erase(staff.begin() + position);
+        else throw PositionOutOfBounds;
     }
 
     void employ(const T& staff_member)

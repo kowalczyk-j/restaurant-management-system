@@ -3,7 +3,7 @@
 
 void Employee::print(std::ostream& os) const
 {
-    os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id << "/";
+    os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id;
 }
 
 Json::Value Employee::parse_to_json()
