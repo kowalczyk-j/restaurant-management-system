@@ -7,6 +7,7 @@
 #include "../change_surname/changesurname.h"
 #include "../change_id/changeid.h"
 #include "../change_salary/changesalary.h"
+#include "../add_product/addproduct.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMainWindow>
@@ -238,9 +239,51 @@ void MainWindow::on_addOrder_clicked(){
 void MainWindow::on_pantryList_itemClicked(){
     std::string product = restaurant->get_pantry().get_all_products()[ui->pantryList->currentRow()];
     ui->productName->setText(QString::fromStdString(product));
+    ui->allergens->setText(QString::fromStdString(restaurant->get_pantry().get_product(product).get_allergen()));
+    ui->unit->setText(QString::fromStdString(restaurant->get_pantry().get_product(product).get_unit()));
     ui->pantryStack->setCurrentIndex(0);
     ui->quantity->setText(QString::fromStdString(std::to_string(restaurant->get_pantry().get_product(product).get_quantity())+" "+restaurant->get_pantry().get_product(product).get_unit()));
 }
+
+void MainWindow::on_addProduct_clicked(){
+    AddProduct ap;
+    ap.setModal(true);
+    if(ap.exec() == QDialog::Accepted){
+        restaurant->get_pantry().add_product(ap.get_name().toStdString(), ap.get_quantity(), (units)ap.get_unit(), ap.get_allergens().toStdString());
+    }
+    ui->pantryList->clear();
+    for(unsigned int i=0; i<restaurant->get_pantry().get_all_products().size(); i++){
+            ui->pantryList->addItem(QString::fromStdString(restaurant->get_pantry().get_all_products()[i]));
+    }
+}
+
+void MainWindow::on_addQuantitytoProduct_clicked(){
+    std::string product = restaurant->get_pantry().get_all_products()[ui->pantryList->currentRow()];
+    int quantity = ui->addQuantity->value();
+    restaurant->get_pantry().add_quantity(product, quantity);
+    ui->quantity->setText(QString::fromStdString(std::to_string(restaurant->get_pantry().get_product(product).get_quantity())+" "+restaurant->get_pantry().get_product(product).get_unit()));
+    ui->addQuantity->setValue(0);
+}
+
+
+void MainWindow::on_removeQuantityfromProduct_clicked(){
+    std::string product = restaurant->get_pantry().get_all_products()[ui->pantryList->currentRow()];
+    int quantity = ui->addQuantity->value();
+    restaurant->get_pantry().remove_quantity(product, quantity);
+    ui->quantity->setText(QString::fromStdString(std::to_string(restaurant->get_pantry().get_product(product).get_quantity())+" "+restaurant->get_pantry().get_product(product).get_unit()));
+    ui->addQuantity->setValue(0);
+}
+
+void MainWindow::on_removeProduct_clicked(){
+    std::string product = restaurant->get_pantry().get_all_products()[ui->pantryList->currentRow()];
+    restaurant->get_pantry().remove_product(product);
+    ui->pantryStack->setCurrentIndex(1);
+    ui->pantryList->clear();
+    for(unsigned int i=0; i<restaurant->get_pantry().get_all_products().size(); i++){
+            ui->pantryList->addItem(QString::fromStdString(restaurant->get_pantry().get_all_products()[i]));
+    }
+}
+
 
 void MainWindow::on_employeeList_itemClicked(){
     position2 = ui->employeeList->currentRow();

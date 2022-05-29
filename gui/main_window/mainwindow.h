@@ -32,6 +32,10 @@ private slots:
 	void on_addOrder_clicked();
 
 	void on_pantryList_itemClicked();
+	void on_addProduct_clicked();
+	void on_addQuantitytoProduct_clicked();
+	void on_removeQuantityfromProduct_clicked();
+	void on_removeProduct_clicked();
 
 	void on_employeeList_itemClicked();
 	void on_addEmployee_clicked();
