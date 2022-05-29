@@ -71,10 +71,76 @@ TEST(employee, create_waiter)
     EXPECT_EQ(output, expected);
 }
 
+TEST(employee, json_employee)
+{
+    Employee e(1, "name", "last name", Addres(), Money(10000));
+    Json::Value employee = e.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+}
+
+TEST(employee, json_cook)
+{
+    Cook c(1, "name", "last name", Addres(), Money(10000), false);
+    Json::Value employee = c.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+    EXPECT_EQ(employee["position"], "cook");
+}
+
+TEST(employee, json_chef)
+{
+    Cook c(1, "name", "last name", Addres(), Money(10000), true);
+    Json::Value employee = c.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+    EXPECT_EQ(employee["position"], "cook");
+    EXPECT_EQ(employee["ischef"], true);
+}
+
+TEST(employee, json_deliverer)
+{
+    Deliverer d(1, "name", "last name", Addres(), Money(10000));
+    Json::Value employee = d.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+    EXPECT_EQ(employee["position"], "deliverer");
+}
+
+TEST(employee, json_waiter)
+{
+    Waiter w(1, "name", "last name", Addres(), Money(10000));
+    Json::Value employee = w.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+    EXPECT_EQ(employee["position"], "waiter");
+}
+
+TEST(employee, json_manager)
+{
+    Manager m(1, "name", "last name", Addres(), Money(10000));
+    Json::Value employee = m.parse_to_json();
+    EXPECT_EQ(employee["name"], "name");
+    EXPECT_EQ(employee["surname"], "last name");
+    EXPECT_EQ(employee["id"], (unsigned int)1);
+    EXPECT_EQ(employee["salary"], (unsigned int)10000);
+    EXPECT_EQ(employee["position"], "manager");
+}
+
 TEST(staff, create_staff)
 {
     Deliverer d1(1, "name", "last name", Addres(), Money(10000));
-    Deliverer d2(1, "name", "last name", Addres(), Money(10000));
+    Deliverer d2(2, "name", "last name", Addres(), Money(10000));
     std::vector<Deliverer> deliverers = {d1, d2};
     Staff<Deliverer> staff(deliverers);
     EXPECT_EQ(deliverers.size(), staff.number_employed());
@@ -106,18 +172,56 @@ TEST(staff, employ)
 
 TEST(staff, employ_already_staff_member)
 {
-    Waiter w1(1, "name", "last name", Addres(), Money(10000));
-    Waiter w2(1, "name", "last name", Addres(), Money(10000));
-    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
-    EXPECT_THROW(staff.employ(w1), StaffExceptions);
+    Manager m1(1, "name", "last name", Addres(), Money(10000));
+    Manager m2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Manager> staff(std::vector<Manager>{m1, m2});
+    EXPECT_THROW(staff.employ(m1), StaffExceptions);
 }
 
 TEST(staff, fire)
 {
     Waiter w1(1, "name", "last name", Addres(), Money(10000));
-    Waiter w2(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
     Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
     EXPECT_EQ(2, staff.number_employed());
     staff.fire(1);
     EXPECT_EQ(1, staff.number_employed());
+}
+
+TEST(staff, fire_out_of_bounds)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_EQ(2, staff.number_employed());
+    EXPECT_THROW(staff.fire(3), StaffExceptions);
+}
+
+TEST(staff, position)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_EQ(staff[0], w1);
+    EXPECT_EQ(staff[1], w2);
+}
+
+TEST(staff, position_out_of_bounds)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_THROW(staff[3], StaffExceptions);
+}
+
+TEST(staff, position_new_value)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    staff[1] = w3;
+    std::vector<Waiter> expected{w1, w3};
+    EXPECT_EQ(staff.get_staff(), expected);
+    EXPECT_EQ(staff.number_employed(), 2);
 }
