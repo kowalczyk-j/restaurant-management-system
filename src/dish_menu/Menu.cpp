@@ -1,8 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Menu.h"
+#include <stdlib.h>
+#include <time.h>
+#include <ctime>
+#include <fstream>   
 #include <json/json.h>
+#include "Menu.h"
 
 static bool compare_dish_type(Dish left, Dish right)
 {
@@ -22,14 +26,27 @@ Menu::Menu(std::vector<Dish> dishes)
 
 std::ostream& operator<<(std::ostream& os, Menu  menu)
 {
-    os << "---Menu---\n";
-    // for(size_t i = 0; i < menu.size(); i++)
-    // {
-    //     os << menu.get_dishes()[i];
-    // }
-    for(auto const &dish : menu.get_dishes())    //dlaczego nie działa?
+    bool dtypes[3] = {1, 1, 1};
+    os << "---Menu---\n\n";
+    os << "Przystawki:\n";
+    for(auto const &dish : menu.get_dishes())
     {
-        os << dish << endl;
+        if(dish.get_enum_dish_type() == danie_glowne && dtypes[0])
+        {
+            os << "\nDania główne:\n";
+            dtypes[0] = 0;
+        }
+        else if(dish.get_enum_dish_type() == deser && dtypes[1])
+        {
+            os << "\nDesery:\n";
+            dtypes[1] = 0;
+        }
+        else if(dish.get_enum_dish_type() == napoje && dtypes[2])
+        {
+            os << "\nNapoje:\n";
+            dtypes[2] = 0;
+        }
+        os << dish;
     }
     return os;
 }
@@ -42,6 +59,29 @@ void Menu::remove_dish(unsigned int dish_idx)
 {
     dishes.erase(dishes.begin() + dish_idx);
 }
+
+void Menu::generate_lunch_menu()
+{
+    ofstream file;
+    file.open ("lunch.txt");
+    std::time_t t = std::time(0);
+    std::tm* now = std::localtime(&t);
+    file << "Lunch menu - " << (now->tm_year + 1900) << '.' 
+    << (now->tm_mon + 1) << '.' <<  now->tm_mday << "\n";
+    vector<size_t> types;
+    for (size_t i = 1; i < dishes.size(); i++)
+    {
+        if(dishes[i].get_enum_dish_type() != dishes[i-1].get_enum_dish_type())
+            types.push_back(i);
+    }
+    types.push_back(dishes.size());
+    srand (time(NULL));
+    file << "Przystawka:\n" << dishes[rand() % types[0]].get_name();
+    file << "\nDanie główne:\n" << dishes[rand() % (types[1]-types[0])+types[0]].get_name();
+    file << "\nDeser:\n" << dishes[rand() % (types[2]-types[1])+types[1]].get_name();
+    file.close();
+}
+
 
 Json::Value Menu::parse_menu_to_json()
 {
