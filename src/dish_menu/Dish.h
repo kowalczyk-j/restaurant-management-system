@@ -90,7 +90,7 @@ public:
         for(auto it = dish["products"].begin(); it != dish["products"].end(); it++){
             ingr.push_back(Product::json_to_product(*it));
         }
-        return Dish(dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr);
+        return Dish(dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asUInt()), dish["is_vegan"].asBool(), ingr);
     }
 
     friend std::ostream& operator<<(std::ostream& os, Dish const& dish)

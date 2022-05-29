@@ -127,8 +127,9 @@ class Restaurant{
     }
 
     static Restaurant create_from_json(Json::Value restaurant){
+        std::cout<<"lalal";
         std::string name = restaurant["name"].asString();
-        int id = restaurant["id"].asInt();
+        int id = restaurant["id"].asUInt();
         Addres a = Addres::read_from_json(restaurant["address"]);
         Pantry p = Pantry::read_from_file_json(restaurant["pantry"]);
         Menu m = Menu::parse_from_json(restaurant["menu"]);

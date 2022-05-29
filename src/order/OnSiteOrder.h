@@ -23,6 +23,6 @@ class OnSiteOrder : public AbstractOrder{
             Dish d_order = Dish::parse_dish_from_json(*it);
             ordered_dishes.push_back(d_order);
         }
-        return OnSiteOrder(oso["id"].asInt(), ordered_dishes, oso["table_id"].asInt(), oso["waiter_id"].asInt());
+        return OnSiteOrder(oso["id"].asUInt(), ordered_dishes, oso["table_id"].asUInt(), oso["waiter_id"].asUInt());
     }
 };

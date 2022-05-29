@@ -62,7 +62,7 @@ class Product{
     }
 
     static Product json_to_product(Json::Value obj){
-        return  Product(obj["name"].asString(), obj["quantity"].asInt(), (units)obj["unit"].asInt(), obj["allergen"].asString());
+        return  Product(obj["name"].asString(), obj["quantity"].asUInt(), (units)obj["unit"].asUInt(), obj["allergen"].asString());
     }
 
     void print_product(){
