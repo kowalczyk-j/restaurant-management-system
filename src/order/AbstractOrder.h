@@ -15,6 +15,7 @@ class AbstractOrder{
     AbstractOrder(unsigned int id, std::vector<Dish> o_d):order_id(id), ordered_dishes(o_d){};
     unsigned int get_order_id() {return order_id;}
     std::vector<Dish> & get_ordered_dishes() {return ordered_dishes;}
+    void add_dish(Dish & d){ordered_dishes.push_back(d);}
     virtual Json::Value parse_to_JSON(){
         Json::Value order;
         Json::Value dishes(Json::arrayValue);
