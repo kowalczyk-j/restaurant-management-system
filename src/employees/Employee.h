@@ -33,7 +33,8 @@ public:
     void set_salary(Money new_sal) {salary = new_sal;}
 
     //konwertery do formatu JSON
-    Json::Value parse_to_json();
+    virtual Json::Value parse_to_json();
+    void save_to_json(std::string path);
 
     bool operator==(Employee other) const {return (employee_id == other.employee_id);}
 

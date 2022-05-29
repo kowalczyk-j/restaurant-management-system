@@ -50,6 +50,9 @@
         this->cents /= s;
         return *this;
     }
+    bool Money::operator==(Money const& m) const{
+        return cents == m.cents;
+    }
 
     std::string Money::to_string() const{
         std::string res;

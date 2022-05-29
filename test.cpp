@@ -90,6 +90,7 @@ TEST(employee, json_cook)
     EXPECT_EQ(employee["id"], (unsigned int)1);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
     EXPECT_EQ(employee["position"], "cook");
+    EXPECT_EQ(employee["ischef"], false);
 }
 
 TEST(employee, json_chef)
@@ -137,6 +138,82 @@ TEST(employee, json_manager)
     EXPECT_EQ(employee["position"], "manager");
 }
 
+TEST(employee, save_to_json)
+{
+    Employee e(1, "name", "surname", Addres(), Money(10000));
+    e.save_to_json("employee.json");
+    std::ifstream file;
+    file.open("employee.json");
+    EXPECT_EQ(file.is_open(), true); // checks if file exists
+    file.close();
+}
+
+TEST(employee, create_employee_from_json)
+{
+    Employee e(parse_employee_from_json("employee.json"));
+    EXPECT_EQ(e.get_employee_id(), 1);
+    EXPECT_EQ(e.get_name(), "name");
+    EXPECT_EQ(e.get_salary(), Money(10000));
+    EXPECT_EQ(e.get_surname(), "surname");
+}
+
+TEST(employee, create_cook_from_json)
+{
+    Cook c1(1, "name", "surname", Addres(), Money(10000), false);
+    c1.save_to_json("cook.json");
+    Cook c2(parse_employee_from_json("cook.json"));
+    EXPECT_EQ(c2.get_employee_id(), 1);
+    EXPECT_EQ(c2.get_name(), "name");
+    EXPECT_EQ(c2.get_salary(), Money(10000));
+    EXPECT_EQ(c2.get_surname(), "surname");
+    EXPECT_EQ(c2.get_ischef(), false);
+}
+
+TEST(employee, create_chef_from_json)
+{
+    Cook c1(1, "name", "surname", Addres(), Money(10000), true);
+    c1.save_to_json("chef.json");
+    Cook c2(parse_employee_from_json("chef.json"));
+    EXPECT_EQ(c2.get_employee_id(), 1);
+    EXPECT_EQ(c2.get_name(), "name");
+    EXPECT_EQ(c2.get_salary(), Money(10000));
+    EXPECT_EQ(c2.get_surname(), "surname");
+    EXPECT_EQ(c2.get_ischef(), true);
+}
+
+TEST(employee, create_deliverer_from_json)
+{
+    Deliverer d1(1, "name", "surname", Addres(), Money(10000));
+    d1.save_to_json("deliverer.json");
+    Deliverer d2(parse_employee_from_json("deliverer.json"));
+    EXPECT_EQ(d2.get_employee_id(), 1);
+    EXPECT_EQ(d2.get_name(), "name");
+    EXPECT_EQ(d2.get_salary(), Money(10000));
+    EXPECT_EQ(d2.get_surname(), "surname");
+}
+
+TEST(employee, create_manager_from_json)
+{
+    Manager m1(1, "name", "surname", Addres(), Money(10000));
+    m1.save_to_json("manager.json");
+    Manager m2(parse_employee_from_json("manager.json"));
+    EXPECT_EQ(m2.get_employee_id(), 1);
+    EXPECT_EQ(m2.get_name(), "name");
+    EXPECT_EQ(m2.get_salary(), Money(10000));
+    EXPECT_EQ(m2.get_surname(), "surname");
+}
+
+TEST(employee, create_waiter_from_json)
+{
+    Waiter w1(1, "name", "surname", Addres(), Money(10000));
+    w1.save_to_json("waiter.json");
+    Waiter w2(parse_employee_from_json("waiter.json"));
+    EXPECT_EQ(w2.get_employee_id(), 1);
+    EXPECT_EQ(w2.get_name(), "name");
+    EXPECT_EQ(w2.get_salary(), Money(10000));
+    EXPECT_EQ(w2.get_surname(), "surname");
+}
+
 TEST(staff, create_staff)
 {
     Deliverer d1(1, "name", "last name", Addres(), Money(10000));
@@ -146,7 +223,6 @@ TEST(staff, create_staff)
     EXPECT_EQ(deliverers.size(), staff.number_employed());
     EXPECT_EQ(deliverers, staff.get_staff());
 }
-
 
 TEST(staff, print_staff)
 {
@@ -224,4 +300,23 @@ TEST(staff, position_new_value)
     std::vector<Waiter> expected{w1, w3};
     EXPECT_EQ(staff.get_staff(), expected);
     EXPECT_EQ(staff.number_employed(), 2);
+}
+
+TEST(staff, save_to_json)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
+    save_staff_to_json(staff.parse_to_json(), "waiters.json");
+    std::ifstream file;
+    file.open("waiters.json");
+    EXPECT_EQ(file.is_open(), true); // checks if file exists
+    file.close();
+}
+
+TEST(staff, create_staff_from_json)
+{
+    Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
+    EXPECT_EQ(staff.number_employed(), 3);
 }

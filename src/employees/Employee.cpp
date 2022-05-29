@@ -33,6 +33,15 @@ Json::Value Employee::parse_to_json()
     return employee;
 }
 
+void Employee::save_to_json(std::string path)
+{
+    std::ofstream file;
+    file.open(path);
+    Json::StyledWriter writer;
+    file << writer.write(this->parse_to_json());
+    file.close();
+}
+
 Json::Value parse_employee_from_json(std::string path)
 {
     std::ifstream file(path);
