@@ -38,6 +38,31 @@
      <height>31</height>
     </rect>
    </property>
+   <item>
+    <property name="text">
+     <string>Zupa</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Przystawka</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Danie Główne</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Deser</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Napoje</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

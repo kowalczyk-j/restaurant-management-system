@@ -40,15 +40,7 @@ void Menu::add_dish(Dish const& dish)
 }
 void Menu::remove_dish(unsigned int dish_idx)
 {
-    for(size_t i = 0; i < dishes.size(); i++)
-    {
-        if (dishes[i].get_id() == dish_idx)
-        {
-            dishes.erase(dishes.begin() + i);
-            break;
-        }
-
-    }
+    dishes.erase(dishes.begin() + dish_idx);
 }
 
 Json::Value Menu::parse_menu_to_json()
