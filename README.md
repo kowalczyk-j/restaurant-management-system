@@ -65,3 +65,6 @@ Zdefiniowane są również funkcje:
 - *parse_staff_from_json(string path)*, odczytująca plik JSON i zwracająca obiekt typu Json::Value
 - *save_staff_to_json(Json::Value staff, string path)*, zapisująca dane do pliku JSON.
 
+
+Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test. 
+

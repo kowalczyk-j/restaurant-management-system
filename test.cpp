@@ -220,7 +220,7 @@ TEST(staff, create_staff)
     Deliverer d2(2, "name", "last name", Addres(), Money(10000));
     std::vector<Deliverer> deliverers = {d1, d2};
     Staff<Deliverer> staff(deliverers);
-    EXPECT_EQ(deliverers.size(), staff.number_employed());
+    EXPECT_EQ(deliverers.size(), staff.size());
     EXPECT_EQ(deliverers, staff.get_staff());
 }
 
@@ -241,9 +241,9 @@ TEST(staff, employ)
     Waiter w1(1, "name1", "last name", Addres(), Money(10000));
     Waiter w2(2, "name2", "last name", Addres(), Money(10000));
     Staff<Waiter> staff(std::vector<Waiter>{w1});
-    EXPECT_EQ(1, staff.number_employed());
+    EXPECT_EQ(1, staff.size());
     staff.employ(w2);
-    EXPECT_EQ(2, staff.number_employed());
+    EXPECT_EQ(2, staff.size());
 }
 
 TEST(staff, employ_already_staff_member)
@@ -259,9 +259,9 @@ TEST(staff, fire)
     Waiter w1(1, "name", "last name", Addres(), Money(10000));
     Waiter w2(2, "name2", "last name", Addres(), Money(10000));
     Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
-    EXPECT_EQ(2, staff.number_employed());
+    EXPECT_EQ(2, staff.size());
     staff.fire(1);
-    EXPECT_EQ(1, staff.number_employed());
+    EXPECT_EQ(1, staff.size());
 }
 
 TEST(staff, fire_out_of_bounds)
@@ -269,7 +269,7 @@ TEST(staff, fire_out_of_bounds)
     Waiter w1(1, "name", "last name", Addres(), Money(10000));
     Waiter w2(2, "name2", "last name", Addres(), Money(10000));
     Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
-    EXPECT_EQ(2, staff.number_employed());
+    EXPECT_EQ(2, staff.size());
     EXPECT_THROW(staff.fire(3), StaffExceptions);
 }
 
@@ -299,7 +299,7 @@ TEST(staff, position_new_value)
     staff[1] = w3;
     std::vector<Waiter> expected{w1, w3};
     EXPECT_EQ(staff.get_staff(), expected);
-    EXPECT_EQ(staff.number_employed(), 2);
+    EXPECT_EQ(staff.size(), 2);
 }
 
 TEST(staff, save_to_json)
@@ -318,5 +318,5 @@ TEST(staff, save_to_json)
 TEST(staff, create_staff_from_json)
 {
     Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
-    EXPECT_EQ(staff.number_employed(), 3);
+    EXPECT_EQ(staff.size(), 3);
 }
