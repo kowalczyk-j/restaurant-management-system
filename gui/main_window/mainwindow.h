@@ -25,11 +25,13 @@ private slots:
 
 	void on_selectRole_currentIndexChanged();
 
+	void on_orderType_currentIndexChanged();
 	void on_orderList_itemClicked();
 	void on_modifyDeliveryAddress_clicked();
-	void on_addDishDeliveryOrder_clicked();
-	void on_removeDeliveryOrder_clicked();
-	void on_addOrder_clicked();
+	void on_addDishOrder_clicked();
+	void on_removeOrder_clicked();
+	void on_addOrderD_clicked();
+	void on_addOrderOS_clicked();
 
 	void on_pantryList_itemClicked();
 	void on_addProduct_clicked();

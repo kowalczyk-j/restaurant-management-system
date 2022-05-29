@@ -20,7 +20,7 @@ Menu::Menu(std::vector<Dish> dishes)
     this->dishes = dishes;
 }
 
-std::ostream& operator<<(std::ostream& os, Menu const& menu)
+std::ostream& operator<<(std::ostream& os, Menu  menu)
 {
     os << "---Menu---\n";
     // for(size_t i = 0; i < menu.size(); i++)

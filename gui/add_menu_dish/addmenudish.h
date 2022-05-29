@@ -21,7 +21,6 @@ public:
 private slots:
 
 	void on_addIngridient_clicked(){
-		std::cout<<"sdwddw";
 		AddIng ai;
 		ai.setModal(true);
     	ai.set_products(pan);

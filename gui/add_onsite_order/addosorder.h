@@ -1,5 +1,5 @@
-#ifndef ADDORDER_H
-#define ADDORDER_H
+#ifndef ADDOSORDER_H
+#define ADDOSORDER_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>
@@ -9,20 +9,17 @@
 #include <string>
 #include "../../src/dish_menu/Menu.h"
 #include "../add_dish/adddish.h"
-#include "ui_addorder.h"
+#include "ui_addosorder.h"
 
 
-class AddOrder : public QDialog
+class AddOsOrder : public QDialog
 {
     Q_OBJECT
 public:
-	AddOrder(QWidget *parent = 0);
+	AddOsOrder(QWidget *parent = 0);
 	void set_menu(Menu & m){menu = m;};
 	QString get_number(){return ui->number->text();}
-	QString get_city(){return ui->city->text();}
-	QString get_street(){return ui->street->text();}
-	QString get_building(){return ui->building->text();}
-	QString get_postal_code(){return ui->postal_code->text();}
+    QString get_table_id(){return ui->table_id->text();}
 	vector<Dish> get_orderedDishes(){return order;}
 
 
@@ -58,6 +55,6 @@ public slots:
 private:
 	Menu menu;
 	std::vector<Dish> order;
-	Ui::AddOrder *ui;
+	Ui::AddOsOrder *ui;
 };
 #endif
