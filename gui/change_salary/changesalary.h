@@ -1,5 +1,5 @@
 #ifndef CHANGESALARY_H
-#define CHANGESALARY_h
+#define CHANGESALARY_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

@@ -110,7 +110,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QLabel" name="image">
@@ -350,25 +350,6 @@
          <string>Spiżarnia</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>113</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>szukaj...</string>
-        </property>
-       </widget>
        <widget class="QStackedWidget" name="pantryStack">
         <property name="geometry">
          <rect>
@@ -589,9 +570,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>120</y>
+          <y>70</y>
           <width>256</width>
-          <height>311</height>
+          <height>361</height>
          </rect>
         </property>
        </widget>
@@ -615,25 +596,6 @@
         </property>
         <property name="text">
          <string>Pracownicy</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="lineEdit_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>113</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>szukaj...</string>
         </property>
        </widget>
        <widget class="QPushButton" name="addEmployee">
@@ -1059,7 +1021,7 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>90</y>
+          <y>60</y>
           <width>121</width>
           <height>23</height>
          </rect>
@@ -1089,9 +1051,9 @@
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>120</y>
+          <y>100</y>
           <width>256</width>
-          <height>311</height>
+          <height>331</height>
          </rect>
         </property>
        </widget>
@@ -1117,30 +1079,11 @@
          <string>Menu</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>113</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="placeholderText">
-         <string>szukaj...</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="pushButton_9">
         <property name="geometry">
          <rect>
           <x>60</x>
-          <y>430</y>
+          <y>450</y>
           <width>151</width>
           <height>23</height>
          </rect>
@@ -1162,7 +1105,7 @@
          <number>0</number>
         </property>
         <widget class="QWidget" name="page_12">
-         <widget class="QLabel" name="label_34">
+         <widget class="QLabel" name="dishName">
           <property name="geometry">
            <rect>
             <x>90</x>
@@ -1208,7 +1151,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_21">
+         <widget class="QPushButton" name="addIngridient">
           <property name="geometry">
            <rect>
             <x>310</x>
@@ -1257,7 +1200,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_37">
+         <widget class="QLabel" name="Price">
           <property name="geometry">
            <rect>
             <x>150</x>
@@ -1280,7 +1223,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_23">
+         <widget class="QPushButton" name="modifyPrice">
           <property name="geometry">
            <rect>
             <x>240</x>
@@ -1303,7 +1246,7 @@
            </rect>
           </property>
           <property name="text">
-           <string>Ususń danie</string>
+           <string>Usuń danie</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_38">
@@ -1329,7 +1272,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QLabel" name="label_39">
+         <widget class="QLabel" name="Category">
           <property name="geometry">
            <rect>
             <x>150</x>
@@ -1352,7 +1295,7 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_25">
+         <widget class="QPushButton" name="modifyCategory">
           <property name="geometry">
            <rect>
             <x>240</x>
@@ -1378,46 +1321,13 @@
         </widget>
         <widget class="QWidget" name="page_13"/>
        </widget>
-       <widget class="QComboBox" name="comboBox_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>90</y>
-          <width>121</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <item>
-         <property name="text">
-          <string>Zupy</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Przystawki</string>
-         </property>
-        </item>
-       </widget>
-       <widget class="QPushButton" name="pushButton_26">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>460</y>
-          <width>151</width>
-          <height>23</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Generuj Menu</string>
-        </property>
-       </widget>
        <widget class="QListWidget" name="menuList">
         <property name="geometry">
          <rect>
           <x>10</x>
-          <y>120</y>
+          <y>60</y>
           <width>256</width>
-          <height>301</height>
+          <height>361</height>
          </rect>
         </property>
        </widget>

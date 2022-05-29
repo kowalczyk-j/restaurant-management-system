@@ -12,17 +12,10 @@ class OnSiteOrder : public AbstractOrder{
     unsigned int get_table_id(){return table_id;}
     unsigned int get_waiter_id(){return waiter_id;}
     virtual Json::Value parse_to_JSON() {
-        Json::Value order;
-        Json::Value dishes(Json::arrayValue);
-        for(size_t i=0; i<ordered_dishes.size(); i++){
-            dishes.append(Json::Value(ordered_dishes[i].get_name()));
-        }
-        order["id"] = order_id;
-        order["dishes"] = dishes;
-        order["table_id"] = table_id;
-        order["waiter_id"] = waiter_id;
-
-        return order;
+        Json::Value OnSite = AbstractOrder::parse_to_JSON();
+        OnSite["table_id"] = table_id;
+        OnSite["waiter_id"] = waiter_id;
+        return OnSite;
     }
     virtual void parse_from_JSON() {
 

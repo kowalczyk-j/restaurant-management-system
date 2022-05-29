@@ -30,7 +30,7 @@ void Menu::remove_dish(unsigned int dish_idx)
             dishes.erase(dishes.begin() + i);
             break;
         }
-            
+
     }
 }
 
@@ -46,18 +46,18 @@ Menu::iterator::iterator(std::vector<Dish>::const_iterator const &cstart,
  std::vector<Dish>::const_iterator const &cstop) : start(cstart), stop(cstop)
 {
     auto type_less = [](Dish const &left, Dish const &right)
-    { return left.get_dish_type() < right.get_dish_type(); };
+    { return left.get_enum_dish_type() < right.get_enum_dish_type(); };
     current = std::min_element(start, stop, type_less);
 }
 
 static bool operator==(Dish const& dish, int dish_type)
 {
-    return dish.get_dish_type() == dish_type;
+    return dish.get_enum_dish_type() == dish_type;
 }
 
 Menu::iterator Menu::iterator::operator++()
 {
-    int cur_val = current->get_dish_type();
+    int cur_val = current->get_enum_dish_type();
     current = find(current+1, stop, cur_val);
     if(current == stop) // if no more items of previous dish_type
     {

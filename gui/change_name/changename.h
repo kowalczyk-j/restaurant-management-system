@@ -1,5 +1,5 @@
 #ifndef CHANGENAME_H
-#define CHANGENAME_h
+#define CHANGENAME_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

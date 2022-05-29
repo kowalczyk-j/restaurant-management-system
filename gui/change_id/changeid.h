@@ -1,5 +1,5 @@
 #ifndef CHANGEID_H
-#define CHANGEID_h
+#define CHANGEID_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

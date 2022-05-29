@@ -9,7 +9,7 @@ class Menu
     std::vector<Dish> dishes;
 
 public:
-    std::vector<Dish> get_dishes() const { return dishes; }
+    std::vector<Dish> & get_dishes() {return dishes;}
     void set_dishes(std::vector<Dish> d) { dishes = d; }
     size_t size() const { return dishes.size(); }
     Menu(std::vector<Dish> di) : dishes(di)
@@ -18,7 +18,7 @@ public:
     void remove_dish(unsigned int dish_idx);
 
     Json::Value parse_menu_to_json();
-    
+
     class iterator
     {
         std::vector<Dish>::const_iterator current;

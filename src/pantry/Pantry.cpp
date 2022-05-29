@@ -62,20 +62,12 @@ using namespace std;
         }
     }
 
-    void Pantry::write_to_file_json(){
-        ofstream file;
-        file.open("src/pantry/pantry_base.json");
-        if (!file.is_open()){
-            cout << "Nie udało się otworzyć pliku" << endl;
-            return;
-        }
+    Json::Value Pantry::write_to_file_json(){
         Json::Value root;
         for(auto it = shell.begin(); it != shell.end(); it++){
             root.append(it->second.parse_to_json());
         }
-        Json::StyledWriter writer;
-        file << writer.write(root);
-        file.close();
+        return root;
     }
 
     void Pantry::read_from_file_json(){

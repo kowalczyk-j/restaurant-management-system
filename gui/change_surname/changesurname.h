@@ -1,5 +1,5 @@
 #ifndef CHANGESURNAME_H
-#define CHANGESURNAME_h
+#define CHANGESURNAME_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

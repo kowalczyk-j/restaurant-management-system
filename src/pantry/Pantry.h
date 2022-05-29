@@ -21,7 +21,7 @@ class Pantry{
     void print_products();
     void print_allergens();
 
-    void write_to_file_json();
+    Json::Value write_to_file_json();
     void read_from_file_json();
 
     void write_to_file_csv();

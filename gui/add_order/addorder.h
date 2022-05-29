@@ -1,5 +1,5 @@
 #ifndef ADDORDER_H
-#define ADDORDER_h
+#define ADDORDER_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

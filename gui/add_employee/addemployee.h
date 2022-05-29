@@ -1,5 +1,5 @@
-#ifndef ADEMPLOYEE_H
-#define ADEMPLOYEE_h
+#ifndef ADDEMPLOYEE_H
+#define ADDEMPLOYEE_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

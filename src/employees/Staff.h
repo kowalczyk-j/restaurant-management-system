@@ -28,7 +28,7 @@ public:
         else staff.push_back(staff_member);
     }
 
-    Json::Value parse_to_json(std::string path)
+    Json::Value parse_to_json()
     {
         Json::Value json_staff(Json::arrayValue);
         for(auto& staff_member : staff)

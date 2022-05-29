@@ -1,5 +1,5 @@
 #ifndef ADDDISH_H
-#define ADDDISH_h
+#define ADDDISH_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>

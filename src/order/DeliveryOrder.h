@@ -12,17 +12,10 @@ class DeliveryOrder : public AbstractOrder{
     Addres & get_delivery_address(){return delivery_address;}
     unsigned int get_deliverer_id() const{return deliverer_id;}
     virtual Json::Value parse_to_JSON(){
-        Json::Value order;
-        Json::Value dishes(Json::arrayValue);
-        for(size_t i=0; i<ordered_dishes.size(); i++){
-            dishes.append(Json::Value(ordered_dishes[i].get_name()));
-        }
-        order["id"] = order_id;
-        order["dishes"] = dishes;
-        order["delivery_address"] = get_delivery_address().parse_to_json();
-        order["deliverer_id"] = deliverer_id;
-
-        return order;
+        Json::Value Delivery = AbstractOrder::parse_to_JSON();
+        Delivery["delivery_address"] = get_delivery_address().parse_to_json();
+        Delivery["deliverer_id"] = deliverer_id;
+        return Delivery;
     }
     virtual void parse_from_JSON() {
 

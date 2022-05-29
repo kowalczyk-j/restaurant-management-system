@@ -1,5 +1,5 @@
 #ifndef ADDPRODUCT_H
-#define ADDPRODUCT_h
+#define ADDPRODUCT_H
 #include <QWidget>
 #include <QDialog>
 #include <QString>
