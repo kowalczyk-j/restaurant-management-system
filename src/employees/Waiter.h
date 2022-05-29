@@ -10,6 +10,7 @@ private:
 public:
     Waiter( unsigned int e_id, std::string fname, std::string lname, Addres a, Money sal) :
            Employee(e_id, fname, lname, a, sal) {};
+    Waiter(Json::Value waiter_from_json) : Employee(waiter_from_json) {};
 
     void new_tip(double tip) {tips += tip;}
 

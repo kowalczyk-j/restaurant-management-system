@@ -10,6 +10,14 @@ private:
     std::vector<T> staff;
 public:
     Staff(std::vector<T> s) : staff(s) {}
+    Staff(Json::Value staff_from_json)
+    {
+        for(auto employee : staff_from_json)
+        {
+            T new_employee(employee);
+            staff.push_back(new_employee);
+        }
+    }
     size_t number_employed() const {return staff.size();}
     std::vector<T> const& get_staff() const {return staff;}
     size_t size(){return staff.size();}
@@ -59,3 +67,20 @@ public:
     }
 };
 
+Json::Value parse_staff_from_json(std::string path)
+{
+    std::ifstream file(path);
+    Json::Reader reader;
+    Json::Value staff;
+    reader.parse(file, staff);
+    return staff;
+}
+
+void save_staff_to_json(Json::Value parsed_staff, std::string path)
+{
+    std::ofstream file;
+    file.open(path);
+    Json::StyledWriter writer;
+    file << writer.write(parsed_staff);
+    file.close();
+}
