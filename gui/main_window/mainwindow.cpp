@@ -9,7 +9,8 @@
 #include "../change_salary/changesalary.h"
 #include "../add_product/addproduct.h"
 #include "../change_category/changecategory.h"
-//#include "../add_ingridient/addingridient.h"
+#include "../add_ingridient/addingridient.h"
+#include "../add_menu_dish/addmenudish.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMainWindow>
@@ -45,8 +46,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Addres a1 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.220154, 21.011968);
     Addres a2 = Addres( "Warszawa", "00-000", "Plac Politechniki", "1", "Polska", "Mazowieckie", 52.216184, 20.239073);
-    std::map<std::string, Product> map = {{"Jabłko", p}};
-    Dish d1 = Dish(1, "zupa pomidorowa", przystawka, Money(500), 1, map);
+    std::vector< Product> map = {p};
+    Dish d1 = Dish("zupa pomidorowa", przystawka, Money(500), 1, map);
     std::vector<Dish> dishes;
     dishes.push_back(d1);
     Menu m = Menu(dishes);
@@ -131,6 +132,7 @@ void MainWindow::on_selectRestaurant_clicked(){
         for(unsigned int i=0; i<restaurant->get_pantry().get_all_products().size(); i++){
             ui->pantryList->addItem(QString::fromStdString(restaurant->get_pantry().get_all_products()[i]));
         }
+        ui->menuList->clear();
         for(unsigned int i=0; i<restaurant->get_menu().get_dishes().size(); i++){
             ui->menuList->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[i].get_name()));
         }
@@ -446,11 +448,16 @@ void MainWindow::on_removeEmployee_clicked(){
 }
 
 void MainWindow::on_menuList_itemClicked(){
+
     position1 = ui->menuList->currentRow();
     ui->menuStack->setCurrentIndex(0);
     ui->dishName->setText(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_name()));
     ui->Price->setText(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_price().to_string()));
     ui->Category->setText(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_dish_type()));
+    ui->DishIngrdidients->clear();
+    for(size_t i=0; i<restaurant->get_menu().get_dishes()[position1].get_ingredients().size(); i++){
+            ui->DishIngrdidients->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_name()+" ("+to_string(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_quantity())+restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_unit() +")"));
+        }
 
 }
 
@@ -468,19 +475,60 @@ void MainWindow::on_modifyCategory_clicked(){
     ChangeCategory cc;
     cc.setModal(true);
     if(cc.exec() == QDialog::Accepted){
-        restaurant->get_menu().get_dishes()[position1].set_dish_type((dish_type)cc.get_category());
+        std::cout << cc.get_category();
+        restaurant->get_menu().get_dishes()[position1].set_dish_type((dish_type) cc.get_category());
+        ui->Category->setText(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_dish_type()));
     }
 }
 
 void MainWindow::on_addIngridient_clicked(){
-    //AddIngridient ac;
-    //ac.setModal(true);
-    //ac.set_products()
-    //if(ac.exec() == QDialog::Accepted){
+    AddIng ac;
+    ac.setModal(true);
+    ac.set_products(restaurant->get_pantry());
+    if(ac.exec() == QDialog::Accepted){
+        restaurant->get_menu().get_dishes()[position1].add_ingiridnet(ac.get_ing());
+        ui->DishIngrdidients->clear();
+        for(size_t i=0; i<restaurant->get_menu().get_dishes()[position1].get_ingredients().size(); i++){
+            ui->DishIngrdidients->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_name()+" ("+to_string(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_quantity())+restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_unit() +")"));
+        }
+    }
+}
 
-    //}
+void MainWindow::on_removeIngridient_clicked(){
+    position2 = ui->DishIngrdidients->currentRow();
+    if(position2 != -1){
+        restaurant->get_menu().get_dishes()[position1].remove_ingridient(position2);
+        ui->DishIngrdidients->setCurrentRow(-1);
+        ui->DishIngrdidients->clear();
+        for(size_t i=0; i<restaurant->get_menu().get_dishes()[position1].get_ingredients().size(); i++){
+            ui->DishIngrdidients->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_name()+" ("+to_string(restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_quantity())+restaurant->get_menu().get_dishes()[position1].get_ingredients()[i].get_unit() +")"));
+        }
+    }
+}
+
+void MainWindow::on_addMenuDish_clicked(){
+    AddMenuDish amd;
+    amd.set_pantry(restaurant->get_pantry());
+    if(amd.exec() == QDialog::Accepted){
+        Dish dish_to_add = Dish(amd.get_name().toStdString(), (dish_type) amd.get_category(), Money(amd.get_zlotys().toInt(), amd.get_grosze().toInt()), amd.get_vegan(), amd.get_ing());
+        restaurant->get_menu().add_dish(dish_to_add);
+        ui->menuList->clear();
+        for(unsigned int i=0; i<restaurant->get_menu().get_dishes().size(); i++){
+            ui->menuList->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[i].get_name()));
+        }
+    }
 
 }
+
+void MainWindow::on_removeMenuDish_clicked(){
+    restaurant->get_menu().remove_dish(position1);
+    ui->menuStack->setCurrentIndex(1);
+    ui->menuList->clear();
+    for(unsigned int i=0; i<restaurant->get_menu().get_dishes().size(); i++){
+        ui->menuList->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[i].get_name()));
+    }
+}
+
 
 Employee & MainWindow::get_employee_refernece(){
     if(position1 == 0){return restaurant->get_cooks()[position2];}

@@ -4,11 +4,11 @@
 #include <QVector>
 #include <iostream>
 #include <string>
-#include "ui_addingridient.h"
-#include "addingridient.h"
+#include "ui_addmenudish.h"
+#include "addmenudish.h"
 
-AddIng::AddIng(QWidget *parent) :
+AddMenuDish::AddMenuDish(QWidget *parent) :
     QDialog(parent){
-        ui = new Ui::AddIng;
+        ui = new Ui::AddMenuDish;
         ui->setupUi(this);
 }

@@ -1079,7 +1079,7 @@
          <string>Menu</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="addMenuDish">
         <property name="geometry">
          <rect>
           <x>60</x>
@@ -1164,7 +1164,7 @@
            <string>+</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_22">
+         <widget class="QPushButton" name="removeIngridient">
           <property name="geometry">
            <rect>
             <x>310</x>
@@ -1226,8 +1226,8 @@
          <widget class="QPushButton" name="modifyPrice">
           <property name="geometry">
            <rect>
-            <x>240</x>
-            <y>230</y>
+            <x>300</x>
+            <y>240</y>
             <width>81</width>
             <height>16</height>
            </rect>
@@ -1236,7 +1236,7 @@
            <string>Modyfikuj</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="pushButton_24">
+         <widget class="QPushButton" name="removeMenuDish">
           <property name="geometry">
            <rect>
             <x>150</x>
@@ -1298,7 +1298,7 @@
          <widget class="QPushButton" name="modifyCategory">
           <property name="geometry">
            <rect>
-            <x>240</x>
+            <x>300</x>
             <y>270</y>
             <width>81</width>
             <height>16</height>

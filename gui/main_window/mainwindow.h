@@ -49,6 +49,9 @@ private slots:
 	void on_modifyPrice_clicked();
 	void on_modifyCategory_clicked();
 	void on_addIngridient_clicked();
+	void on_removeIngridient_clicked();
+	void on_addMenuDish_clicked();
+	void on_removeMenuDish_clicked();
 
 
 	Employee & get_employee_refernece();

@@ -6,28 +6,44 @@
 #include <QVector>
 #include <iostream>
 #include <string>
+#include "../../src/pantry/Product.h"
+#include "../../src/pantry/Pantry.h"
 #include "ui_addingridient.h"
-//#include "../../src/pantry/Product.h"
 
 
-class AddIngridient : public QDialog
+class AddIng : public QDialog
 {
     Q_OBJECT
 public:
-	AddIngridient(QWidget *parent = 0);
+	AddIng(QWidget *parent = 0);
 
 
 private slots:
 
-public:
-	void set_products(vetcor<Product> vp){
-		for(size_t i= 0; i<vp.size(); i++){
-			ui->name->addItem(QString::fromStdString(vp[i].get_name()));
-		}
-	}
+    void on_ing_currentIndexChanged(){
+        ui->quantity->setValue(0);
+        ui->unit->setText(QString::fromStdString(pan.get_product(ui->ing->currentText().toStdString()).get_unit()));
+    }
 
+public:
+    void set_products(Pantry & p){
+        pan = p;
+        for(auto const &dish : p.get_all_products())
+        {
+            ui->ing->addItem(QString::fromStdString(dish));
+        }
+        ui->quantity->setValue(0);
+        ui->unit->setText(QString::fromStdString(p.get_product(ui->ing->currentText().toStdString()).get_unit()));
+    }
+
+    Product get_ing(){
+        Product p = Product(pan.get_product(ui->ing->currentText().toStdString()));
+        p.set_quantity(ui->quantity->value());
+        return p;
+    }
 
 private:
-	Ui::AddIngridient *ui;
+    Pantry pan;
+	Ui::AddIng *ui;
 };
 #endif

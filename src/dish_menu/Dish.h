@@ -3,6 +3,7 @@
 #include <map>
 #include <unordered_map>
 #include <set>
+#include <vector>
 #include <json/json.h>
 #include "../utils/Money.h"
 #include "../pantry/Product.h"
@@ -11,16 +12,14 @@ enum dish_type {zupa, przystawka, danie_glowne, deser, napoje};
 
 class Dish
 {
-    unsigned int id;
     std::string name;
     dish_type type;
     Money price;
     bool is_vegan;
-    std::map<std::string, Product> ingredients;
+    std::vector<Product> ingredients;
     set<std::string> allergens;
 
 public:
-    unsigned int get_id() const { return id; }
     std::string get_name() const { return name; }
     std::string get_dish_type(){
         unordered_map<dish_type, string> dish_type_map = {{zupa, "Zupa"},{przystawka, "Przystawka"},{danie_glowne, "Danie Główne"}, {deser, "Deser"},{napoje, "Napoje"}};
@@ -29,23 +28,23 @@ public:
     dish_type get_enum_dish_type() const { return type;}
     Money get_price() const { return price; }
     bool get_is_vegan() const { return is_vegan; }
-    std::map<std::string, Product> get_ingredients() const { return ingredients; }
+    std::vector<Product> & get_ingredients() {return ingredients; }
     set<string> get_allergens() const {return allergens;}
 
-    void set_id(unsigned int i) { id=i; }
     void set_name(std::string n) { name=n; }
     void set_dish_type(dish_type t) { type=t; }
     void set_price(Money p) { price=p; }
     void set_is_vegan(bool veg) { is_vegan=veg; }
-    void set_ingredients(std::map<std::string, Product> ingr) { ingredients=ingr;}
-    void add_ingiridnet(std::string name, Product ingr){ingredients[name] = ingr;}
+    void set_ingredients(std::vector <Product> ingr) {ingredients=ingr;}
+    void add_ingiridnet(Product ingr){ingredients.push_back(ingr);}
+    void remove_ingridient(int position){ingredients.erase(ingredients.begin() + position);}
     void set_allergens(set<std::string> a) { allergens=a; }
 
-    Dish(int i, std::string n, dish_type t, Money pr,
-    bool veg, std::map<std::string, Product> ingr, set<std::string> allerg = {}) :
-    id(i), name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
+    Dish(std::string n, dish_type t, Money pr,
+    bool veg, std::vector<Product> ingr, set<std::string> allerg = {}) :
+    name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
     {
-        for (const auto& [key, value] : ingredients)
+        for (const auto& value : ingredients)
         {
             if (value.get_allergen() != "")
                 allerg.insert(value.get_allergen());
@@ -56,8 +55,8 @@ public:
     void print_ingredients() const
     {
         std::cout << "Lista składników - " << name << ": \n";
-        for (const auto& [key, value] : ingredients) {
-            std::cout << key << " - " << value.get_quantity() << ' ' << value.get_unit() << "; ";
+        for (const auto& value : ingredients) {
+            std::cout << value.get_name() << " - " << value.get_quantity() << ' ' << value.get_unit() << "; ";
         std::cout << "\n";
         }
     }
@@ -77,14 +76,13 @@ public:
         Json::Value allergens(Json::arrayValue);
         Json::Value quantities(Json::arrayValue);
         Json::Value units(Json::arrayValue);
-        dish["id"] = id;
         dish["name"] = name;
         dish["type"] = type;
         dish["price"]["zlotys"] = price.get_zlotys();
         dish["price"]["cents"] = price.get_cents();
         dish["is_vegan"] = is_vegan;
         dish["allergens"] = allergens;
-        for(const auto& [key, value] : ingredients){
+        for(const auto& value : ingredients){
             names.append(value.get_name());
             allergens.append(value.get_allergen());
             quantities.append(value.get_quantity());
