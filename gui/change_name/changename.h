@@ -14,11 +14,7 @@ class ChangeName : public QDialog
     Q_OBJECT
 public:
 	ChangeName(QWidget *parent = 0);
-
-
-private slots:
-
-public:
+	~ChangeName(){delete ui;}
 	void set_name(QString name){ui->name->setText(name);};
 	QString get_name(){return ui->name->text();}
 

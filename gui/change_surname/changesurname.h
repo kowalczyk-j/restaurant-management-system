@@ -14,11 +14,7 @@ class ChangeSurname : public QDialog
     Q_OBJECT
 public:
 	ChangeSurname(QWidget *parent = 0);
-
-
-private slots:
-
-public:
+	~ChangeSurname(){delete ui;}
 	void set_surname(QString surname){ui->surname->setText(surname);};
 	QString get_surnname(){return ui->surname->text();}
 

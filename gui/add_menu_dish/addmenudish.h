@@ -16,6 +16,16 @@ class AddMenuDish : public QDialog
     Q_OBJECT
 public:
 	AddMenuDish(QWidget *parent = 0);
+	~AddMenuDish(){delete ui;}
+	QString get_name(){return ui->name->text();}
+	QString get_zlotys(){return ui->zloty->text();}
+	QString get_grosze(){return ui->grosze->text();}
+	int get_category(){return ui->category->currentIndex();}
+	bool get_vegan(){return ui->vegan->isChecked();}
+	vector<Product> get_ing(){return pro;}
+
+	void set_pantry(Pantry & p){pan = p;}
+
 
 
 private slots:
@@ -43,18 +53,6 @@ private slots:
         	}
 		}
 	}
-
-public:
-	QString get_name(){return ui->name->text();}
-	QString get_zlotys(){return ui->zloty->text();}
-	QString get_grosze(){return ui->grosze->text();}
-	int get_category(){return ui->category->currentIndex();}
-	bool get_vegan(){return ui->vegan->isChecked();}
-	vector<Product> get_ing(){return pro;}
-
-	void set_pantry(Pantry & p){pan = p;}
-
-
 
 private:
 	Ui::AddMenuDish *ui;

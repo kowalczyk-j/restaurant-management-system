@@ -14,11 +14,7 @@ class AddProduct : public QDialog
     Q_OBJECT
 public:
 	AddProduct(QWidget *parent = 0);
-
-
-private slots:
-
-public:
+	~AddProduct(){delete ui;}
 	QString get_name(){return ui->name->text();}
 	int get_quantity(){return ui->quantity->value();}
 	int get_unit(){return ui->unit->currentIndex();}

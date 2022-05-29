@@ -17,6 +17,7 @@ class AddOrder : public QDialog
     Q_OBJECT
 public:
 	AddOrder(QWidget *parent = 0);
+	~AddOrder(){delete ui;}
 	void set_menu(Menu & m){menu = m;};
 	QString get_number(){return ui->number->text();}
 	QString get_city(){return ui->city->text();}
@@ -51,9 +52,6 @@ void on_removeDishOrder_clicked(){
 		ui->orderedDishes->addItem(QString::fromStdString(order[i].get_name()));
 	}
 }
-
-public slots:
-
 
 private:
 	Menu menu;

@@ -12,6 +12,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 public:
 	MainWindow(QWidget *parent = 0);
+	~MainWindow(){delete ui;}
 
 	std::vector <std::string> vector;
 
@@ -57,6 +58,9 @@ private slots:
 
 
 	Employee & get_employee_refernece();
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private:
 	Ui::MainWindow *ui;

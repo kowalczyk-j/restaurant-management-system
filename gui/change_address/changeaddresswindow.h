@@ -14,11 +14,7 @@ class ChangeAddress: public QDialog
     Q_OBJECT
 public:
 	ChangeAddress(QWidget *parent = 0);
-
-
-private slots:
-
-public:
+	~ChangeAddress(){delete ui;};
 	void set_current_address(QString street, QString building, QString city, QString postal_code);
 	QString get_city();
 	QString get_street();
