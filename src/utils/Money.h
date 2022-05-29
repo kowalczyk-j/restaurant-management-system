@@ -28,6 +28,7 @@ public:
     Money & operator-=(Money const& m);
     Money & operator*=(unsigned int s);
     Money & operator/=(unsigned int s);
+    bool operator==(Money const& m) const;
 
     std::string to_string() const;
 
