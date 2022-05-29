@@ -3,8 +3,17 @@
 Plik wykonywalny app2 został wyjątkowo dodany w celu prezentacji działania GUI.
 Zbudowanie tego pliku może nie być możliwe ze względu na wymagane biblioteki
 
-## Nasz cuowny projekt
-A tutaj zostanie dodana dokumantcja
+## Struktura
+W skład naszego projektu wchodzą następujące foldery:
+- *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
+- *rsc*, zawierający grafiki wykorzystywane przez GUI
+- *src*
+    - *dish_menu*: klasy Dish oraz Menu
+    - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter, oraz klasa szablonowa Staff
+    - *order*: klasa abstrakcyjna Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
+    - *pantry*: klasy Pantry oraz Product
+    - *restaurant*: klasa Restaurant
+    - *utils*: klasy Money oraz Addres, wykorzystywane w definicji powyższych klas
 
 ### Employee
 Klasa bazowa pracownika. Zawiera pola:
