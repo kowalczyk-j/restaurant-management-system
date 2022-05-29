@@ -1,4 +1,5 @@
-# projekt_PROI_restauracja
+# projekt_PROI_restauracja (Z05)
+*Kajetan Rożej, Kinga Świderek, Magdalena Dudek, Jakub Kowalczyk*
 
 Plik wykonywalny app2 został wyjątkowo dodany w celu prezentacji działania GUI.
 Zbudowanie tego pliku może nie być możliwe ze względu na wymagane biblioteki
