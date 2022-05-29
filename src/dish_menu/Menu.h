@@ -16,6 +16,7 @@ public:
     void add_dish(Dish const& dish);
     void remove_dish(unsigned int dish_idx);
 
+    void generate_lunch_menu();
     Json::Value parse_menu_to_json();
 
     // class iterator

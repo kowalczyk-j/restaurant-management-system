@@ -41,7 +41,7 @@ public:
     void set_allergens(set<std::string> a) { allergens=a; }
 
     Dish(std::string n, dish_type t, Money pr,
-    bool veg, std::vector<Product> ingr, set<std::string> allerg = {}) :
+    bool veg, std::vector<Product> ingr= {}, set<std::string> allerg = {}) :
     name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
     {
         for (const auto& value : ingredients)
