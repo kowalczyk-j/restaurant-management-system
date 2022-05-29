@@ -14,11 +14,7 @@ class ChangeSalary : public QDialog
     Q_OBJECT
 public:
 	ChangeSalary(QWidget *parent = 0);
-
-
-private slots:
-
-public:
+	~ChangeSalary(){delete ui;}
 	void set_salary(QString zl, QString gr){ui->zloty->setText(zl); ui->grosze->setText(gr);};
 	QString get_salary_zlotys(){return ui->zloty->text();}
 	QString get_salary_grosze(){return ui->grosze->text();}

@@ -11,6 +11,8 @@
 #include "../order/DeliveryOrder.h"
 #include "../order/OnSiteOrder.h"
 
+enum exceptions {DuplicatedEmployeeID, DuplicatedOrderID};
+
 class Restaurant{
     unsigned int restaurant_id;
     std::string name;
@@ -18,6 +20,7 @@ class Restaurant{
     Pantry pantry;
     Menu  menu;
     std::set<int> employee_ids;
+    std::set<int> orders_id;
     Staff<Cook> cooks;
     Staff<Deliverer> deliverers;
     Staff<Manager> managers;
@@ -29,7 +32,24 @@ class Restaurant{
     Restaurant(unsigned int r_id, std::string n, Addres a, Pantry  p, Menu m, Staff<Cook> c,
                Staff<Deliverer> d, Staff<Manager> mng, Staff<Waiter> w, std::vector<DeliveryOrder> dor,  std::vector<OnSiteOrder> oo ):
                restaurant_id(r_id), name(n), address(a), pantry(p), menu(m), cooks(c), deliverers(d), managers(mng),
-               waiters(w), delivery_orders(dor), onsite_orders(oo) {};
+               waiters(w), delivery_orders(dor), onsite_orders(oo){
+                   for(size_t i=0; i<delivery_orders.size(); i++){
+                        if (orders_id.find(delivery_orders[i].get_order_id()) != orders_id.end()) {
+                            throw DuplicatedOrderID;
+                        }
+                        orders_id.insert(delivery_orders[i].get_order_id());
+                   }
+                   for(size_t i=0; i<onsite_orders.size(); i++){
+                        if (orders_id.find(onsite_orders[i].get_order_id()) != orders_id.end()) {
+                            throw DuplicatedOrderID;
+                        }
+                        orders_id.insert(onsite_orders[i].get_order_id());
+                   }
+                    for(size_t i=0; i<cooks.size(); i++){add_and_check_employee_id(cooks[i].get_employee_id());}
+                    for(size_t i=0; i<deliverers.size(); i++){add_and_check_employee_id(deliverers[i].get_employee_id());}
+                    for(size_t i=0; i<managers.size(); i++){add_and_check_employee_id(managers[i].get_employee_id());}
+                    for(size_t i=0; i<waiters.size(); i++){add_and_check_employee_id(waiters[i].get_employee_id());}
+               };
 
     Addres & get_address(){return address;}
     Pantry & get_pantry(){return pantry;}
@@ -41,21 +61,42 @@ class Restaurant{
     Staff<Manager>& get_managers() {return managers;}
     Staff<Waiter>& get_waiters() {return waiters;}
     std::string get_name(){return name;}
-    std::set<int>& get_employees_id_set(){return employee_ids;}
+    int get_orders_number(){return orders_id.size();}
+    int get_emoployee_number(){return employee_ids.size();}
 
     void add_delivery_order(unsigned int id, std::vector<Dish> vd, Addres a, unsigned d_id){
+        if (orders_id.find(id) != orders_id.end()) {
+            throw DuplicatedOrderID;
+        }
+        orders_id.insert(id);
         DeliveryOrder delivery_order = DeliveryOrder(id, vd, a, d_id);
         delivery_orders.push_back(delivery_order);
     };
     void remove_delivery_order(unsigned int position){
+        orders_id.erase(orders_id.find(delivery_orders[position].get_order_id()));
         delivery_orders.erase(delivery_orders.begin()+position);
     }
     void add_on_site_order(unsigned int id, std::vector<Dish> vd, unsigned t_id, unsigned int w_id){
+        if (orders_id.find(id) != orders_id.end()) {
+            throw DuplicatedOrderID;
+        }
+        orders_id.insert(id);
         OnSiteOrder delivery_order = OnSiteOrder(id, vd, t_id, w_id);
         onsite_orders.push_back(delivery_order);
     };
     void remove_on_site_order(unsigned int position){
+        orders_id.erase(orders_id.find(onsite_orders[position].get_order_id()));
         onsite_orders.erase(onsite_orders.begin()+position);
+    }
+
+    void add_and_check_employee_id(int id){
+        if (employee_ids.find(id) != employee_ids.end()) {
+            throw DuplicatedEmployeeID;
+        }
+        employee_ids.insert(id);
+    }
+    void remove_emoloyee_id(int id){
+        employee_ids.erase(employee_ids.find(id));
     }
 
     Json::Value parse_to_json(){

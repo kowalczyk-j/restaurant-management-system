@@ -17,6 +17,7 @@ class AddOsOrder : public QDialog
     Q_OBJECT
 public:
 	AddOsOrder(QWidget *parent = 0);
+	~AddOsOrder(){delete ui;}
 	void set_menu(Menu & m){menu = m;};
 	QString get_number(){return ui->number->text();}
     QString get_table_id(){return ui->table_id->text();}
@@ -48,9 +49,6 @@ void on_removeDishOrder_clicked(){
 		ui->orderedDishes->addItem(QString::fromStdString(order[i].get_name()));
 	}
 }
-
-public slots:
-
 
 private:
 	Menu menu;

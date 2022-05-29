@@ -16,16 +16,7 @@ class AddIng : public QDialog
     Q_OBJECT
 public:
 	AddIng(QWidget *parent = 0);
-
-
-private slots:
-
-    void on_ing_currentIndexChanged(){
-        ui->quantity->setValue(0);
-        ui->unit->setText(QString::fromStdString(pan.get_product(ui->ing->currentText().toStdString()).get_unit()));
-    }
-
-public:
+    ~AddIng(){delete ui;}
     void set_products(Pantry & p){
         pan = p;
         for(auto const &dish : p.get_all_products())
@@ -41,6 +32,16 @@ public:
         p.set_quantity(ui->quantity->value());
         return p;
     }
+
+
+
+private slots:
+
+    void on_ing_currentIndexChanged(){
+        ui->quantity->setValue(0);
+        ui->unit->setText(QString::fromStdString(pan.get_product(ui->ing->currentText().toStdString()).get_unit()));
+    }
+
 
 private:
     Pantry pan;

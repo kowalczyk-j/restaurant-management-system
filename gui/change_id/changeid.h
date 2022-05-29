@@ -14,11 +14,7 @@ class ChangeId : public QDialog
     Q_OBJECT
 public:
 	ChangeId(QWidget *parent = 0);
-
-
-private slots:
-
-public :
+	~ChangeId(){delete ui;}
 	void set_id(QString id){ui->id->setText(id);};
 	QString get_id(){return ui->id->text();}
 

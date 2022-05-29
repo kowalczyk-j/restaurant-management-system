@@ -53,9 +53,9 @@ MainWindow::MainWindow(QWidget *parent) :
     dishes.push_back(d1);
     Menu m = Menu(dishes);
     Cook c = Cook(1, "Adam", "Wiśniewski", a1, Money(800000), 0);
-    Waiter w = Waiter(1, "Alicja", "Polska", a1, Money(800000));
-    Deliverer d = Deliverer(1, "Tomasz", "Niewierny", a1, Money(800000));
-    Manager man = Manager(1, "Jan", "Nowak", a1, Money(800000));
+    Waiter w = Waiter(2, "Alicja", "Polska", a1, Money(800000));
+    Deliverer d = Deliverer(3, "Tomasz", "Niewierny", a1, Money(800000));
+    Manager man = Manager(4, "Jan", "Nowak", a1, Money(800000));
     std::vector<Cook> vc;
     std::vector<Manager> vm;
     std::vector<Deliverer> vd;
@@ -77,15 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     restaurant_list.push_back(r2);
 
 
-    std::ofstream file;
-    file.open("file.json");
 
-    Json::Value res;
-    res = r1.parse_to_json();
-    Json::StyledWriter styledWriter;
-    file << styledWriter.write(res);
-
-    file.close();
 
     vector.push_back("Restauracj Magnoliowa");
     vector.push_back("Restauracja Różana");
@@ -108,8 +100,8 @@ void MainWindow::on_return_2_clicked(){
     ui->mainStack->setCurrentIndex(0);
     else{
         ui->restaurantStack->setCurrentIndex(0);
-        ui->employeesNumber->setText(QString::number(restaurant->get_employees_id_set().size()));
-        ui->ordersNumber->setText(QString::number(restaurant->get_delivery_orders().size()));
+        ui->employeesNumber->setText(QString::number(restaurant->get_emoployee_number()));
+        ui->ordersNumber->setText(QString::number(restaurant->get_orders_number()));
         ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
     }
 
@@ -125,8 +117,8 @@ void MainWindow::on_selectRestaurant_clicked(){
         ui->image->setPixmap(QString::fromStdString("rsc/"+restaurant->get_name()+".jpg"));
         ui->restaurantAddress->setText(QString::fromStdString(restaurant->get_address().to_string()));
         ui->restaurationName->setText(QString::fromStdString(restaurant->get_name()));
-        ui->employeesNumber->setText(QString::number(restaurant->get_employees_id_set().size()));
-        ui->ordersNumber->setText(QString::number(restaurant->get_delivery_orders().size()));
+        ui->employeesNumber->setText(QString::number(restaurant->get_emoployee_number()));
+        ui->ordersNumber->setText(QString::number(restaurant->get_orders_number()));
         ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
 
         ui->orderList->clear();
@@ -402,6 +394,7 @@ void MainWindow::on_addEmployee_clicked(){
     if(ae.exec() == QDialog::Accepted){
         Addres a = Addres(ae.get_city().toStdString(), ae.get_postal_code().toStdString(), ae.get_street().toStdString(), ae.get_building().toStdString());
         Money m = Money(ae.get_salary_zlotys().toInt(), ae.get_salary_grosze().toInt());
+        restaurant->add_and_check_employee_id(ae.get_id().toInt());
         if(ae.get_role_index() == 0){
             Cook c = Cook(ae.get_id().toInt(), ae.get_name().toStdString(), ae.get_surname().toStdString(), a, m, 0);
             restaurant->get_cooks().employ(c);
@@ -467,7 +460,7 @@ void MainWindow::on_modifyId_clicked(){
     chi.set_id(ui->id->text());
     chi.setModal(true);
     if(chi.exec() == QDialog::Accepted){
-        //TODO dodać sprawdzanie unikatowości
+        restaurant->add_and_check_employee_id(chi.get_id().toInt());
         if(position1 == 0){restaurant->get_cooks()[position2].set_employee_id(chi.get_id().toInt());}
         else if(position1 == 1){restaurant->get_deliverers()[position2].set_employee_id(chi.get_id().toInt());}
         else if(position1 == 2){restaurant->get_managers()[position2].set_employee_id(chi.get_id().toInt());}
@@ -494,6 +487,7 @@ void MainWindow::on_modifySalary_clicked(){
 
 void MainWindow::on_removeEmployee_clicked(){
     if(position1 == 0){
+        restaurant->remove_emoloyee_id(restaurant->get_cooks()[position2].get_employee_id());
         restaurant->get_cooks().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
@@ -501,6 +495,7 @@ void MainWindow::on_removeEmployee_clicked(){
         }
     }
     else if(position1 == 1){
+        restaurant->remove_emoloyee_id(restaurant->get_deliverers()[position2].get_employee_id());
         restaurant->get_deliverers().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
@@ -508,6 +503,7 @@ void MainWindow::on_removeEmployee_clicked(){
         }
     }
     else if(position1 == 2){
+        restaurant->remove_emoloyee_id(restaurant->get_managers()[position2].get_employee_id());
         restaurant->get_managers().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
@@ -515,6 +511,7 @@ void MainWindow::on_removeEmployee_clicked(){
         }
     }
     else {
+        restaurant->remove_emoloyee_id(restaurant->get_waiters()[position2].get_employee_id());
         restaurant->get_waiters().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
@@ -604,6 +601,19 @@ void MainWindow::on_removeMenuDish_clicked(){
     for(unsigned int i=0; i<restaurant->get_menu().get_dishes().size(); i++){
         ui->menuList->addItem(QString::fromStdString(restaurant->get_menu().get_dishes()[i].get_name()));
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->accept();
+    std::ofstream file;
+    file.open("file.json");
+
+    Json::Value res;
+    res = restaurant->parse_to_json();
+    Json::StyledWriter styledWriter;
+    file << styledWriter.write(res);
+
+    file.close();
 }
 
 
