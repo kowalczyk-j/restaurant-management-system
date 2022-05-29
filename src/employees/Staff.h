@@ -23,21 +23,21 @@ public:
 
     T & operator[](size_t pos)
     {
-        if(pos<=number_employed())
+        if(pos<=size())
             return staff[pos];
         else throw PositionOutOfBounds;
     }
 
     T const& operator[](size_t pos) const
     {
-        if(pos<=number_employed())
+        if(pos<=size())
             return staff[pos];
         else throw PositionOutOfBounds;
     }
 
     void fire(size_t position)
     {
-        if(position<=number_employed())
+        if(position<=size())
             staff.erase(staff.begin() + position);
         else throw PositionOutOfBounds;
     }
