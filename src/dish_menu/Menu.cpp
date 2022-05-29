@@ -51,6 +51,15 @@ Json::Value Menu::parse_menu_to_json()
     }
     return root;
 }
+
+Menu Menu::parse_from_json(Json::Value m)
+{
+    Menu menu;
+    for(auto it = m.begin(); it != m.end(); it++){
+       menu.add_dish(Dish::parse_dish_from_json(*it));
+    }
+    return menu;
+}
 // Menu::iterator::iterator(std::vector<Dish>::const_iterator const &cstart,
 //  std::vector<Dish>::const_iterator const &cstop) : start(cstart), stop(cstop)
 // {

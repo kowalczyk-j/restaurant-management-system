@@ -30,14 +30,18 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    ifstream ifs("file.json");
+    Json::Reader reader;
+    Json::Value obj;
+    reader.parse(ifs, obj);
+    Restaurant r1 = Restaurant::create_from_json(obj);
+
     Product p = Product("Jabłko",670, g);
     Product p1 = Product("Mięso",500, g);
     Product p2 = Product("Sok Jabłkowy",1000, ml);
     Product p3 = Product("jajka",60, szt);
     Product p4  = Product("koperek",100, g);
     Product p5 = Product("ziemniaki",4000, g);
-    cout << p.get_name()<< " " << p.get_quantity() << " " << p.get_unit() << endl;
-
 
     Pantry pan;
     string s;
@@ -70,7 +74,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::vector<DeliveryOrder> vde;
     std::vector<OnSiteOrder> vso;
     vde.push_back(os);
-    Restaurant r1 =  Restaurant(1, "Magnoliowa", a1, pan, m, vc, vd, vm, vw, vde, vso);
+    //Restaurant r1 =  Restaurant(1, "Magnoliowa", a1, pan, m, vc, vd, vm, vw, vde, vso);
     Restaurant r2 =  Restaurant(2, "Różana", a2, pan, m, vc, vd, vm, vw, vde, vso);
 
     restaurant_list.push_back(r1);

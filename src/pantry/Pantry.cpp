@@ -70,20 +70,13 @@ using namespace std;
         return root;
     }
 
-    void Pantry::read_from_file_json(){
-        ifstream file;
-        file.open("src/pantry/pantry_base.json");
-        Json::Value root;
-        Json::Reader reader;
-        if(!reader.parse(file, root, false)){
-            cout << "Nie udało się odczytać pliku" << endl;
-            return;
-        }
-        for(auto it = root.begin(); it != root.end(); it++){
+    Pantry Pantry::read_from_file_json(Json::Value pan){
+        Pantry p;
+        for(auto it = pan.begin(); it != pan.end(); it++){
             Product new_product = Product::json_to_product(*it);
-            this->add_product(new_product);
+            p.add_product(new_product);
         }
-        file.close();
+        return p;
     }
 
     /*

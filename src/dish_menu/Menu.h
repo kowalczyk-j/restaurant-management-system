@@ -47,5 +47,7 @@ public:
     // iterator end() const {
     //     return iterator(dishes.cbegin(), dishes.cend());
     // }
+    static Menu parse_from_json(Json::Value m);
+
     friend std::ostream &operator<<(std::ostream &os, Menu &menu);
 };

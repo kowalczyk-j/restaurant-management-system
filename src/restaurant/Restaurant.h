@@ -126,4 +126,28 @@ class Restaurant{
         return restaurant;
     }
 
+    static Restaurant create_from_json(Json::Value restaurant){
+        std::string name = restaurant["name"].asString();
+        int id = restaurant["id"].asInt();
+        Addres a = Addres::read_from_json(restaurant["address"]);
+        Pantry p = Pantry::read_from_file_json(restaurant["pantry"]);
+        Menu m = Menu::parse_from_json(restaurant["menu"]);
+        std::vector<DeliveryOrder> dorv;
+        for(auto it = restaurant["orders"]["delivery"].begin(); it != restaurant["orders"]["delivery"].end(); it++){
+            DeliveryOrder dor = DeliveryOrder::parse_from_JSON(*it);
+            dorv.push_back(dor);
+        }
+        std::vector<OnSiteOrder> osorv;
+        for(auto it = restaurant["orders"]["on_site"].begin(); it != restaurant["orders"]["on_site"].end(); it++){
+            OnSiteOrder oso = OnSiteOrder::parse_from_JSON(*it);
+            osorv.push_back(oso);
+        }
+        Staff<Cook> cookers = Staff<Cook>(restaurant["employees"]["cooks"]);
+        Staff<Deliverer> deliverers = Staff<Deliverer>(restaurant["employees"]["deliverers"]);
+        Staff<Manager> managers = Staff<Manager>(restaurant["employees"]["managers"]);
+        Staff<Waiter> waiters = Staff<Waiter>(restaurant["employees"]["waiters"]);
+
+        return Restaurant(id, name, a, p, m, cookers, deliverers, managers, waiters, dorv, osorv);
+    }
+
 };

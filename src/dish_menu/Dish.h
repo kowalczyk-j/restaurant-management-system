@@ -72,28 +72,26 @@ public:
 
     Json::Value parse_dish_to_json(){
         Json::Value dish;
-        Json::Value names(Json::arrayValue);
-        Json::Value allergens(Json::arrayValue);
-        Json::Value quantities(Json::arrayValue);
-        Json::Value units(Json::arrayValue);
+        Json::Value products (Json::arrayValue);
         dish["name"] = name;
         dish["type"] = type;
-        dish["price"]["zlotys"] = price.get_zlotys();
-        dish["price"]["cents"] = price.get_cents();
+        dish["price"] = price.get_in_cents();
         dish["is_vegan"] = is_vegan;
-        dish["allergens"] = allergens;
+        //dish["allergens"] = allergens;
         for(const auto& value : ingredients){
-            names.append(value.get_name());
-            allergens.append(value.get_allergen());
-            quantities.append(value.get_quantity());
-            units.append(value.get_unit());
+            products.append(value.parse_to_json());
         }
-        dish["products"]["names"] = names;
-        dish["products"]["allergens"] = allergens;
-        dish["products"]["quantities"] = quantities;
-        dish["products"]["units"] = units;
+        dish["products"]=products;
         return dish;
-    };
+    }
+
+    static Dish parse_dish_from_json(Json::Value dish){
+        std::vector<Product> ingr;
+        for(auto it = dish["products"].begin(); it != dish["products"].end(); it++){
+            ingr.push_back(Product::json_to_product(*it));
+        }
+        return Dish(dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr);
+    }
 
     friend std::ostream& operator<<(std::ostream& os, Dish const& dish)
     {

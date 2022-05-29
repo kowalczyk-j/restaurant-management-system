@@ -52,7 +52,7 @@ class Product{
         *this += (-quantity_to_sub);
     }
 
-    Json::Value parse_to_json(){
+    Json::Value parse_to_json() const{
         Json::Value add;
         add["name"] = name;
         add["quantity"] = quantity;
@@ -62,8 +62,7 @@ class Product{
     }
 
     static Product json_to_product(Json::Value obj){
-        Product product(obj["name"].asString(), obj["quantity"].asInt(), ml, obj["allergen"].asString());
-        return product;
+        return  Product(obj["name"].asString(), obj["quantity"].asInt(), (units)obj["unit"].asInt(), obj["allergen"].asString());
     }
 
     void print_product(){

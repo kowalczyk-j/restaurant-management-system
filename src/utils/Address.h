@@ -53,4 +53,15 @@ class Addres{
         return add;
     }
 
+    static Addres read_from_json(Json::Value add){
+        return Addres(add["city"].asString(),
+                      add["postal_code"].asString(),
+                      add["street"].asString(),
+                      add["building"].asString(),
+                      add["country"].asString(),
+                      add["region"].asString(),
+                      add["coordinates"]["latitude"].asDouble(),
+                      add["coordinates"]["longitude"].asDouble());
+
+    }
 };
