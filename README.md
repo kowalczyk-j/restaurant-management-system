@@ -26,11 +26,11 @@ Oraz metody:
     - *get_salary()*, zwracająca pensję pracownika (Money)
     - *get_address()*, zwracająca adres pracownika (Addres)
 - ***settery***
-    - *set_name(string name)*, ustawiająca imię (void)
-    - *set_surname(string surname)*, ustawiająca nazwisko (void)
-    - *set_employee_id(unsigned int id)*, ustawiająca identyfikator pracownika (unsigned int)
-    - *set_salary(Money salary)*, ustawiająca pensję pracownika (Money)
-    - *set_address(Addres address)*, ustawiająca adres pracownika (Addres)
+    - *set_name(string name)*, ustawiająca imię
+    - *set_surname(string surname)*, ustawiająca nazwisko
+    - *set_employee_id(unsigned int id)*, ustawiająca identyfikator pracownika
+    - *set_salary(Money salary)*, ustawiająca pensję pracownika
+    - *set_address(Addres address)*, ustawiająca adres pracownika
 - *parse_to_json()*, wirtualna funkcja zwracająca dane pracownika przekonwertowane do formatu JSON (Json::Value)
 - *save_to_json(string path)*, zapisująca dane pracownika do pliku JSON (void)
 - *print(ostream& os)* wirtualna funkcja wysyłająca do strumienia dane o pracowniku
@@ -60,7 +60,8 @@ Oraz metody:
 - *fire(size_t position)*, usuwająca z wektora staff pracownika o danym indeksie. Wyrzuca wyjątek *PositionOutOfBounds*, gdy indeks jest większy niż ilość elementów w wektorze staff
 - *employ(const T& employee)*, dodaje pracownika do staff. Rzuca wyjątek *AlreadyStaffMember*, jeśli pracownik *employee* znajduje się już w kolekcji staff
 - *parse_to_json()*, zwracająca dane o każdym pracowniku (Json::Value)
+
 Zdefiniowane są również funkcje:
-- *parse_staff_from_json(string path)*, odczytująca pliki JSON i zwracająca obiekt typu Json::Value
-- *save_staff_to_json(Json::Value staff, string path), zapisująca dane do pliku JSON (void).
+- *parse_staff_from_json(string path)*, odczytująca plik JSON i zwracająca obiekt typu Json::Value
+- *save_staff_to_json(Json::Value staff, string path)*, zapisująca dane do pliku JSON.
 
