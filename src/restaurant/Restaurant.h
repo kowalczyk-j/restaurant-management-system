@@ -50,6 +50,13 @@ class Restaurant{
     void remove_delivery_order(unsigned int position){
         delivery_orders.erase(delivery_orders.begin()+position);
     }
+    void add_on_site_order(unsigned int id, std::vector<Dish> vd, unsigned t_id, unsigned int w_id){
+        OnSiteOrder delivery_order = OnSiteOrder(id, vd, t_id, w_id);
+        onsite_orders.push_back(delivery_order);
+    };
+    void remove_on_site_order(unsigned int position){
+        onsite_orders.erase(onsite_orders.begin()+position);
+    }
 
     Json::Value parse_to_json(){
         Json::Value restaurant;

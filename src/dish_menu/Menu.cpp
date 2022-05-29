@@ -24,7 +24,7 @@ Menu::Menu(std::vector<Dish> dishes)
     this->dishes = dishes;
 }
 
-std::ostream& operator<<(std::ostream& os, Menu const& menu)
+std::ostream& operator<<(std::ostream& os, Menu  menu)
 {
     bool dtypes[3] = {1, 1, 1};
     os << "---Menu---\n\n";

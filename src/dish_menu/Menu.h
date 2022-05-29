@@ -9,8 +9,9 @@ class Menu
     std::vector<Dish> dishes;
 
 public:
+    Menu(){};
     Menu(std::vector<Dish> dishes);
-    std::vector<Dish> const& get_dishes() const {return dishes;}
+    std::vector<Dish> & get_dishes()  {return dishes;}
     void set_dishes(std::vector<Dish> d) { dishes = d; }
     size_t size() const { return dishes.size(); }
     void add_dish(Dish const& dish);
@@ -47,5 +48,5 @@ public:
     // iterator end() const {
     //     return iterator(dishes.cbegin(), dishes.cend());
     // }
-    friend std::ostream &operator<<(std::ostream &os, Menu const &menu);
+    friend std::ostream &operator<<(std::ostream &os, Menu &menu);
 };

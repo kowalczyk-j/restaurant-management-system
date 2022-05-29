@@ -11,6 +11,7 @@
 #include "../change_category/changecategory.h"
 #include "../add_ingridient/addingridient.h"
 #include "../add_menu_dish/addmenudish.h"
+#include "../add_onsite_order/addosorder.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMainWindow>
@@ -105,7 +106,12 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::on_return_2_clicked(){
     if(ui->restaurantStack->currentIndex() == 0)
     ui->mainStack->setCurrentIndex(0);
-    else ui->restaurantStack->setCurrentIndex(0);
+    else{
+        ui->restaurantStack->setCurrentIndex(0);
+        ui->employeesNumber->setText(QString::number(restaurant->get_employees_id_set().size()));
+        ui->ordersNumber->setText(QString::number(restaurant->get_delivery_orders().size()));
+        ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
+    }
 
 }
 void MainWindow::on_selectRestaurant_clicked(){
@@ -126,9 +132,6 @@ void MainWindow::on_selectRestaurant_clicked(){
         ui->orderList->clear();
         ui->pantryList->clear();
         ui->employeeList->clear();
-        for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
-            ui->orderList->addItem(QString::number(restaurant->get_delivery_orders()[i].get_order_id()));
-        }
         for(unsigned int i=0; i<restaurant->get_pantry().get_all_products().size(); i++){
             ui->pantryList->addItem(QString::fromStdString(restaurant->get_pantry().get_all_products()[i]));
         }
@@ -156,6 +159,8 @@ void MainWindow::on_moveMenu_clicked(){
     ui->menuStack->setCurrentIndex(1);
 }
 void MainWindow::on_moveOrders_clicked(){
+    ui->orderType->setCurrentIndex(1);
+    ui->orderType->setCurrentIndex(0);
     ui->restaurantStack->setCurrentIndex(4);
     ui->orderStack->setCurrentIndex(1);
 }
@@ -186,17 +191,45 @@ void MainWindow::on_selectRole_currentIndexChanged(){
     }
 }
 
+void MainWindow::on_orderType_currentIndexChanged(){
+        position1 = ui->orderType->currentIndex();
+        ui->orderStack->setCurrentIndex(1);
+        ui->orderList->clear();
+        if(position1==0){
+            for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
+                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+            }
+        }
+        else {
+            for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
+                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+            }
+        }
+}
+
 void MainWindow::on_orderList_itemClicked(){
-    ui->orderedDishesDelivery->clear();
+    ui->orderedDishes->clear();
     size_t position = ui->orderList->currentRow();
-    restaurant->get_delivery_orders()[position];
-    ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[position].get_order_id())));
-    ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_order_value().to_string()));
-    ui->orderDelivery->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_delivery_address().to_string()));
-    for(unsigned int i=0; i<restaurant->get_delivery_orders()[position].get_ordered_dishes().size(); i++){
-        ui->orderedDishesDelivery->addItem(QString::fromStdString(restaurant->get_delivery_orders()[position].get_ordered_dishes()[i].get_name()));
+    if(position1==0){
+        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[position].get_order_id())));
+        ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_order_value().to_string()));
+        ui->orderDelivery->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_delivery_address().to_string()));
+        for(unsigned int i=0; i<restaurant->get_delivery_orders()[position].get_ordered_dishes().size(); i++){
+            ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_delivery_orders()[position].get_ordered_dishes()[i].get_name()));
+        }
+        ui->orderTypeStack->setCurrentIndex(0);
     }
-    ui->orderStack->setCurrentIndex(2);
+    else{
+        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[position].get_order_id())));
+        ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_onsite_orders()[position].get_order_value().to_string()));
+        for(unsigned int i=0; i<restaurant->get_onsite_orders()[position].get_ordered_dishes().size(); i++){
+            ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_onsite_orders()[position].get_ordered_dishes()[i].get_name()));
+        }
+        ui->orderTypeStack->setCurrentIndex(1);
+    }
+
+    ui->orderStack->setCurrentIndex(0);
+
 
 }
 
@@ -226,28 +259,72 @@ void MainWindow::on_modifyDeliveryAddress_clicked(){
 
 }
 
-void MainWindow::on_addDishDeliveryOrder_clicked(){
+void MainWindow::on_addDishOrder_clicked(){
+    int order_position = ui->orderList->currentRow();
     AddDish ad;
+    ad.set_menu(restaurant->get_menu());
     ad.setModal(true);
-    ad.exec();
+    if(ad.exec() == QDialog::Accepted){
+        if(position1==0){
+            restaurant->get_delivery_orders()[order_position].add_dish(ad.get_dish());
+            ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_delivery_orders()[order_position].get_order_value().to_string()));
+            ui->orderedDishes->clear();
+            for(unsigned int i=0; i<restaurant->get_delivery_orders()[order_position].get_ordered_dishes().size(); i++){
+                ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_delivery_orders()[order_position].get_ordered_dishes()[i].get_name()));
+            }
+        }
+        else{
+            restaurant->get_onsite_orders()[order_position].add_dish(ad.get_dish());
+        }
+    }
 }
 
-void MainWindow::on_removeDeliveryOrder_clicked(){
+void MainWindow::on_removeOrder_clicked(){
     int order_position = ui->orderList->currentRow();
+    ui->orderStack->setCurrentIndex(1);
+    ui->orderList->clear();
     if(order_position != -1){
         restaurant->remove_delivery_order(order_position);
-        ui->orderStack->setCurrentIndex(1);
-        ui->orderList->clear();
         for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
-            ui->orderList->addItem(QString::number(restaurant->get_delivery_orders()[i].get_order_id()));
+            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+        }
     }
+    else{
+        restaurant->remove_on_site_order(order_position);
+        for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
+            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+        }
     }
 }
 
-void MainWindow::on_addOrder_clicked(){
+void MainWindow::on_addOrderD_clicked(){
     AddOrder ao;
     ao.setModal(true);
-    ao.exec();
+    ao.set_menu(restaurant->get_menu());
+    if(ao.exec() == QDialog::Accepted){
+        restaurant->add_delivery_order(ao.get_number().toInt(), ao.get_orderedDishes(), Addres(ao.get_city().toStdString(), ao.get_postal_code().toStdString(), ao.get_street().toStdString(), ao.get_building().toStdString()), 0);
+        if(position1 == 0){
+            ui->orderList->clear();
+            for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
+                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+            }
+        }
+    }
+}
+
+void MainWindow::on_addOrderOS_clicked(){
+    AddOsOrder ao;
+    ao.setModal(true);
+    ao.set_menu(restaurant->get_menu());
+    if(ao.exec() == QDialog::Accepted){
+        restaurant->add_on_site_order(ao.get_number().toInt(), ao.get_orderedDishes(), ao.get_table_id().toInt(), 0);
+        if(position1 == 1){
+            ui->orderList->clear();
+            for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
+                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+            }
+        }
+    }
 }
 
 

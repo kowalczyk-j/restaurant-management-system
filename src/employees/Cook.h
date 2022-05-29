@@ -10,6 +10,7 @@ public:
          Employee(e_id, fname, lname,  a, sal), is_chef(chef) {};
     Cook(Json::Value cook_from_json) : Employee(cook_from_json), is_chef(cook_from_json["ischef"].asBool()) {};
 
+    bool get_ischef() {return is_chef;}
     void set_chef() {is_chef = true;}
     void remove_chef(){is_chef = false;}
 
