@@ -48,7 +48,7 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "id" : 1,
+            "id" : 3,
             "name" : "Tomasz",
             "position" : "deliverer",
             "salary" : 800000,
@@ -69,7 +69,7 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "id" : 1,
+            "id" : 4,
             "name" : "Jan",
             "position" : "manager",
             "salary" : 800000,
@@ -90,7 +90,7 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "id" : 1,
+            "id" : 2,
             "name" : "Alicja",
             "position" : "waiter",
             "salary" : 800000,
@@ -101,19 +101,17 @@
    "id" : 1,
    "menu" : [
       {
-         "allergens" : [],
          "is_vegan" : true,
          "name" : "zupa pomidorowa",
-         "price" : {
-            "cents" : 0,
-            "zlotys" : 5
-         },
-         "products" : {
-            "allergens" : [ "" ],
-            "names" : [ "Jabłko" ],
-            "quantities" : [ 670 ],
-            "units" : [ "g" ]
-         },
+         "price" : 500,
+         "products" : [
+            {
+               "allergen" : "",
+               "name" : "Jabłko",
+               "quantity" : 670,
+               "unit" : 1
+            }
+         ],
          "type" : 1
       }
    ],
@@ -134,13 +132,34 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "dishes" : [ "zupa pomidorowa" ],
+            "dishes" : [
+               {
+                  "is_vegan" : true,
+                  "name" : "zupa pomidorowa",
+                  "price" : 500,
+                  "products" : [
+                     {
+                        "allergen" : "",
+                        "name" : "Jabłko",
+                        "quantity" : 670,
+                        "unit" : 1
+                     }
+                  ],
+                  "type" : 1
+               }
+            ],
             "id" : 1
          }
       ],
       "on_site" : []
    },
    "pantry" : [
+      {
+         "allergen" : "",
+         "name" : "Kasz",
+         "quantity" : 34,
+         "unit" : 0
+      },
       {
          "allergen" : "",
          "name" : "Sok Jabłkowy",
