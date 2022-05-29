@@ -15,10 +15,10 @@ protected:
     Money salary;
 
 public:
-
     //konstruktor klasy z parametrami
     Employee(unsigned int e_id=0, std::string fname="", std::string lname="", Addres a = Addres(), Money sal = Money()) :
              employee_id(e_id),name(fname), surname(lname), address(a), salary(sal){};
+    Employee(Json::Value employee_from_json);
 
     //gettery
     std::string const& get_name() const {return name;}
@@ -34,9 +34,10 @@ public:
 
     //konwertery do formatu JSON
     Json::Value parse_to_json();
-    Json::Value parse_from_json(std::string path);
 
     bool operator==(Employee other) const {return (employee_id == other.employee_id);}
 
     void print(std::ostream& os) const;
 };
+
+Json::Value parse_employee_from_json(std::string path);

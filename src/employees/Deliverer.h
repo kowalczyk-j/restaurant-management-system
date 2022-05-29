@@ -11,6 +11,7 @@ private:
 public:
     Deliverer(unsigned int e_id, std::string fname, std::string lname, Addres a, Money sal) :
               Employee(e_id, fname, lname, a, sal) {};
+    Deliverer(Json::Value deliverer_from_json) : Employee(deliverer_from_json) {};
 
     void new_tip(Money tip) {tips += tip;}
 

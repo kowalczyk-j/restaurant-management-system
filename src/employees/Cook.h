@@ -8,6 +8,7 @@ private:
 public:
     Cook(unsigned int e_id, std::string fname, std::string lname, Addres a, Money sal, bool chef) :
          Employee(e_id, fname, lname,  a, sal), is_chef(chef) {};
+    Cook(Json::Value cook_from_json) : Employee(cook_from_json), is_chef(cook_from_json["ischef"].asBool()) {};
 
     void set_chef() {is_chef = true;}
     void remove_chef(){is_chef = false;}
