@@ -155,9 +155,9 @@
    },
    "pantry" : [
       {
-         "allergen" : "",
-         "name" : "Kasz",
-         "quantity" : 34,
+         "allergen" : "23",
+         "name" : "3",
+         "quantity" : 232,
          "unit" : 0
       },
       {

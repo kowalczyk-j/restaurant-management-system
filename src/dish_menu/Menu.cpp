@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctime>
-#include <fstream>   
+#include <fstream>
 #include <json/json.h>
 #include "Menu.h"
 
@@ -24,7 +24,7 @@ Menu::Menu(std::vector<Dish> dishes)
     this->dishes = dishes;
 }
 
-std::ostream& operator<<(std::ostream& os, Menu  menu)
+std::ostream& operator<<(std::ostream& os, Menu & menu)
 {
     bool dtypes[3] = {1, 1, 1};
     os << "---Menu---\n\n";
@@ -66,7 +66,7 @@ void Menu::generate_lunch_menu()
     file.open ("lunch.txt");
     std::time_t t = std::time(0);
     std::tm* now = std::localtime(&t);
-    file << "Lunch menu - " << (now->tm_year + 1900) << '.' 
+    file << "Lunch menu - " << (now->tm_year + 1900) << '.'
     << (now->tm_mon + 1) << '.' <<  now->tm_mday << "\n";
     vector<size_t> types;
     for (size_t i = 1; i < dishes.size(); i++)

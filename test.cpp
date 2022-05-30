@@ -138,18 +138,10 @@ TEST(employee, json_manager)
     EXPECT_EQ(employee["position"], "manager");
 }
 
-TEST(employee, save_to_json)
-{
-    Employee e(1, "name", "surname", Addres(), Money(10000));
-    e.save_to_json("employee.json");
-    std::ifstream file;
-    file.open("employee.json");
-    EXPECT_EQ(file.is_open(), true); // checks if file exists
-    file.close();
-}
-
 TEST(employee, create_employee_from_json)
 {
+    Employee e1(1, "name", "surname", Addres(), Money(10000));
+    e1.save_to_json("employee.json");
     Employee e(parse_employee_from_json("employee.json"));
     EXPECT_EQ(e.get_employee_id(), 1);
     EXPECT_EQ(e.get_name(), "name");
@@ -300,23 +292,4 @@ TEST(staff, position_new_value)
     std::vector<Waiter> expected{w1, w3};
     EXPECT_EQ(staff.get_staff(), expected);
     EXPECT_EQ(staff.size(), 2);
-}
-
-TEST(staff, save_to_json)
-{
-    Waiter w1(1, "name", "last name", Addres(), Money(10000));
-    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
-    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
-    Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
-    save_staff_to_json(staff.parse_to_json(), "waiters.json");
-    std::ifstream file;
-    file.open("waiters.json");
-    EXPECT_EQ(file.is_open(), true); // checks if file exists
-    file.close();
-}
-
-TEST(staff, create_staff_from_json)
-{
-    Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
-    EXPECT_EQ(staff.size(), 3);
 }
