@@ -24,11 +24,6 @@ class Pantry{
     Json::Value write_to_file_json();
     static Pantry read_from_file_json(Json::Value pan);
 
-    void write_to_file_csv();
-    void read_from_file_csv();
-
-
-    void generate_pretty_raport();
 };
 
 

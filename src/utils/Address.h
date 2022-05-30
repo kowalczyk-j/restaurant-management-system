@@ -3,18 +3,21 @@
 #pragma once
 
 class Addres{
-    std::string country;
-    std::string region;
-    std::string city;
-    std::string postal_code;
-    std::string street;
-    std::string building;
-    double latitude;
-    double longitude;
+    std::string country;        //kraj
+    std::string region;         //region (województwo)
+    std::string city;           //miasto
+    std::string postal_code;    //kod pocztowy
+    std::string street;         //ulica
+    std::string building;       //budynek
+    double latitude;            //szerokość geograficzna
+    double longitude;           //długość geograficzna
 
     public:
+    //konstruktor
     Addres(std::string ci="", std::string p_c="", std::string s="", std::string b="", std::string co="", std::string r="", double lat=0, double lng=0):
     country(co), region(r), city(ci), postal_code(p_c), street(s), building(b), latitude(lat), longitude(lng){};
+
+    //gettery
     std::string get_city(){return city;}
     std::string get_postal_code(){return postal_code;}
     std::string get_street(){return street;}
@@ -24,12 +27,15 @@ class Addres{
     double get_latitude(){return latitude;}
     double get_longitude(){return longitude;}
 
+    //settery
     void set_city(std::string c){city = c;}
     void set_postal_code(std::string p_c){postal_code = p_c;}
     void set_street(std::string s){street = s;}
     void set_building(std::string b){building = b;}
     void set_country(std::string c){country = c;}
     void set_region(std::string r){region = r;}
+    void set_latitude(double lat){latitude = lat;}
+    void set_longitude(double lng){longitude = lng;}
 
 
 
@@ -53,7 +59,7 @@ class Addres{
         return add;
     }
 
-    static Addres read_from_json(Json::Value add){
+    static Addres parse_from_json(Json::Value add){
         return Addres(add["city"].asString(),
                       add["postal_code"].asString(),
                       add["street"].asString(),
@@ -62,6 +68,5 @@ class Addres{
                       add["region"].asString(),
                       add["coordinates"]["latitude"].asDouble(),
                       add["coordinates"]["longitude"].asDouble());
-
     }
 };

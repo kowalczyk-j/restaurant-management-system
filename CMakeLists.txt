@@ -18,9 +18,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 FetchContent_MakeAvailable(jsoncpp)
 
-set(MENU src/dish_menu/Dish.h src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
+set(MENU src/dish_menu/Dish.h src/dish_menu/Dish.cpp src/dish_menu/Menu.h src/dish_menu/Menu.cpp)
 set(EMPLOYEES src/employees/Employee.h src/employees/Employee.cpp src/employees/Cook.h src/employees/Deliverer.h src/employees/Manager.h src/employees/Staff.h src/employees/Waiter.h)
-set(ORDER src/order/AbstractOrder.h src/order/DeliveryOrder.h src/order/OnSiteOrder.h)
+set(ORDER src/order/BaseOrder.h src/order/DeliveryOrder.h src/order/OnSiteOrder.h)
 set(PANTRY src/pantry/Pantry.h src/pantry/Pantry.cpp src/pantry/Product.h)
 set(RESTAURANT src/restaurant/Restaurant.h src/restaurant/Restaurant.cpp)
 set(UTILS src/utils/Address.h src/utils/Money.h src/utils/Money.cpp)
@@ -29,6 +29,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+<<<<<<< HEAD
 # add_executable(json_reader_example json_example/reader.cpp)
 # add_executable(json_writer_example json_example/writer.cpp)
 add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${UTILS})
@@ -38,3 +39,10 @@ target_link_libraries(tests PUBLIC gtest_main jsoncpp_lib)
 target_link_libraries(app jsoncpp_lib)
 # target_link_libraries(json_reader_example jsoncpp_lib)
 # target_link_libraries(json_writer_example jsoncpp_lib)
+=======
+add_executable(tests test.cpp ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
+add_executable(app main.cpp  ${MENU} ${EMPLOYEES} ${ORDER} ${PANTRY} ${RESTAURANT} ${UTILS})
+
+target_link_libraries(tests PUBLIC gtest_main jsoncpp_lib)
+target_link_libraries(app jsoncpp_lib)
+>>>>>>> 6343373c38a6f6524e7d46a149e33850ef4633aa

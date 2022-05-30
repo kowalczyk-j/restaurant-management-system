@@ -18,36 +18,8 @@ public:
     void remove_dish(unsigned int dish_idx);
 
     void generate_lunch_menu();
-    Json::Value parse_menu_to_json();
 
-    // class iterator
-    // {
-    //     std::vector<Dish>::const_iterator current;
-    //     std::vector<Dish>::const_iterator start;
-    //     std::vector<Dish>::const_iterator stop;
-    // public:
-    //     iterator(std::vector<Dish>::const_iterator const &cstart,
-    //             std::vector<Dish>::const_iterator const &cstop);
-    //     bool operator==(iterator const& rt) const
-    //     {
-    //         return (current == rt.current);
-    //     }
-    //     bool operator!=(iterator const& rt) const
-    //     {
-    //         return not operator==(rt);
-    //     }
-    //     iterator operator++();
-    //     Dish const& operator*() const
-    //     {
-    //         return *current;
-    //     }
-    // };
-    // iterator begin() const {
-    //     return iterator(dishes.cbegin(), dishes.cend());
-    // }
-    // iterator end() const {
-    //     return iterator(dishes.cbegin(), dishes.cend());
-    // }
+    Json::Value parse_menu_to_json();
     static Menu parse_from_json(Json::Value m);
 
     friend std::ostream &operator<<(std::ostream &os, Menu &menu);

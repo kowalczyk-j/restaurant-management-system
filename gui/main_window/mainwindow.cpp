@@ -30,11 +30,13 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+
     ifstream ifs("file.json");
     Json::Reader reader;
     Json::Value obj;
     reader.parse(ifs, obj);
-    Restaurant r1 = Restaurant::create_from_json(obj);
+    Restaurant r1 = Restaurant::parse_from_json(obj);
+
 
     Product p = Product("Jabłko",670, g);
     Product p1 = Product("Mięso",500, g);
@@ -403,31 +405,39 @@ void MainWindow::on_addEmployee_clicked(){
             Cook c = Cook(ae.get_id().toInt(), ae.get_name().toStdString(), ae.get_surname().toStdString(), a, m, 0);
             restaurant->get_cooks().employ(c);
             ui->employeeList->clear();
-            for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
-                ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_employee_id()) + ")"));
+            if(position1 == 0){
+                for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_employee_id()) + ")"));
+                }
             }
 
         }
         else if(ae.get_role_index() == 1){
             Deliverer d = Deliverer(ae.get_id().toInt(), ae.get_name().toStdString(), ae.get_surname().toStdString(), a, m);
             restaurant->get_deliverers().employ(d);
-            for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
-                ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_employee_id()) + ")"));
+            if(position1 == 1){
+                for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_employee_id()) + ")"));
+                }
             }
         }
         else if(ae.get_role_index() == 2){
             Manager man = Manager(ae.get_id().toInt(), ae.get_name().toStdString(), ae.get_surname().toStdString(), a, m);
             restaurant->get_managers().employ(man);
             ui->employeeList->clear();
-            for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
-                ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_employee_id()) + ")"));
+            if(position1 == 2){
+                for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_employee_id()) + ")"));
+                }
             }
         }
         else {
             Waiter w = Waiter(ae.get_id().toInt(), ae.get_name().toStdString(), ae.get_surname().toStdString(), a, m);
             restaurant->get_waiters().employ(w);
-            for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
-                ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_employee_id()) + ")"));
+            if(position1 == 3){
+                for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_employee_id()) + ")"));
+                }
             }
         }
     }

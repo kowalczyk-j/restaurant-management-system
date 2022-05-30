@@ -22,7 +22,7 @@ using namespace std;
     }
 
 
-    void Pantry::add_product(std::string name, int quantity, units unit, string allergen){//żeby patrzyło też czy laergen jest
+    void Pantry::add_product(std::string name, int quantity, units unit, string allergen){
         if (shell.find(name) == shell.end()){
             shell[name] = Product(name, quantity, unit, allergen);
         }
@@ -35,7 +35,6 @@ using namespace std;
     }
 
     void Pantry::remove_product(std::string name){
-        // tutaj nie wiem, czy nie będziemy potrzebować tego wyjątku (do GUI)
         try{
             shell.at(name);
         }
@@ -77,52 +76,6 @@ using namespace std;
             p.add_product(new_product);
         }
         return p;
-    }
-
-    /*
-    void Pantry::write_to_file_csv(){
-        ofstream file;
-        file.open("pantry_base.csv", ios::out);
-        if (file.is_open()){
-        for(auto it = shell.begin(); it != shell.end(); it++){
-            file << it->first << "," << it->second.get_quantity() << "," << it->second.get_unit();
-            for(auto it2 = it->second.get_allergen().begin(); it2 != it->second.get_allergen().end(); it2++){
-                file <<"," << *it2;
-            }
-            file << endl;
-        }
-        }
-        file.close();
-    }
-
-    void Pantry::read_from_file_csv(){
-        ifstream file;
-        file.open("pantry_base.csv", ios::in);
-        if (file.is_open()){
-        string line;
-        while(getline(file, line)){
-            string name;
-            int quantity;
-            units unit = ml;
-            string allergen;
-            std::string temp_s;
-            stringstream ss(line);
-            getline(ss, name, ',');
-            getline(ss, temp_s, ',');
-            //getline(ss, unit, ',');
-            string allergen_string;
-            while(getline(ss, allergen_string, ',')){
-                allergen.insert(allergen_string);
-            }
-            quantity = stoi(temp_s);
-            add_product(name, quantity, unit, allergen);
-        }
-        }
-        file.close();
-    }
-    */
-    void Pantry::generate_pretty_raport(){
-        return;
     }
 
 

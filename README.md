@@ -1,20 +1,37 @@
 # projekt_PROI_restauracja (Z05)
 *Kajetan Rożej, Kinga Świderek, Magdalena Dudek, Jakub Kowalczyk*
 
-Plik wykonywalny app2 został wyjątkowo dodany w celu prezentacji działania GUI.
-Zbudowanie tego pliku może nie być możliwe ze względu na wymagane biblioteki
-
 ## Struktura
 W skład naszego projektu wchodzą następujące foldery:
 - *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
 - *rsc*, zawierający grafiki wykorzystywane przez GUI
+- *lib*, zawierający zestaw bibiotek zewnętrznych niezbędnych do uruchoeminia GUI
 - *src*
     - *dish_menu*: klasy Dish oraz Menu
     - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter, oraz klasa szablonowa Staff
-    - *order*: klasa abstrakcyjna Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
+    - *order*: klasa bazowa Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
     - *pantry*: klasy Pantry oraz Product
     - *restaurant*: klasa Restaurant
     - *utils*: klasy Money oraz Addres, wykorzystywane w definicji powyższych klas
+
+## Uruchaminie
+
+UWAGA Plik wykonywalny guiApp został wyjątkowo dodany w celu prezentacji działania GUI.
+Zbudowanie tego pliku może nie być możliwe, umieszczono jednak CMakeList użyty do tego celu - jest on dostępny pod nazwą CMakeListGUI.txt .
+
+Komilacja programu dokonywana jest poprzez program CMake. W folderze projektu z konsoli należy wywołać
+cmake --build {ścieżka_do_projektu}/build --config Debug --target app -j 6 --
+(przykładowy program, wypiszę kilka rzeczy na ekranie)
+lub
+cmake --build {ścieżka_do_projektu}/build --config Debug --target tests -j 6 --
+(testy jednostkowe do wybranych klas).
+
+Aby uruchomić aplikację w trybie z interfejsem graficznym należy wywołać następującą komende:
+export LD_LIBRARY_PATH={ścieżka_do_projeku}/lib/lib/ && ./guiApp
+
+W każdym z powyższych przypadków {ścieżka_do_projektu} powinno zostać zastąpione pełną ścieżką do projektu.
+
+
 
 ### Employee
 Klasa bazowa pracownika. Zawiera pola:
@@ -76,5 +93,28 @@ Zdefiniowane są również funkcje:
 - *save_staff_to_json(Json::Value staff, string path)*, zapisująca dane do pliku JSON.
 
 
-Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test. 
+Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test.
 
+
+### GUI
+Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
+programu z plikami .ui, .cpp i .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI.
+
+UWAGA! Ze względu na brak czasu obsługa wyjątków z poziozmu GUI nie została zaimplamentowana. W związku z tym operacje takie jak:
+- dodanie zamówienia o takim samym id jak zamówienie istniejące
+- dodanie pracownika o takim samym id jak zamówienie istniejące
+- usunięcie ilości produktu do wartości mniejszej niż 0
+spowodują zamknięcie okna programu
+
+### Orders
+Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
+obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
+
+### Restaurant
+Klasa reprexentująca całą restaurację wraz z:
+- spiżarnią
+- menu
+- pracownikami(kucharzami, dostawcami, managerami, kelnerami)
+- aktywnymi zamówieniami(na miejscu i z dostawą)
+
+Poszczególne atrybuty i metody klasy zostały opisane w jej definicji. Jest to główna klasa programu.

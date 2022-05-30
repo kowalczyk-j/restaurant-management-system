@@ -55,6 +55,9 @@
     }
 
     std::string Money::to_string() const{
+    /*
+        Zwraca tekstową reprezentację klasy
+    */
         std::string res;
         if (get_cents() < 10){
             res += std::to_string(get_zlotys());
@@ -75,10 +78,5 @@
 
 
 std::ostream& operator<<(std::ostream& os, Money const& m){
-    if (m.get_cents() < 10){
-        return os << m.get_zlotys() << ",0"<< m.get_cents()<<"zł";
-    }
-    else{
-        return os << m.get_zlotys() << ','<<  m.get_cents()<<"zł";
-    }
+    return os << m.to_string();
 }

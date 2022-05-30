@@ -143,6 +143,12 @@
    },
    "pantry" : [
       {
+         "allergen" : "23",
+         "name" : "3",
+         "quantity" : 232,
+         "unit" : 0
+      },
+      {
          "allergen" : "",
          "name" : "Sok Jabłkowy",
          "quantity" : 1000,
