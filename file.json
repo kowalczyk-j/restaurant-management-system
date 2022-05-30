@@ -103,7 +103,10 @@
       {
          "is_vegan" : true,
          "name" : "zupa pomidorowa",
-         "price" : 500,
+         "price" : {
+            "cents" : 0,
+            "zlotys" : 5
+         },
          "products" : [
             {
                "allergen" : "",
@@ -132,34 +135,13 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "dishes" : [
-               {
-                  "is_vegan" : true,
-                  "name" : "zupa pomidorowa",
-                  "price" : 500,
-                  "products" : [
-                     {
-                        "allergen" : "",
-                        "name" : "Jabłko",
-                        "quantity" : 670,
-                        "unit" : 1
-                     }
-                  ],
-                  "type" : 1
-               }
-            ],
+            "dishes" : [ "zupa pomidorowa" ],
             "id" : 1
          }
       ],
       "on_site" : []
    },
    "pantry" : [
-      {
-         "allergen" : "",
-         "name" : "Kasz",
-         "quantity" : 34,
-         "unit" : 0
-      },
       {
          "allergen" : "",
          "name" : "Sok Jabłkowy",
