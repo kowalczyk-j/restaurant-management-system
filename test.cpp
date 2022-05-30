@@ -5,6 +5,8 @@
 #include "src/employees/Waiter.h"
 #include "src/employees/Staff.h"
 #include "src/dish_menu/Menu.h"
+#include "src/pantry/Product.h"
+#include "src/pantry/Pantry.h"
 
 TEST(employee, create_employee)
 {
@@ -310,25 +312,149 @@ TEST(staff, position_new_value)
     EXPECT_EQ(staff.get_staff(), expected);
     EXPECT_EQ(staff.size(), 2);
 }
+/*
+TEST(staff, save_to_json)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
+    save_staff_to_json(staff.parse_to_json(), "waiters.json");
+    std::ifstream file;
+    file.open("waiters.json");
+    EXPECT_EQ(file.is_open(), true); // checks if file exists
+    file.close();
+}
 
-// TEST(staff, save_to_json)
-// {
-//     Waiter w1(1, "name", "last name", Addres(), Money(10000));
-//     Waiter w2(2, "name2", "last name", Addres(), Money(10000));
-//     Waiter w3(3, "name3", "last name", Addres(), Money(10000));
-//     Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
-//     save_staff_to_json(staff.parse_to_json(), "waiters.json");
-//     std::ifstream file;
-//     file.open("waiters.json");
-//     EXPECT_EQ(file.is_open(), true); // checks if file exists
-//     file.close();
-// }
+TEST(staff, create_staff_from_json)
+{
+    Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
+    EXPECT_EQ(staff.size(), 3);
+}
+ */
 
-// TEST(staff, create_staff_from_json)
-// {
-//     Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
-//     EXPECT_EQ(staff.size(), 3);
-// }
+//-----------------------------PRODUCT/PANTRY testing
+
+
+TEST(product, create_empty_product)
+{
+    Product p;
+    EXPECT_EQ(p.get_name(), "");
+    EXPECT_EQ(p.get_quantity(), 0);
+    EXPECT_EQ(p.get_enum_unit(), none);
+    EXPECT_EQ(p.get_allergen(), "");
+}
+
+
+TEST(product, create_product)
+{
+    Product p("name", 10, ml, "allergen");
+    EXPECT_EQ(p.get_name(), "name");
+    EXPECT_EQ(p.get_quantity(), 10);
+    EXPECT_EQ(p.get_enum_unit(), ml);
+    EXPECT_EQ(p.get_allergen(), "allergen");
+}
+
+
+TEST(product, test_setters)
+{
+    Product p("name", 10, ml, "allergen");
+    p.set_name("new name");
+    p.set_quantity(20);
+    p.set_allergen("new allergen");
+    EXPECT_EQ(p.get_name(), "new name");
+    EXPECT_EQ(p.get_quantity(), 20);
+    EXPECT_EQ(p.get_allergen(), "new allergen");
+}
+
+TEST(product, quantity_operators)
+{
+    Product p("name", 10, ml, "allergen");
+    p += 10;
+    EXPECT_EQ(p.get_quantity(), 20);
+    p -= 10;
+    EXPECT_EQ(p.get_quantity(), 10);
+    p -= 10;
+    EXPECT_EQ(p.get_quantity(), 0);
+
+}
+
+TEST(product, throw_exception_while_adding_negative_quantity)
+{
+    // this tests _that_ the expected exception is thrown
+    EXPECT_THROW({
+        try
+        {
+            Product p("name", 10, ml, "allergen");
+            p += -20;
+            }
+        catch( const invalid_argument& e )
+        {
+            // and this tests that it has the correct message
+            EXPECT_STREQ( "Quantity cannot be negative!", e.what() );
+            throw;
+        }
+    }, invalid_argument);
+}
+
+TEST(pantry, create_empty_pantry)
+{
+    Pantry p;
+    EXPECT_EQ(p.get_all_products().size(), 0);
+}
+
+TEST(pantry, add_product)
+{
+    Pantry p;
+    Product p1("name", 10, ml, "allergen");
+    p.add_product(p1);
+    EXPECT_EQ(p.get_all_products().size(), 1);
+}
+
+TEST(pantry, add_quantity)
+{
+    Pantry p;
+    Product p1("name", 10, ml, "allergen");
+    p.add_product(p1);
+    p.add_quantity("name", 10);
+    EXPECT_EQ(p.get_all_products().size(), 1);
+    EXPECT_EQ(p.get_product("name").get_quantity(), 20);
+}
+
+TEST(pantry, remove_quantity)
+{
+    Pantry p;
+    Product p1("name", 10, ml, "allergen");
+    p.add_product(p1);
+    p.remove_quantity("name", 10);
+    EXPECT_EQ(p.get_all_products().size(), 1);
+    EXPECT_EQ(p.get_product("name").get_quantity(), 0);
+}
+
+TEST(pantry, add_product_object)
+{
+    Pantry p;
+    Product p1("name", 10, ml, "allergen");
+    p.add_product(p1);
+    EXPECT_EQ(p.get_all_products().size(), 1);
+}
+
+TEST(pantry, add_product_manually)
+{
+    Pantry p;
+    p.add_product("name", 10, ml, "allergen");
+    EXPECT_EQ(p.get_all_products().size(), 1);
+
+}
+
+TEST(pantry, remove_product_by_name)
+{
+    Pantry p;
+    Product p1("name", 10, ml, "allergen");
+    p.add_product(p1);
+    p.remove_product("name");
+    EXPECT_EQ(p.get_all_products().size(), 0);
+}
 
 TEST(dish, create_dish)
 {
@@ -345,7 +471,7 @@ TEST(dish, json_dish)
 {
     Product p1("cebula", 1, szt);
     Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
-    
+
     Json::Value dish = d1.parse_dish_to_json();
     EXPECT_EQ(dish["name"], "Kaszanka");
     EXPECT_EQ(dish["type"], (int)2);
