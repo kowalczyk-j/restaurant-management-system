@@ -8,6 +8,8 @@
 #include "../utils/Money.h"
 #include "../pantry/Product.h"
 
+enum dish_exceptions {NegativeIndex, IndexOutOfBounds};
+
 enum dish_type {zupa, przystawka, danie_glowne, deser, napoje};
 
 class Dish
@@ -21,7 +23,7 @@ class Dish
 
 public:
     Dish(std::string n, dish_type t, Money pr,
-    bool veg, std::vector<Product> ingr, set<std::string> allerg={});
+    bool veg, std::vector<Product> ingr={}, set<std::string> allerg={});
 
     std::string get_name() const { return name; }
     std::string get_dish_type(){
@@ -42,7 +44,7 @@ public:
     void set_allergens(set<std::string> a) { allergens=a; }
 
     void add_ingiridnet(Product ingr){ingredients.push_back(ingr);}
-    void remove_ingridient(int position){ingredients.erase(ingredients.begin() + position);}
+    void remove_ingridient(int position);
 
     void print_ingredients() const;
     void print_allergens() const;

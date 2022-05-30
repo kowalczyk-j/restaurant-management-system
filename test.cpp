@@ -4,6 +4,7 @@
 #include "src/employees/Manager.h"
 #include "src/employees/Waiter.h"
 #include "src/employees/Staff.h"
+#include "src/dish_menu/Menu.h"
 
 TEST(employee, create_employee)
 {
@@ -310,24 +311,24 @@ TEST(staff, position_new_value)
     EXPECT_EQ(staff.size(), 2);
 }
 
-TEST(staff, save_to_json)
-{
-    Waiter w1(1, "name", "last name", Addres(), Money(10000));
-    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
-    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
-    Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
-    save_staff_to_json(staff.parse_to_json(), "waiters.json");
-    std::ifstream file;
-    file.open("waiters.json");
-    EXPECT_EQ(file.is_open(), true); // checks if file exists
-    file.close();
-}
+// TEST(staff, save_to_json)
+// {
+//     Waiter w1(1, "name", "last name", Addres(), Money(10000));
+//     Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+//     Waiter w3(3, "name3", "last name", Addres(), Money(10000));
+//     Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
+//     save_staff_to_json(staff.parse_to_json(), "waiters.json");
+//     std::ifstream file;
+//     file.open("waiters.json");
+//     EXPECT_EQ(file.is_open(), true); // checks if file exists
+//     file.close();
+// }
 
-TEST(staff, create_staff_from_json)
-{
-    Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
-    EXPECT_EQ(staff.size(), 3);
-}
+// TEST(staff, create_staff_from_json)
+// {
+//     Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
+//     EXPECT_EQ(staff.size(), 3);
+// }
 
 TEST(dish, create_dish)
 {
@@ -360,3 +361,138 @@ TEST(dish, json_dish)
     EXPECT_EQ(dish["products"][0]["unit"], product_unit);
 }
 
+TEST(dish, add_ingredient)
+{
+    Product p1("cebula", 1, szt);
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
+    Product p2("sos", 30, ml);
+    d1.add_ingiridnet(p2);
+    EXPECT_EQ(d1.get_ingredients().size(), 2);
+    EXPECT_EQ(d1.get_ingredients()[0].get_name(), p1.get_name());
+    EXPECT_EQ(d1.get_ingredients()[1].get_name(), p2.get_name());
+}
+
+TEST(dish, remove_ingredient)
+{
+    Product p1("cebula", 1, szt);
+    Product p2("sos", 30, ml);
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
+    d1.remove_ingridient(2);
+    EXPECT_EQ(d1.get_ingredients().size(), 1);
+    EXPECT_EQ(d1.get_ingredients()[0].get_name(), p1.get_name());
+}
+
+TEST(dish, remove_ingredient_errors)
+{
+    Product p1("cebula", 1, szt);
+    Product p2("sos", 30, ml);
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
+    EXPECT_THROW(d1.remove_ingridient(3), dish_exceptions);
+    EXPECT_THROW(d1.remove_ingridient(-1), dish_exceptions);
+}
+
+TEST(dish, print_alergens)
+{
+    Product p1("cebula", 1, szt, "alergen1");
+    Product p2("sos", 30, ml, "alergen2");
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen", "alergen1"});
+
+    testing::internal::CaptureStdout();
+    d1.print_allergens();
+    std::string output = testing::internal::GetCapturedStdout();
+    std::string expected = "Alergeny: alergen, alergen1, alergen2\n";
+    EXPECT_EQ(output, expected);
+}
+
+TEST(dish, print_ingredients)
+{
+    Product p1("cebula", 1, szt, "alergen1");
+    Product p2("sos", 30, ml, "alergen2");
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen", "alergen1"});
+
+    testing::internal::CaptureStdout();
+    d1.print_ingredients();
+    std::string output = testing::internal::GetCapturedStdout();
+    std::string expected = "Lista składników - Kaszanka: \ncebula - 1 szt; \nsos - 30 ml; \n";
+    EXPECT_EQ(output, expected);
+}
+
+TEST(menu, create_menu)
+{
+    Dish d1("jajka z orzechami", przystawka, Money(500), 0, {}, {"jaja", "orzechy"});
+    Dish d2("szarlotka", deser, Money(600), 1, {});
+    Dish d3("schabowy z ziemniakami", danie_glowne, Money(600), 1, {});
+    Dish d4("cola", napoje, Money(600), 1, {});
+    std::vector<Dish> dishes = {d4, d2, d3, d1};
+    Menu m = Menu(dishes);
+
+    testing::internal::CaptureStdout();
+    std::cout << m;
+    std::string output = testing::internal::GetCapturedStdout();
+    std::string expected = "---Menu---\n\nPrzystawki:\njajka z orzechami\t5,00zł\n\nDania główne:\nschabowy z ziemniakami\t6,00zł\n\nDesery:\nszarlotka\t6,00zł\n\nNapoje:\ncola\t6,00zł\n";
+    EXPECT_EQ(output, expected);
+}
+
+TEST(menu, add_dish)
+{
+    Dish d1("jajka z orzechami", przystawka, Money(500), 0, {}, {"jaja", "orzechy"});
+    Dish d2("szarlotka", deser, Money(600), 1, {});
+    Dish d3("schabowy z ziemniakami", danie_glowne, Money(600), 1, {});
+    std::vector<Dish> dishes = {d2, d3, d1};
+    Menu m = Menu(dishes);
+    Dish d4("cola", napoje, Money(600), 1, {});
+    m.add_dish(d4);
+    EXPECT_EQ(m.size(), 4);
+    EXPECT_EQ(m.get_dishes()[3].get_name(), d4.get_name());
+}
+
+TEST(menu, remove_dish)
+{
+    Dish d1("jajka z orzechami", przystawka, Money(500), 0, {}, {"jaja", "orzechy"});
+    Dish d2("szarlotka", deser, Money(600), 1, {});
+    Dish d3("schabowy z ziemniakami", danie_glowne, Money(600), 1, {});
+    Dish d4("cola", napoje, Money(600), 1, {});
+    std::vector<Dish> dishes = {d2, d3, d1, d4};
+    Menu m = Menu(dishes);
+    m.remove_dish(4);
+    EXPECT_EQ(m.size(), 3);
+    EXPECT_EQ(m.get_dishes()[0].get_name(), d1.get_name());
+    EXPECT_EQ(m.get_dishes()[1].get_name(), d3.get_name());
+    EXPECT_EQ(m.get_dishes()[2].get_name(), d2.get_name());
+}
+
+TEST(menu, remove_dish_error)
+{
+    Dish d1("jajka z orzechami", przystawka, Money(500), 0, {}, {"jaja", "orzechy"});
+    Dish d2("szarlotka", deser, Money(600), 1, {});
+    Dish d3("schabowy z ziemniakami", danie_glowne, Money(600), 1, {});
+    Dish d4("cola", napoje, Money(600), 1, {});
+    std::vector<Dish> dishes = {d2, d3, d1, d4};
+    Menu m = Menu(dishes);
+    EXPECT_THROW(m.remove_dish(5), menu_exceptions);
+}
+
+TEST(menu, json_menu)
+{
+    Product p1("cebula", 1, szt);
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
+    Dish d2("szarlotka", deser, Money(600), 1, {});
+    Dish d3("schabowy z ziemniakami", deser, Money(600), 1, {});
+    Dish d4("cola", napoje, Money(600), 1, {});
+    std::vector<Dish> dishes = {d2, d1, d3, d4};
+    Menu m = Menu(dishes);
+    
+    Json::Value menu = m.parse_menu_to_json();
+    EXPECT_EQ(menu[0]["name"], "Kaszanka");
+    EXPECT_EQ(menu[0]["type"], (int)2);
+    EXPECT_EQ(menu[0]["price"], (unsigned int)600);
+    EXPECT_EQ(menu[0]["is_vegan"], (bool)0);
+    std::string allergens = menu[0]["allergens"][0].asString();
+    EXPECT_EQ(allergens, "alergen");
+    std::string product_name = menu[0]["products"][0]["name"].asString();
+    int product_quantity = menu[0]["products"][0]["quantity"].asInt();
+    int product_unit = menu[0]["products"][0]["unit"].asInt();
+    EXPECT_EQ(menu[0]["products"][0]["name"], product_name);
+    EXPECT_EQ(menu[0]["products"][0]["quantity"], product_quantity);
+    EXPECT_EQ(menu[0]["products"][0]["unit"], product_unit);
+}

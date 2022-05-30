@@ -57,6 +57,7 @@ void Menu::add_dish(Dish const& dish)
 }
 void Menu::remove_dish(unsigned int dish_idx)
 {
+    if(dish_idx > (unsigned int)dishes.size()) throw IndexOutOfRange;
     dishes.erase(dishes.begin() + dish_idx);
 }
 

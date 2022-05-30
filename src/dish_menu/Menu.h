@@ -4,6 +4,8 @@
 #include "Dish.h"
 #include <json/json.h>
 
+enum menu_exceptions {IndexOutOfRange};
+
 class Menu
 {
     std::vector<Dish> dishes;
@@ -14,6 +16,7 @@ public:
     std::vector<Dish> & get_dishes()  {return dishes;}
     void set_dishes(std::vector<Dish> d) { dishes = d; }
     size_t size() const { return dishes.size(); }
+
     void add_dish(Dish const& dish);
     void remove_dish(unsigned int dish_idx);
 
