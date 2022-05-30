@@ -265,6 +265,14 @@ TEST(staff, fire_out_of_bounds)
     EXPECT_THROW(staff.fire(3), StaffExceptions);
 }
 
+TEST(staff, fire_negative_index)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_THROW(staff.fire(-3), StaffExceptions);
+}
+
 TEST(staff, position)
 {
     Waiter w1(1, "name", "last name", Addres(), Money(10000));
@@ -282,6 +290,14 @@ TEST(staff, position_out_of_bounds)
     EXPECT_THROW(staff[3], StaffExceptions);
 }
 
+TEST(staff, position_negative_index)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2});
+    EXPECT_THROW(staff[-1], StaffExceptions);
+}
+
 TEST(staff, position_new_value)
 {
     Waiter w1(1, "name", "last name", Addres(), Money(10000));
@@ -293,3 +309,54 @@ TEST(staff, position_new_value)
     EXPECT_EQ(staff.get_staff(), expected);
     EXPECT_EQ(staff.size(), 2);
 }
+
+TEST(staff, save_to_json)
+{
+    Waiter w1(1, "name", "last name", Addres(), Money(10000));
+    Waiter w2(2, "name2", "last name", Addres(), Money(10000));
+    Waiter w3(3, "name3", "last name", Addres(), Money(10000));
+    Staff<Waiter> staff(std::vector<Waiter>{w1, w2, w3});
+    save_staff_to_json(staff.parse_to_json(), "waiters.json");
+    std::ifstream file;
+    file.open("waiters.json");
+    EXPECT_EQ(file.is_open(), true); // checks if file exists
+    file.close();
+}
+
+TEST(staff, create_staff_from_json)
+{
+    Staff<Waiter> staff(parse_staff_from_json("waiters.json"));
+    EXPECT_EQ(staff.size(), 3);
+}
+
+TEST(dish, create_dish)
+{
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0);
+
+    testing::internal::CaptureStdout();
+    std::cout << d1;
+    std::string output = testing::internal::GetCapturedStdout();
+    std::string expected = "Kaszanka\t6,00zł\n";
+    EXPECT_EQ(output, expected);
+}
+
+TEST(dish, json_dish)
+{
+    Product p1("cebula", 1, szt);
+    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
+    
+    Json::Value dish = d1.parse_dish_to_json();
+    EXPECT_EQ(dish["name"], "Kaszanka");
+    EXPECT_EQ(dish["type"], (int)2);
+    EXPECT_EQ(dish["price"], (unsigned int)600);
+    EXPECT_EQ(dish["is_vegan"], (bool)0);
+    std::string allergens = dish["allergens"][0].asString();
+    EXPECT_EQ(allergens, "alergen");
+    std::string product_name = dish["products"][0]["name"].asString();
+    int product_quantity = dish["products"][0]["quantity"].asInt();
+    int product_unit = dish["products"][0]["unit"].asInt();
+    EXPECT_EQ(dish["products"][0]["name"], product_name);
+    EXPECT_EQ(dish["products"][0]["quantity"], product_quantity);
+    EXPECT_EQ(dish["products"][0]["unit"], product_unit);
+}
+
