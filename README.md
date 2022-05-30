@@ -1,6 +1,9 @@
 # projekt_PROI_restauracja (Z05)
 *Kajetan Rożej, Kinga Świderek, Magdalena Dudek, Jakub Kowalczyk*
 
+## Tematyka projektu oraz krótki opis
+Stworzyliśmy program, który pomoże menadżerowi sieci restauracji w zarządzaniu lokalami i personelem. Całość została przedstawiona w przyjaznym dla użytkownika GUI. Za jego pomocą można wprowadzać do systemu nowe zamówienia, modyfikować menu danej restauracji, ustalać nowe pensje pracowników, zmieniać skład kadry czy chociażby kontrolować stan spiżarni.
+
 ## Struktura
 W skład naszego projektu wchodzą następujące foldery:
 - *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
@@ -93,9 +96,6 @@ Zdefiniowane są również funkcje:
 - *save_staff_to_json(Json::Value staff, string path)*, zapisująca dane do pliku JSON.
 
 
-Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test.
-
-
 ### GUI
 Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
 programu z plikami .ui, .cpp i .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI.
@@ -118,3 +118,6 @@ Klasa reprexentująca całą restaurację wraz z:
 - aktywnymi zamówieniami(na miejscu i z dostawą)
 
 Poszczególne atrybuty i metody klasy zostały opisane w jej definicji. Jest to główna klasa programu.
+
+### Testy jednostkowe
+Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test. Staraliśmy się testować zarówno przypadki skrajne, jak i typowe. Ważnym elementem testów jest sprawdzenie zdefiniowanych wyjątków - czy są prawiłowo obsłużone. W przypadku testowania zapisu i odczytu plików json, skupiliśmy się na przetestowaniu ich za pomocą pisania kodu w main.cpp. Zwracanie wartości Json::Value i jej prawidłowe formatowanie umieśliśmy również w Google testach.
