@@ -1,20 +1,29 @@
-#include "src/restaurant/RestaurantNet.h"
+//#include "src/restaurant/RestaurantNet.h"
 #include <json/json.h>
 #include <fstream>
+#include "src/pantry/Pantry.h"
+#include "src/pantry/Product.h"
 
 using namespace std;
 
 int main(){
     Product p = Product("Jabłko",670, g);
-    Product p1 = Product("Mięso",500, g);
+    //Product p1 = Product("Mięso",500, g);
     Product p2 = Product("Sok Jabłkowy",1000, ml);
     Product p3 = Product("jajka",60, szt);
     Product p4  = Product("koperek",100, g);
     Product p5 = Product("ziemniaki",4000, g);
-    cout << p.get_name()<< " " << p.get_quantity() << " " << p.get_unit() << endl;
+    //cout << p.get_name()<< " " << p.get_quantity() << " " << p.get_unit() << endl;
 
 
     Pantry pan;
+    Product p1("name", 10, ml, "allergen");
+    pan.add_product(p1);
+    pan.add_quantity("name", 10);
+
+    cout <<pan.get_product("name").get_quantity() << endl;
+    /*
+    pan.write_to_file_json();
     set<string> s;
     pan.add_product("jablko", 6, g, "");
 
@@ -34,7 +43,7 @@ int main(){
     std::vector<DeliveryOrder*> vde;
     vde.push_back(os);
     Restaurant r1 =  Restaurant(1, "Magnoliowa", a1, pan, m, vc, vd, vm, vw, vde);
-    Restaurant r2 =  Restaurant(2, "Różana", a2, pan, m, vc, vd, vm, vw, vde);*/
+    Restaurant r2 =  Restaurant(2, "Różana", a2, pan, m, vc, vd, vm, vw, vde);
 
     DeliveryOrder oso =  DeliveryOrder(1, dishes, a, 10);
     vector<DeliveryOrder*> vd;
@@ -61,5 +70,6 @@ int main(){
 
     d1.print_ingredients();
     d1.print_allergens();
+    */
     return 0;
 }
