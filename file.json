@@ -3,8 +3,8 @@
       "building" : "1",
       "city" : "Warszawa",
       "coordinates" : {
-         "latitude" : 52.220154000000001,
-         "longitude" : 21.011968
+         "latitude" : 52.216183999999998,
+         "longitude" : 20.239073000000001
       },
       "country" : "Polska",
       "postal_code" : "00-000",
@@ -34,27 +34,7 @@
             "surname" : "Wiśniewski"
          }
       ],
-      "deliverers" : [
-         {
-            "address" : {
-               "building" : "1",
-               "city" : "Warszawa",
-               "coordinates" : {
-                  "latitude" : 52.220154000000001,
-                  "longitude" : 21.011968
-               },
-               "country" : "Polska",
-               "postal_code" : "00-000",
-               "region" : "Mazowieckie",
-               "street" : "Plac Politechniki"
-            },
-            "id" : 3,
-            "name" : "Tomasz",
-            "position" : "deliverer",
-            "salary" : 800000,
-            "surname" : "Niewierny"
-         }
-      ],
+      "deliverers" : [],
       "managers" : [
          {
             "address" : {
@@ -98,15 +78,13 @@
          }
       ]
    },
-   "id" : 1,
+   "id" : 2,
    "menu" : [
       {
+         "allergens" : [],
          "is_vegan" : true,
          "name" : "zupa pomidorowa",
-         "price" : {
-            "cents" : 0,
-            "zlotys" : 5
-         },
+         "price" : 500,
          "products" : [
             {
                "allergen" : "",
@@ -118,7 +96,7 @@
          "type" : 1
       }
    ],
-   "name" : "Magnoliowa",
+   "name" : "Różana",
    "orders" : {
       "delivery" : [
          {
@@ -135,7 +113,23 @@
                "region" : "Mazowieckie",
                "street" : "Plac Politechniki"
             },
-            "dishes" : [ "zupa pomidorowa" ],
+            "dishes" : [
+               {
+                  "allergens" : [],
+                  "is_vegan" : true,
+                  "name" : "zupa pomidorowa",
+                  "price" : 500,
+                  "products" : [
+                     {
+                        "allergen" : "",
+                        "name" : "Jabłko",
+                        "quantity" : 670,
+                        "unit" : 1
+                     }
+                  ],
+                  "type" : 1
+               }
+            ],
             "id" : 1
          }
       ],
@@ -143,15 +137,9 @@
    },
    "pantry" : [
       {
-         "allergen" : "23",
-         "name" : "3",
-         "quantity" : 232,
-         "unit" : 0
-      },
-      {
          "allergen" : "",
          "name" : "Sok Jabłkowy",
-         "quantity" : 1000,
+         "quantity" : 200,
          "unit" : 0
       },
       {

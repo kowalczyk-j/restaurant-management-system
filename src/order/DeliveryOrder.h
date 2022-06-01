@@ -8,11 +8,13 @@ class DeliveryOrder : public BaseOrder{
     unsigned int deliverer_id;      //id dostawcy
 
     public:
-    DeliveryOrder(unsigned int id, std::vector<Dish> o_d, Addres a, unsigned int d_id): BaseOrder(id, o_d), delivery_address(a), deliverer_id(d_id){};
+    DeliveryOrder(std::vector<unsigned int> o_d, unsigned int e_id, Addres a): BaseOrder(o_d, e_id), delivery_address(a){};
+    virtual ~DeliveryOrder(){};
     Addres & get_delivery_address(){return delivery_address;}
     unsigned int get_deliverer_id() const{return deliverer_id;}
 
     //operacje na obiektach JSON
+    /*
     virtual Json::Value parse_to_JSON(){
         Json::Value Delivery = BaseOrder::parse_to_JSON();
         Delivery["delivery_address"] = get_delivery_address().parse_to_json();
@@ -27,4 +29,5 @@ class DeliveryOrder : public BaseOrder{
         }
         return DeliveryOrder(dor["id"].asInt(), ordered_dishes, Addres::parse_from_json(dor["delivery_address"]), dor["deliverer_id"].asInt());
     }
+    */
 };

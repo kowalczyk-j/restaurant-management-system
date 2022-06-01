@@ -146,7 +146,7 @@ TEST(employee, create_employee_from_json)
     Employee e1(1, "name", "surname", Addres(), Money(10000));
     e1.save_to_json("employee.json");
     Employee e(parse_employee_from_json("employee.json"));
-    EXPECT_EQ(e.get_employee_id(), 1);
+    EXPECT_EQ(e.get_id(), 1);
     EXPECT_EQ(e.get_name(), "name");
     EXPECT_EQ(e.get_salary(), Money(10000));
     EXPECT_EQ(e.get_surname(), "surname");
@@ -157,7 +157,7 @@ TEST(employee, create_cook_from_json)
     Cook c1(1, "name", "surname", Addres(), Money(10000), false);
     c1.save_to_json("cook.json");
     Cook c2(parse_employee_from_json("cook.json"));
-    EXPECT_EQ(c2.get_employee_id(), 1);
+    EXPECT_EQ(c2.get_id(), 1);
     EXPECT_EQ(c2.get_name(), "name");
     EXPECT_EQ(c2.get_salary(), Money(10000));
     EXPECT_EQ(c2.get_surname(), "surname");
@@ -169,7 +169,7 @@ TEST(employee, create_chef_from_json)
     Cook c1(1, "name", "surname", Addres(), Money(10000), true);
     c1.save_to_json("chef.json");
     Cook c2(parse_employee_from_json("chef.json"));
-    EXPECT_EQ(c2.get_employee_id(), 1);
+    EXPECT_EQ(c2.get_id(), 1);
     EXPECT_EQ(c2.get_name(), "name");
     EXPECT_EQ(c2.get_salary(), Money(10000));
     EXPECT_EQ(c2.get_surname(), "surname");
@@ -181,7 +181,7 @@ TEST(employee, create_deliverer_from_json)
     Deliverer d1(1, "name", "surname", Addres(), Money(10000));
     d1.save_to_json("deliverer.json");
     Deliverer d2(parse_employee_from_json("deliverer.json"));
-    EXPECT_EQ(d2.get_employee_id(), 1);
+    EXPECT_EQ(d2.get_id(), 1);
     EXPECT_EQ(d2.get_name(), "name");
     EXPECT_EQ(d2.get_salary(), Money(10000));
     EXPECT_EQ(d2.get_surname(), "surname");
@@ -192,7 +192,7 @@ TEST(employee, create_manager_from_json)
     Manager m1(1, "name", "surname", Addres(), Money(10000));
     m1.save_to_json("manager.json");
     Manager m2(parse_employee_from_json("manager.json"));
-    EXPECT_EQ(m2.get_employee_id(), 1);
+    EXPECT_EQ(m2.get_id(), 1);
     EXPECT_EQ(m2.get_name(), "name");
     EXPECT_EQ(m2.get_salary(), Money(10000));
     EXPECT_EQ(m2.get_surname(), "surname");
@@ -203,7 +203,7 @@ TEST(employee, create_waiter_from_json)
     Waiter w1(1, "name", "surname", Addres(), Money(10000));
     w1.save_to_json("waiter.json");
     Waiter w2(parse_employee_from_json("waiter.json"));
-    EXPECT_EQ(w2.get_employee_id(), 1);
+    EXPECT_EQ(w2.get_id(), 1);
     EXPECT_EQ(w2.get_name(), "name");
     EXPECT_EQ(w2.get_salary(), Money(10000));
     EXPECT_EQ(w2.get_surname(), "surname");
@@ -607,7 +607,7 @@ TEST(menu, json_menu)
     Dish d4("cola", napoje, Money(600), 1, {});
     std::vector<Dish> dishes = {d2, d1, d3, d4};
     Menu m = Menu(dishes);
-    
+
     Json::Value menu = m.parse_menu_to_json();
     EXPECT_EQ(menu[0]["name"], "Kaszanka");
     EXPECT_EQ(menu[0]["type"], (int)2);

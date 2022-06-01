@@ -8,18 +8,24 @@
 
 class BaseOrder{
     protected:
-    unsigned int order_id;              //unikatowy identyfikator zamówienia
-    std::vector<Dish> ordered_dishes;   //zamówione dania
+    unsigned int order_id=0;              //unikatowy identyfikator zamówienia
+    std::vector<unsigned int> ordered_dishes;   //zamówione dania
+    unsigned int served_employee_id;
 
     public:
     //konstruktor
-    BaseOrder(unsigned int id, std::vector<Dish> o_d):order_id(id), ordered_dishes(o_d){};
-    unsigned int get_order_id() {return order_id;}
+    BaseOrder(std::vector<unsigned int> & o_d, unsigned int e_id):ordered_dishes(o_d), served_employee_id(e_id){};
+    virtual ~BaseOrder(){};
+    unsigned int get_id() {return order_id;}
+    unsigned int get_employee_id(){return served_employee_id;}
 
     //gettery
-    std::vector<Dish> & get_ordered_dishes() {return ordered_dishes;}
-    void add_dish(Dish & d){ordered_dishes.push_back(d);}
+    std::vector<unsigned int>  get_ordered_dishes() {return ordered_dishes;}
+    //void add_dish(Dish & d){ordered_dishes.push_back(d);}
 
+    void set_id(unsigned int id){order_id = id;}
+
+/*
     //generator obiektu JSON
     virtual Json::Value parse_to_JSON(){
         Json::Value order;
@@ -38,5 +44,5 @@ class BaseOrder{
             m += ordered_dishes[i].get_price();
         }
         return m;
-    };
+    };*/
 };

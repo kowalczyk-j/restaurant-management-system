@@ -1,16 +1,21 @@
 #include "Dish.h"
 
 Dish::Dish(std::string n, dish_type t, Money pr,
-bool veg, std::vector<Product> ingr, set<std::string> allerg) :
+bool veg, std::vector<Ingredient> ingr, set<std::string> allerg) :
 name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
 {
+    allergens = allerg;
+    /*
     for (const auto& value : ingredients)
     {
         if (value.get_allergen() != "")
             allerg.insert(value.get_allergen());
     }
     allergens = allerg;
+    */
 }
+
+/*
 void Dish::remove_ingridient(int position)
 {
     if(position < 0) throw NegativeIndex;
@@ -68,3 +73,4 @@ Dish Dish::parse_dish_from_json(Json::Value dish)
     }
     return Dish(dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
 }
+*/

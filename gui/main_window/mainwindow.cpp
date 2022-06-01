@@ -31,6 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
 
+
     ifstream ifs("file.json");
     Json::Reader reader;
     Json::Value obj;
@@ -76,7 +77,7 @@ MainWindow::MainWindow(QWidget *parent) :
     std::vector<DeliveryOrder> vde;
     std::vector<OnSiteOrder> vso;
     vde.push_back(os);
-    //Restaurant r1 =  Restaurant(1, "Magnoliowa", a1, pan, m, vc, vd, vm, vw, vde, vso);
+//    Restaurant r1 =  Restaurant(1, "Magnoliowa", a1, pan, m, vc, vd, vm, vw, vde, vso);
     Restaurant r2 =  Restaurant(2, "Różana", a2, pan, m, vc, vd, vm, vw, vde, vso);
 
     restaurant_list.push_back(r1);
@@ -107,7 +108,7 @@ void MainWindow::on_return_2_clicked(){
     else{
         ui->restaurantStack->setCurrentIndex(0);
         ui->employeesNumber->setText(QString::number(restaurant->get_emoployee_number()));
-        ui->ordersNumber->setText(QString::number(restaurant->get_orders_number()));
+        ui->ordersNumber->setText(QString::number(restaurant->get_active_orders_number()));
         ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
     }
 
@@ -124,7 +125,7 @@ void MainWindow::on_selectRestaurant_clicked(){
         ui->restaurantAddress->setText(QString::fromStdString(restaurant->get_address().to_string()));
         ui->restaurationName->setText(QString::fromStdString(restaurant->get_name()));
         ui->employeesNumber->setText(QString::number(restaurant->get_emoployee_number()));
-        ui->ordersNumber->setText(QString::number(restaurant->get_orders_number()));
+        ui->ordersNumber->setText(QString::number(restaurant->get_active_orders_number()));
         ui->menuPositionsNumber->setText(QString::number(restaurant->get_menu().size()));
 
         ui->orderList->clear();
@@ -169,22 +170,22 @@ void MainWindow::on_selectRole_currentIndexChanged(){
     position1 = ui->selectRole->currentIndex();
     if(position1 == 0){
         for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_id()) + ")"));
         }
     }
     else if(position1 == 1){
         for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_id()) + ")"));
         }
     }
     else if(position1 == 2){
         for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_id()) + ")"));
         }
     }
     else {
         for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_id()) + ")"));
         }
     }
 }
@@ -195,12 +196,12 @@ void MainWindow::on_orderType_currentIndexChanged(){
         ui->orderList->clear();
         if(position1==0){
             for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
-                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[i].get_id())));
             }
         }
         else {
             for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
-                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+                ui->orderList->addItem(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[i].get_id())));
             }
         }
 }
@@ -209,7 +210,7 @@ void MainWindow::on_orderList_itemClicked(){
     ui->orderedDishes->clear();
     size_t position = ui->orderList->currentRow();
     if(position1==0){
-        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[position].get_order_id())));
+        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_delivery_orders()[position].get_id())));
         ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_order_value().to_string()));
         ui->orderDelivery->setText(QString::fromStdString(restaurant->get_delivery_orders()[position].get_delivery_address().to_string()));
         for(unsigned int i=0; i<restaurant->get_delivery_orders()[position].get_ordered_dishes().size(); i++){
@@ -218,7 +219,7 @@ void MainWindow::on_orderList_itemClicked(){
         ui->orderTypeStack->setCurrentIndex(0);
     }
     else{
-        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[position].get_order_id())));
+        ui->orderNumber->setText(QString::fromStdString("#"+to_string(restaurant->get_onsite_orders()[position].get_id())));
         ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_onsite_orders()[position].get_order_value().to_string()));
         for(unsigned int i=0; i<restaurant->get_onsite_orders()[position].get_ordered_dishes().size(); i++){
             ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_onsite_orders()[position].get_ordered_dishes()[i].get_name()));
@@ -284,13 +285,13 @@ void MainWindow::on_removeOrder_clicked(){
     if(order_position != -1){
         restaurant->remove_delivery_order(order_position);
         for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
-            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_id())));
         }
     }
     else{
         restaurant->remove_on_site_order(order_position);
         for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
-            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+            ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_id())));
         }
     }
 }
@@ -304,7 +305,7 @@ void MainWindow::on_addOrderD_clicked(){
         if(position1 == 0){
             ui->orderList->clear();
             for(unsigned int i=0; i<restaurant->get_delivery_orders().size(); i++){
-                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_order_id())));
+                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_delivery_orders()[i].get_id())));
             }
         }
     }
@@ -319,7 +320,7 @@ void MainWindow::on_addOrderOS_clicked(){
         if(position1 == 1){
             ui->orderList->clear();
             for(unsigned int i=0; i<restaurant->get_onsite_orders().size(); i++){
-                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_order_id())));
+                ui->orderList->addItem(QString::fromStdString("#"+ to_string(restaurant->get_onsite_orders()[i].get_id())));
             }
         }
     }
@@ -388,7 +389,7 @@ void MainWindow::on_employeeList_itemClicked(){
     ui->titleName->setText(QString::fromStdString(e.get_name() + " " + e.get_surname()));
     ui->name->setText(QString::fromStdString(e.get_name()));
     ui->surname->setText(QString::fromStdString(e.get_surname()));
-    ui->id->setText(QString::number(e.get_employee_id()));
+    ui->id->setText(QString::number(e.get_id()));
     ui->address->setText(QString::fromStdString(""));
     ui->email->setText(QString::fromStdString(""));
     ui->salary->setText(QString::fromStdString(e.get_salary().to_string()));
@@ -407,7 +408,7 @@ void MainWindow::on_addEmployee_clicked(){
             ui->employeeList->clear();
             if(position1 == 0){
                 for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
-                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_employee_id()) + ")"));
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_id()) + ")"));
                 }
             }
 
@@ -417,7 +418,7 @@ void MainWindow::on_addEmployee_clicked(){
             restaurant->get_deliverers().employ(d);
             if(position1 == 1){
                 for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
-                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_employee_id()) + ")"));
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_id()) + ")"));
                 }
             }
         }
@@ -427,7 +428,7 @@ void MainWindow::on_addEmployee_clicked(){
             ui->employeeList->clear();
             if(position1 == 2){
                 for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
-                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_employee_id()) + ")"));
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_id()) + ")"));
                 }
             }
         }
@@ -436,7 +437,7 @@ void MainWindow::on_addEmployee_clicked(){
             restaurant->get_waiters().employ(w);
             if(position1 == 3){
                 for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
-                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_employee_id()) + ")"));
+                    ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_id()) + ")"));
                 }
             }
         }
@@ -475,10 +476,10 @@ void MainWindow::on_modifyId_clicked(){
     chi.setModal(true);
     if(chi.exec() == QDialog::Accepted){
         restaurant->add_and_check_employee_id(chi.get_id().toInt());
-        if(position1 == 0){restaurant->get_cooks()[position2].set_employee_id(chi.get_id().toInt());}
-        else if(position1 == 1){restaurant->get_deliverers()[position2].set_employee_id(chi.get_id().toInt());}
-        else if(position1 == 2){restaurant->get_managers()[position2].set_employee_id(chi.get_id().toInt());}
-        else {restaurant->get_waiters()[position2].set_employee_id(chi.get_id().toInt());}
+        if(position1 == 0){restaurant->get_cooks()[position2].set_id(chi.get_id().toInt());}
+        else if(position1 == 1){restaurant->get_deliverers()[position2].set_id(chi.get_id().toInt());}
+        else if(position1 == 2){restaurant->get_managers()[position2].set_id(chi.get_id().toInt());}
+        else {restaurant->get_waiters()[position2].set_id(chi.get_id().toInt());}
     }
     ui->id->setText(chi.get_id());
 }
@@ -501,35 +502,35 @@ void MainWindow::on_modifySalary_clicked(){
 
 void MainWindow::on_removeEmployee_clicked(){
     if(position1 == 0){
-        restaurant->remove_emoloyee_id(restaurant->get_cooks()[position2].get_employee_id());
+        restaurant->remove_emoloyee_id(restaurant->get_cooks()[position2].get_id());
         restaurant->get_cooks().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_cooks().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_cooks()[i].get_name() + " " + restaurant->get_cooks()[i].get_surname() + " (" + to_string(restaurant->get_cooks()[i].get_id()) + ")"));
         }
     }
     else if(position1 == 1){
-        restaurant->remove_emoloyee_id(restaurant->get_deliverers()[position2].get_employee_id());
+        restaurant->remove_emoloyee_id(restaurant->get_deliverers()[position2].get_id());
         restaurant->get_deliverers().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_deliverers().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_deliverers()[i].get_name() + " " + restaurant->get_deliverers()[i].get_surname() + " (" + to_string(restaurant->get_deliverers()[i].get_id()) + ")"));
         }
     }
     else if(position1 == 2){
-        restaurant->remove_emoloyee_id(restaurant->get_managers()[position2].get_employee_id());
+        restaurant->remove_emoloyee_id(restaurant->get_managers()[position2].get_id());
         restaurant->get_managers().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_managers().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_managers()[i].get_name() + " " + restaurant->get_managers()[i].get_surname() + " (" + to_string(restaurant->get_managers()[i].get_id()) + ")"));
         }
     }
     else {
-        restaurant->remove_emoloyee_id(restaurant->get_waiters()[position2].get_employee_id());
+        restaurant->remove_emoloyee_id(restaurant->get_waiters()[position2].get_id());
         restaurant->get_waiters().fire(position2);
         ui->employeeList->clear();
         for(unsigned int i=0; i<restaurant->get_waiters().size(); i++){
-            ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_employee_id()) + ")"));
+            ui->employeeList->addItem(QString::fromStdString(restaurant->get_waiters()[i].get_name() + " " + restaurant->get_waiters()[i].get_surname() + " (" + to_string(restaurant->get_waiters()[i].get_id()) + ")"));
         }
     }
     ui->employeeStack->setCurrentIndex(1);

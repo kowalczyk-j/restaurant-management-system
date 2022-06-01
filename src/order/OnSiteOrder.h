@@ -8,11 +8,13 @@ class OnSiteOrder : public BaseOrder{
     unsigned int waiter_id; //id kelnera
 
     public:
-    OnSiteOrder(unsigned int id, std::vector<Dish> o_d, unsigned int tb_id, unsigned int w_id): BaseOrder(id, o_d), table_id(tb_id), waiter_id(w_id){};
+    OnSiteOrder(std::vector<unsigned int> o_d, unsigned int e_id, unsigned int tb_id): BaseOrder(o_d, e_id), table_id(tb_id){};
+    virtual ~OnSiteOrder(){};
     unsigned int get_table_id(){return table_id;}
     unsigned int get_waiter_id(){return waiter_id;}
 
     //operacje na obiektach JSON
+    /*
     virtual Json::Value parse_to_JSON() {
         Json::Value OnSite = BaseOrder::parse_to_JSON();
         OnSite["table_id"] = table_id;
@@ -26,5 +28,5 @@ class OnSiteOrder : public BaseOrder{
             ordered_dishes.push_back(d_order);
         }
         return OnSiteOrder(oso["id"].asUInt(), ordered_dishes, oso["table_id"].asUInt(), oso["waiter_id"].asUInt());
-    }
+    }*/
 };

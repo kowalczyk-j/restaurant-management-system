@@ -4,21 +4,21 @@
 class Manager : public Employee
 {
 public:
-    Manager(unsigned int e_id, std::string fname, std::string lname,  Addres a, Money sal) :
-            Employee(e_id, fname, lname, a, sal) {};
+    Manager(std::string fname, std::string lname,  Addres a, Money sal) :
+            Employee(fname, lname, a, sal) {};
     Manager(Json::Value manager_from_json) : Employee(manager_from_json) {};
-
+    ~Manager(){};
+/*
     Json::Value parse_to_json()
     {
         Json::Value manager = Employee::parse_to_json();
         manager["position"] = "manager";
         return manager;
-    }
+    }*/
 
-    friend std::ostream& operator<<(std::ostream& os, Manager manager)
+    void print(std::ostream& os) const
     {
-        manager.print(os);
+        this->Employee::print(os);
         os << "\nPosition: Manager";
-        return os;
     }
 };

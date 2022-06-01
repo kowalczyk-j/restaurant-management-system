@@ -6,27 +6,28 @@ class Cook : public Employee
 private:
     bool is_chef;
 public:
-    Cook(unsigned int e_id, std::string fname, std::string lname, Addres a, Money sal, bool chef) :
-         Employee(e_id, fname, lname,  a, sal), is_chef(chef) {};
+    Cook(std::string fname, std::string lname, Addres a, Money sal, bool chef) :
+         Employee(fname, lname,  a, sal), is_chef(chef) {};
     Cook(Json::Value cook_from_json) : Employee(cook_from_json), is_chef(cook_from_json["ischef"].asBool()) {};
+    ~Cook(){};
 
     bool get_ischef() {return is_chef;}
     void set_chef() {is_chef = true;}
     void remove_chef(){is_chef = false;}
 
+    /*
     Json::Value parse_to_json()
     {
         Json::Value cook = Employee::parse_to_json();
         cook["position"] = "cook";
         cook["ischef"] = is_chef;
         return cook;
-    }
+    }*/
 
-    friend std::ostream& operator<<(std::ostream& os, Cook cook)
+    void print(std::ostream& os) const
     {
-        cook.print(os);
+        this->Employee::print(os);
         os << "\nPosition: ";
-        cook.is_chef?(os << "Chef"):(os << "Cook");
-        return os;
+        is_chef?(os << "Chef"):(os << "Cook");
     }
 };
