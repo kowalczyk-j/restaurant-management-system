@@ -95,8 +95,8 @@ class Restaurant{
         return pantry.add_data(p);
     }
 
-    unsigned int add_dish(std::string const& name, dish_type type, Money const& price, bool is_vegan, std::vector<Ingredient> & ingredients){
-        Dish * d = new Dish(name, type, price, is_vegan, ingredients);
+    unsigned int add_dish(unsigned int id, std::string const& name, dish_type type, Money const& price, bool is_vegan, std::vector<Ingredient> & ingredients){
+        Dish * d = new Dish(id, name, type, price, is_vegan, ingredients);
         return menu.add_data(d);
     }
 
