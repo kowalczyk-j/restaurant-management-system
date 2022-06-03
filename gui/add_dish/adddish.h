@@ -4,9 +4,11 @@
 #include <QDialog>
 #include <QString>
 #include <QVector>
+#include <QListWidgetItem>
 #include <iostream>
 #include <string>
-#include "../../src/dish_menu/Menu.h"
+#include <vector>
+#include "../../src/restaurant/Restaurant.h"
 #include "ui_adddish.h"
 
 
@@ -14,20 +16,22 @@ class AddDish : public QDialog
 {
     Q_OBJECT
 public:
-	AddDish(QWidget *parent = 0);
-	~AddDish(){delete ui;}
-	void set_menu(Menu & m){
-		menu = m;
-		for(size_t i=0; i<menu.get_dishes().size(); i++){
-			ui->listWidget->addItem(QString::fromStdString(menu.get_dishes()[i].get_name()));
+	AddDish(Restaurant & r, QWidget *parent = 0): QDialog(parent), res(r){
+		ui = new Ui::AddDish;
+        ui->setupUi(this);
+		for(size_t i=0; i<res.get_all_dishes().size(); i++){
+			new QListWidgetItem(QString::fromStdString(res.get_all_dishes()[i]->get_name()),
+								ui->listWidget,
+								res.get_all_dishes()[i]->get_id());
 		}
 	}
-	Dish & get_dish(){
-		return menu.get_dishes()[ui->listWidget->currentRow()];
+	~AddDish(){delete ui;}
+	unsigned int get_dish_id(){
+		return ui->listWidget->currentItem()->type();
 	}
 
 private:
-	Menu menu;
+	Restaurant & res;
 	Ui::AddDish *ui;
 };
 #endif

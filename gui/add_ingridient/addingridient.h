@@ -4,10 +4,11 @@
 #include <QDialog>
 #include <QString>
 #include <QVector>
+#include <QVariant>
 #include <iostream>
+#include <vector>
 #include <string>
-#include "../../src/pantry/Product.h"
-#include "../../src/pantry/Pantry.h"
+#include "../../src/restaurant/Restaurant.h"
 #include "ui_addingridient.h"
 
 
@@ -15,22 +16,21 @@ class AddIng : public QDialog
 {
     Q_OBJECT
 public:
-	AddIng(QWidget *parent = 0);
-    ~AddIng(){delete ui;}
-    void set_products(Pantry & p){
-        pan = p;
-        for(auto const &dish : p.get_all_products())
+	AddIng(Restaurant & r, QWidget *parent = 0): QDialog(parent), res(r){
+        ui = new Ui::AddIng;
+        ui->setupUi(this);
+        for(auto  product: res.get_all_prodcucts())
         {
-            ui->ing->addItem(QString::fromStdString(dish));
+            ui->ing->addItem( QString::fromStdString(product->get_name()), QVariant(product->get_id()));
         }
         ui->quantity->setValue(0);
-        ui->unit->setText(QString::fromStdString(p.get_product(ui->ing->currentText().toStdString()).get_unit()));
+        if(res.get_products_number() > 0) ui->unit->setText(QString::fromStdString(res.get_all_prodcucts()[0]->get_unit()));
     }
+    ~AddIng(){delete ui;}
 
-    Product get_ing(){
-        Product p = Product(pan.get_product(ui->ing->currentText().toStdString()));
-        p.set_quantity(ui->quantity->value());
-        return p;
+    Ingredient get_ing(){
+        Ingredient ing = Ingredient(ui->ing->currentData().toInt(), ui->quantity->value());
+        return ing;
     }
 
 
@@ -39,12 +39,12 @@ private slots:
 
     void on_ing_currentIndexChanged(){
         ui->quantity->setValue(0);
-        ui->unit->setText(QString::fromStdString(pan.get_product(ui->ing->currentText().toStdString()).get_unit()));
+        ui->unit->setText(QString::fromStdString(res.get_product(ui->ing->currentData().toInt())->get_unit()));
     }
 
 
 private:
-    Pantry pan;
+    Restaurant & res;
 	Ui::AddIng *ui;
 };
 #endif

@@ -9,7 +9,9 @@ private:
     std::vector<int> orders_to_serve;
 public:
     Waiter(std::string fname, std::string lname, Addres a, Money sal) :
-           Employee(fname, lname, a, sal) {};
+           Employee(fname, lname, a, sal) {
+               position_name = "Kelner";
+           };
     Waiter(Json::Value waiter_from_json) : Employee(waiter_from_json) {};
     ~Waiter(){};
 

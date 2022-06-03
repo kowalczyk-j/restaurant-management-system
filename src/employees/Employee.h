@@ -11,6 +11,7 @@ protected:
     unsigned int employee_id;
     std::string name;
     std::string surname;
+    std::string position_name;
     Addres address;
     Money salary;
 
@@ -29,6 +30,7 @@ public:
     unsigned int get_id() const {return employee_id;}
     Money const& get_salary() const {return salary;}
     Addres const& get_address() const {return address;}
+    std::string const& get_position() {return position_name;}
 
     //settery
     void set_name(std::string name) {this->name = name;}

@@ -17,7 +17,6 @@ public:
 	~AddEmployee(){delete ui;}
 	QString get_name(){return ui->name->text();}
 	QString get_surname(){return ui->surname->text();}
-	QString get_id(){return ui->id->text();}
 	QString get_street(){return ui->street->text();}
 	QString get_building(){return ui->building->text();}
 	QString get_city(){return ui->city->text();}

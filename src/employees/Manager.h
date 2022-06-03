@@ -5,7 +5,9 @@ class Manager : public Employee
 {
 public:
     Manager(std::string fname, std::string lname,  Addres a, Money sal) :
-            Employee(fname, lname, a, sal) {};
+            Employee(fname, lname, a, sal) {
+                position_name = "Manager";
+            };
     Manager(Json::Value manager_from_json) : Employee(manager_from_json) {};
     ~Manager(){};
 /*

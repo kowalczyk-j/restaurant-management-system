@@ -26,13 +26,15 @@ class Database
         return data.at(id);
     }
 
-    void add_data(T* data_to_add){
+    unsigned int add_data(T* data_to_add){
         data_to_add->set_id(next_id);
         data[next_id] = data_to_add;
+        unsigned int data_id = next_id;
         this->move_to_next_free_id();
+        return data_id;
     }
 
-    void remove_and_delete_data(unsigned int id){
+    void remove_data(unsigned int id){
         if(data.find(id) == data.end()){
             throw KeyNotFound;
         }
@@ -41,12 +43,18 @@ class Database
         this->free_up_id(id);
     }
 
-    void remove_data(unsigned int id){
+    void add_data_with_id(T* data_to_add){
+        if(data.find(data_to_add->get_id()) == data.end()){
+            throw NotUniqueKey;
+        }
+        data[data_to_add->get_id()] = data_to_add;
+    }
+
+    void remove_data_without_deleting(unsigned int id){
         if(data.find(id) == data.end()){
             throw KeyNotFound;
         }
         data.erase(id);
-        this->free_up_id(id);
     }
 
     std::vector<T*> get_full_data(){
@@ -65,11 +73,9 @@ class Database
     }
 
     void  move_to_next_free_id(){
-        std::cout <<next_id << " "<< this->is_in_database(next_id)<<"\n";
         while(this->is_in_database(next_id)){
             next_id ++;
         }
-        std::cout <<next_id << " "<< this->is_in_database(next_id)<<"\n\n";
     }
 
     void free_up_id(unsigned int free_id){

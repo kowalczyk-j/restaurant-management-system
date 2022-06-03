@@ -9,17 +9,17 @@
 #include "../order/DeliveryOrder.h"
 #include "../order/OnSiteOrder.h"
 #include "../Database.h"
-#include "../pantry/Stock.h"
+#include "../pantry/Product.h"
 
 
-enum restaurant_exception{DishCurrentlyInOrder, EmployeeCurrentlyWithOrder, ProductCurrentlyInDish};
+enum restaurant_exception{DishCurrentlyInOrder, EmployeeCurrentlyWithOrder, ProductCurrentlyInDish, NotEnoughtProductInPantry};
 
 class Restaurant{
 
     unsigned int restaurant_id;     //id restauracji
     std::string name;               //nazwa restauracji
     Addres address;                 //adres restuaracji
-    Database<Stock> pantry;
+    Database<Product> pantry;
     Database<Dish> menu;
     Database<Employee> employee_database;
     Database<BaseOrder> active_orders;
@@ -35,13 +35,13 @@ class Restaurant{
     std::string get_name(){return name;}
     Addres & get_address(){return address;}
 
-    Stock * get_prodcuct(unsigned int product_id){return pantry[product_id];}
+    Product * get_product(unsigned int product_id){return pantry[product_id];}
     Dish * get_dish(unsigned int dish_id){return menu[dish_id];}
     Employee * get_employee(unsigned int employee_id){return employee_database[employee_id];}
     BaseOrder * get_active_order(unsigned int order_id){return active_orders[order_id];}
     BaseOrder * get_order_from_history(unsigned int order_id){return orders_history[order_id];}
 
-    std::vector<Stock *> get_all_prodcucts(){return pantry.get_full_data();}
+    std::vector<Product *> get_all_prodcucts(){return pantry.get_full_data();}
     std::vector<Dish *> get_all_dishes(){return menu.get_full_data();}
     std::vector<Employee *> get_all_employees(){return employee_database.get_full_data();}
     std::vector<BaseOrder *> get_all_active_orders(){return active_orders.get_full_data();}
@@ -49,57 +49,99 @@ class Restaurant{
 
     int get_active_orders_number(){return active_orders.size();}
     int get_emoployee_number(){return employee_database.size();}
+    int get_dishes_number(){return menu.size();}
+    int get_products_number(){return pantry.size();}
 
     /*
-    ewentaulnie funkcja zwracająca kucharzy, managerow...
+    std::vector<Employee *> get_all_cooks(){
+        std::vector<Employee *> cooks = employee_database.get_full_data();
+        for(std::vector<Employee *>::iterator it = cooks.begin(); it!= cooks.end(); it++){
+            std::cout << (*it)->get_position();
+            if((*it)->get_position().compare("Kucharz") != 0) it = cooks.erase(it);
+        }
+        return cooks;
+    }
+
+    std::vector<Employee *> get_all_deliverers(){
+        std::vector<Employee *> deliverers = employee_database.get_full_data();
+        for(std::vector<Employee *>::iterator it = deliverers.begin(); it!= deliverers.end(); it++){
+            if((*it)->get_position().compare("Dostawca") != 0) it = deliverers.erase(it);
+        }
+        return deliverers;
+    }
+
+    std::vector<Employee *> get_all_managers(){
+        std::vector<Employee *> managers = employee_database.get_full_data();
+        for(std::vector<Employee *>::iterator it = managers.begin(); it!= managers.end(); it++){
+            std::string s1 = typeid(*it).name();
+            if((*it)->get_position().compare("Manager") != 0) it = managers.erase(it);
+        }
+        return managers;
+    }
+
+    std::vector<Employee *> get_all_waiters(){
+        std::vector<Employee *> waiters = employee_database.get_full_data();
+        for(std::vector<Employee *>::iterator it = waiters.begin(); it!= waiters.end(); it++){
+            std::string s1 = typeid(*it).name();
+            if((*it)->get_position().compare("Kelner") != 0) it = waiters.erase(it);
+        }
+        return waiters;
+    }
     */
 
     //dodawanie elementów do baz danych
-    void add_products(std::string name, units unit, std::string allergens, unsigned int quantity){
-        Stock * p = new Stock(name, unit, allergens, quantity);
-        pantry.add_data(p);
+    unsigned int add_product(std::string const& name, units unit, std::string const& allergens, unsigned int quantity){
+        Product * p = new Product(name, unit, allergens, quantity);
+        return pantry.add_data(p);
     }
 
-    void add_dish(std::string name, dish_type type, Money & price, bool is_vegan, std::vector<Ingredient> & ingredients){
+    unsigned int add_dish(std::string const& name, dish_type type, Money const& price, bool is_vegan, std::vector<Ingredient> & ingredients){
         Dish * d = new Dish(name, type, price, is_vegan, ingredients);
-        menu.add_data(d);
+        return menu.add_data(d);
     }
 
-    void add_cook(std::string name, std::string surname, Addres & address, Money & salary, bool is_chef){
+    unsigned int add_cook(std::string const& name , std::string const& surname, Addres const& address, Money const& salary, bool is_chef){
         Cook * c = new Cook(name, surname, address, salary, is_chef);
-        employee_database.add_data(c);
+        return employee_database.add_data(c);
     }
 
-    void add_deliverer(std::string name, std::string surname, Addres & address, Money & salary){
+    unsigned int add_deliverer(std::string const& name, std::string const& surname, Addres const& address, Money const& salary){
         Deliverer * d = new Deliverer(name, surname, address, salary);
-        employee_database.add_data(d);
+        return employee_database.add_data(d);
     }
 
-    void add_manager(std::string name, std::string surname, Addres & address, Money & salary){
+    unsigned int add_manager(std::string const& name, std::string const& surname, Addres const& address, Money const& salary){
         Manager * m = new Manager(name, surname, address, salary);
-        employee_database.add_data(m);
+        return employee_database.add_data(m);
     }
 
-    void add_waiter(std::string name, std::string surname, Addres & address, Money & salary){
+    unsigned int add_waiter(std::string const& name, std::string const& surname, Addres const& address, Money const& salary){
         Waiter * w = new Waiter(name, surname, address, salary);
-        employee_database.add_data(w);
+        return employee_database.add_data(w);
     }
 
-    void add_delivery_order(std::vector<unsigned int> & ordered_dishes, unsigned int deliverer_id, Addres & address){
-        DeliveryOrder * dor = new DeliveryOrder(ordered_dishes, deliverer_id, address);
-        active_orders.add_data(dor);
+    unsigned int add_delivery_order(std::vector<unsigned int> ordered_dishes, unsigned int deliverer_id, Addres const& address){
+        try{
+            for(auto dish:ordered_dishes){
+                for(auto ingridient:get_dish(dish)->get_ingredients()){
+                    get_product(ingridient.stock_id)->reserve(ingridient.quantity);
+                }
+            }
+            DeliveryOrder * dor = new DeliveryOrder(ordered_dishes, deliverer_id, address);
+            return active_orders.add_data(dor);
+        }
+        catch(std::invalid_argument & e){
+            throw NotEnoughtProductInPantry;
+        }
     }
 
-    void add_on_site_order(std::vector<unsigned int> & ordered_dishes, unsigned int waiter_id, unsigned int table_id){
+    unsigned int add_on_site_order(std::vector<unsigned int> ordered_dishes, unsigned int waiter_id, unsigned int table_id){
         OnSiteOrder * dor = new OnSiteOrder(ordered_dishes,  waiter_id, table_id);
-        active_orders.add_data(dor);
+        return active_orders.add_data(dor);
     }
 
-    /*
-    void mark_order_as_done(unsigned int ){
 
-    }
-    */
+
 
 
     //usuwanie elementów z baz danych
@@ -110,7 +152,7 @@ class Restaurant{
                 if(ing.stock_id == id) throw ProductCurrentlyInDish;
             }
         }
-        pantry.remove_and_delete_data(id);
+        pantry.remove_data(id);
     }
 
     void remove_dish(unsigned int id){
@@ -126,11 +168,11 @@ class Restaurant{
                 if(dish == id) throw DishCurrentlyInOrder;
             }
         }
-        menu.remove_and_delete_data(id);
+        menu.remove_data(id);
     }
 
     void remove_employee(unsigned int id){
-        employee_database.remove_and_delete_data(id);
+        employee_database.remove_data(id);
         std::vector<BaseOrder *> orders = this->get_all_active_orders();
         for (auto order:orders){
             if(order->get_employee_id() == id) throw EmployeeCurrentlyWithOrder;
@@ -142,11 +184,41 @@ class Restaurant{
         }
     }
 
-    void remove_active_order(unsigned int id){active_orders.remove_and_delete_data(id);}
+    void remove_active_order(unsigned int id){
+        BaseOrder * order = get_active_order(id);
+        for(auto dish:order->get_ordered_dishes()){
+            for(auto ingridient:get_dish(dish)->get_ingredients()){
+                get_product(ingridient.stock_id)->release(ingridient.quantity);
+            }
+        }
+        active_orders.remove_data(id);
+    }
 
 
 
     //funkcje specjalne
+    Money get_active_order_value(unsigned int order_id){
+        BaseOrder * order = get_active_order(order_id);
+        Money m;
+        for (size_t i=0;  i<order->get_ordered_dishes().size(); i++){
+            m += get_dish(order->get_ordered_dishes()[i])->get_price();
+        }
+        return m;
+    };
+
+    void mark_order_as_done(unsigned int order_id){
+        BaseOrder * order = get_active_order(order_id);
+        active_orders.remove_data_without_deleting(order_id);
+        orders_history.add_data_with_id(order);
+        for(auto dish:order->get_ordered_dishes()){
+            for(auto ingridient:get_dish(dish)->get_ingredients()){
+                get_product(ingridient.stock_id)->operator-=(ingridient.quantity);
+            }
+        }
+    }
+
+
+
     /*
     void generate_lunch_menu()
     {

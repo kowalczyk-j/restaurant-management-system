@@ -8,7 +8,7 @@ class OnSiteOrder : public BaseOrder{
     unsigned int waiter_id; //id kelnera
 
     public:
-    OnSiteOrder(std::vector<unsigned int> o_d, unsigned int e_id, unsigned int tb_id): BaseOrder(o_d, e_id), table_id(tb_id){};
+    OnSiteOrder(std::vector<unsigned int> o_d, unsigned int e_id, unsigned int tb_id): BaseOrder(o_d, e_id), table_id(tb_id){order_type=1;};
     virtual ~OnSiteOrder(){};
     unsigned int get_table_id(){return table_id;}
     unsigned int get_waiter_id(){return waiter_id;}

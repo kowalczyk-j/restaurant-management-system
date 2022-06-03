@@ -6,8 +6,8 @@
 #include <QVector>
 #include <iostream>
 #include <string>
-#include "../../src/pantry/Pantry.h"
 #include "../add_ingridient/addingridient.h"
+#include "../../src/restaurant/Restaurant.h"
 #include "ui_addmenudish.h"
 
 
@@ -15,48 +15,50 @@ class AddMenuDish : public QDialog
 {
     Q_OBJECT
 public:
-	AddMenuDish(QWidget *parent = 0);
+	AddMenuDish(Restaurant & r, QWidget *parent = 0): QDialog(parent), res(r) {
+        ui = new Ui::AddMenuDish;
+        ui->setupUi(this);
+	}
 	~AddMenuDish(){delete ui;}
 	QString get_name(){return ui->name->text();}
 	QString get_zlotys(){return ui->zloty->text();}
 	QString get_grosze(){return ui->grosze->text();}
 	int get_category(){return ui->category->currentIndex();}
 	bool get_vegan(){return ui->vegan->isChecked();}
-	vector<Product> get_ing(){return pro;}
+	vector<Ingredient> & get_ing(){return ingredient;}
 
-	void set_pantry(Pantry & p){pan = p;}
 
 
 
 private slots:
 
 	void on_addIngridient_clicked(){
-		AddIng ai;
+		AddIng ai(res);
 		ai.setModal(true);
-    	ai.set_products(pan);
     	if(ai.exec() == QDialog::Accepted){
-        	pro.push_back(ai.get_ing());
+        	ingredient.push_back(ai.get_ing());
         	ui->DishIngrdidients->clear();
-        	for(size_t i=0; i<pro.size(); i++){
-            	ui->DishIngrdidients->addItem(QString::fromStdString(pro[i].get_name()+" ("+to_string(pro[i].get_quantity())+pro[i].get_unit() +")"));
+        	for(size_t i=0; i<ingredient.size(); i++){
+            	ui->DishIngrdidients->addItem(QString::fromStdString(res.get_product(ingredient[i].stock_id)->get_name()+" ("+to_string(ingredient[i].quantity)+res.get_product(ingredient[i].stock_id)->get_unit() +")"));
         	}
     	}
 	}
+
 	void on_removeIngridient_clicked(){
 		int position = ui->DishIngrdidients->currentRow();
 		if(position != -1){
 			ui->DishIngrdidients->setCurrentRow(-1);
-			pro.erase(pro.begin() + position);
+			ingredient.erase(ingredient.begin() + position);
 			ui->DishIngrdidients->clear();
-        	for(size_t i=0; i<pro.size(); i++){
-            	ui->DishIngrdidients->addItem(QString::fromStdString(pro[i].get_name()+" ("+to_string(pro[i].get_quantity())+pro[i].get_unit() +")"));
+        	for(size_t i=0; i<ingredient.size(); i++){
+            	ui->DishIngrdidients->addItem(QString::fromStdString(res.get_product(ingredient[i].stock_id)->get_name()+" ("+to_string(ingredient[i].quantity)+res.get_product(ingredient[i].stock_id)->get_unit() +")"));
         	}
 		}
 	}
 
 private:
 	Ui::AddMenuDish *ui;
-	std::vector<Product> pro;
-	Pantry pan;
+	vector<Ingredient> ingredient;
+	Restaurant & res;
 };
 #endif

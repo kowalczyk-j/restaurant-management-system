@@ -24,11 +24,10 @@ private slots:
 	void on_moveMenu_clicked();
 	void on_moveOrders_clicked();
 
-	void on_selectRole_currentIndexChanged();
-
 	void on_orderType_currentIndexChanged();
 	void on_orderList_itemClicked();
 	void on_modifyDeliveryAddress_clicked();
+	void on_removeDishOrder_clicked();
 	void on_addDishOrder_clicked();
 	void on_removeOrder_clicked();
 	void on_addOrderD_clicked();
@@ -41,10 +40,10 @@ private slots:
 	void on_removeProduct_clicked();
 
 	void on_employeeList_itemClicked();
+	void on_selectRole_currentIndexChanged();
 	void on_addEmployee_clicked();
 	void on_modifyName_clicked();
 	void on_modifySurname_clicked();
-	void on_modifyId_clicked();
 	void on_modifySalary_clicked();
 	void on_removeEmployee_clicked();
 
@@ -56,9 +55,6 @@ private slots:
 	void on_addMenuDish_clicked();
 	void on_removeMenuDish_clicked();
 
-
-	Employee & get_employee_refernece();
-
 protected:
     void closeEvent(QCloseEvent *event);
 
@@ -67,7 +63,9 @@ private:
 	std::vector<Restaurant> restaurant_list;
 	Restaurant *restaurant;
 	Money m;
+	int position0;
 	int position1;
 	int position2;
+	unsigned int current_id;
 };
 #endif

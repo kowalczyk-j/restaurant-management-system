@@ -10,7 +10,9 @@ private:
 
 public:
     Deliverer(std::string fname, std::string lname, Addres a, Money sal) :
-              Employee(fname, lname, a, sal) {};
+              Employee(fname, lname, a, sal) {
+                  position_name = "Dostawca";
+              };
     Deliverer(Json::Value deliverer_from_json) : Employee(deliverer_from_json) {};
     ~Deliverer(){};
 

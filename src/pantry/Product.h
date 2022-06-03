@@ -1,9 +1,9 @@
 #pragma once
 #include <iomanip>
 #include <iostream>
-#include <unordered_map> //działa szybciej od mapy (nie trzeba sortować)
 #include <fstream>
 #include <json/json.h>
+#include "../dish_menu/Dish.h"
 #include <exception>
 
 using namespace std;
@@ -16,12 +16,16 @@ class Product{
     string name;
     units unit;
     string allergen;
+    int quantity;
+    int available_quantity;
 
     public:
     //konstruktor
-    Product(string n = "", units u = none, string a = "" ):
+    Product(string n = "", units u = none, string a = "", int q=0):
     name(n), unit(u), allergen(a){
-
+        if(q < 0){throw std::invalid_argument("Quantity cannot be negative!");}
+        quantity = q;
+        available_quantity = q;
     }
 
     //gettery
@@ -33,11 +37,40 @@ class Product{
     units get_enum_unit() const{return unit;}
     string get_allergen() const {return allergen;}
     unsigned int get_id() const{return product_id;}
+    int get_quantity() const {return quantity;}
+    int get_available_quantity() const {return available_quantity;}
 
     //settery
     void set_name(string n){name = n;}
     void set_allergen(string a){allergen = a;}
     void set_id(unsigned int id){product_id = id;}
+
+
+
+    void set_quantity(int q){
+        if(q < 0){throw std::invalid_argument("Quantity cannot be negative!");}
+        quantity = q;
+    }
+
+    void operator+=(int quantity_to_add){
+        if(quantity + quantity_to_add < 0){throw std::invalid_argument("Quantity cannot be negative!");}
+        quantity += quantity_to_add;
+    }
+
+
+    void operator-=(int quantity_to_sub){
+        *this += (-quantity_to_sub);
+    }
+
+    void reserve(int quantity){
+        if(available_quantity - quantity < 0){throw std::invalid_argument("Quantity cannot be negative!");}
+        available_quantity -= quantity;
+    }
+
+    void release(int quantity){
+        if(available_quantity + quantity < 0){throw std::invalid_argument("Quantity cannot be negative!");}
+        available_quantity += quantity;
+    }
 
     /*
     Json::Value parse_to_json() const{

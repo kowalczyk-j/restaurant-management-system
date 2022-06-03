@@ -19,4 +19,14 @@ int main(){
     Employee * man2 = employee_databse[1001];
     man2->set_name("Karol");
     for(Employee * employee:employee_databse.get_full_data()){employee->print(std::cout);}
+
+    Restaurant r1(0, "Rożana", Addres());
+    Addres a = Addres();
+    Money m = Money();
+    std::string name = "Kajetan";
+    r1.add_manager(name, "Rożej", a, m);
+    name = "JAKUB";
+    for(Employee * employee:r1.get_all_employees()){employee->print(std::cout);}
+
+
 }

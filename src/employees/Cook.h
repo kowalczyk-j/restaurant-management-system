@@ -7,7 +7,9 @@ private:
     bool is_chef;
 public:
     Cook(std::string fname, std::string lname, Addres a, Money sal, bool chef) :
-         Employee(fname, lname,  a, sal), is_chef(chef) {};
+         Employee(fname, lname,  a, sal), is_chef(chef) {
+             position_name = "Kucharz";
+         };
     Cook(Json::Value cook_from_json) : Employee(cook_from_json), is_chef(cook_from_json["ischef"].asBool()) {};
     ~Cook(){};
 

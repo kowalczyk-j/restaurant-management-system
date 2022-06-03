@@ -8,7 +8,7 @@ class DeliveryOrder : public BaseOrder{
     unsigned int deliverer_id;      //id dostawcy
 
     public:
-    DeliveryOrder(std::vector<unsigned int> o_d, unsigned int e_id, Addres a): BaseOrder(o_d, e_id), delivery_address(a){};
+    DeliveryOrder(std::vector<unsigned int> & o_d, unsigned int e_id, Addres a): BaseOrder(o_d, e_id), delivery_address(a){order_type=0;};
     virtual ~DeliveryOrder(){};
     Addres & get_delivery_address(){return delivery_address;}
     unsigned int get_deliverer_id() const{return deliverer_id;}

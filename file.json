@@ -81,7 +81,6 @@
    "id" : 2,
    "menu" : [
       {
-         "allergens" : [],
          "is_vegan" : true,
          "name" : "zupa pomidorowa",
          "price" : 500,
@@ -115,7 +114,6 @@
             },
             "dishes" : [
                {
-                  "allergens" : [],
                   "is_vegan" : true,
                   "name" : "zupa pomidorowa",
                   "price" : 500,
@@ -138,9 +136,9 @@
    "pantry" : [
       {
          "allergen" : "",
-         "name" : "Sok Jabłkowy",
-         "quantity" : 200,
-         "unit" : 0
+         "name" : "Jabłko",
+         "quantity" : 6,
+         "unit" : 1
       },
       {
          "allergen" : "",
@@ -150,9 +148,9 @@
       },
       {
          "allergen" : "",
-         "name" : "Jabłko",
-         "quantity" : 6,
-         "unit" : 1
+         "name" : "Sok Jabłkowy",
+         "quantity" : 200,
+         "unit" : 0
       }
    ]
 }

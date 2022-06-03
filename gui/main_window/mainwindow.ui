@@ -28,7 +28,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label">
@@ -110,7 +110,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QLabel" name="image">
@@ -835,19 +835,6 @@
            <string>Modyfikuj</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="modifyId">
-          <property name="geometry">
-           <rect>
-            <x>350</x>
-            <y>180</y>
-            <width>81</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Modyfikuj</string>
-          </property>
-         </widget>
          <widget class="QPushButton" name="pushButton_16">
           <property name="geometry">
            <rect>
@@ -1026,6 +1013,11 @@
           <height>23</height>
          </rect>
         </property>
+        <item>
+         <property name="text">
+          <string>Wszyscy</string>
+         </property>
+        </item>
         <item>
          <property name="text">
           <string>Kucharz</string>
@@ -1387,12 +1379,22 @@
         </property>
         <item>
          <property name="text">
+          <string>Wszytskie aktywne</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>Zamówienia z dowozem</string>
          </property>
         </item>
         <item>
          <property name="text">
           <string>Zamówienia na miejscu</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Historia Zamówień</string>
          </property>
         </item>
        </widget>
