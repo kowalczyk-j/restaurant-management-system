@@ -7,6 +7,7 @@
 #include <json/json.h>
 #include "../utils/Money.h"
 #include "../pantry/Product.h"
+#include "../Database.h"
 
 enum dish_exceptions {NegativeIndex, IndexOutOfBounds};
 
@@ -31,7 +32,8 @@ class Dish
 
 public:
     Dish(unsigned int id=1, std::string n="", dish_type t=danie_glowne, Money pr= Money(),
-    bool veg=0, std::vector<Ingredient> ingr={}, std::set<std::string> allerg={});
+    bool veg=0, std::vector<Ingredient> ingr={}, std::set<std::string> allerg={}, 
+    Database<Product> * products=nullptr);
 
     unsigned int get_id() const {return dish_id;}
     std::string const& get_name() const { return name; }
@@ -61,7 +63,7 @@ public:
     }
 
     void print_ingredients() const;
-    // void print_allergens() const;
+    void print_allergens() const;
     
     Json::Value parse_to_json();
     static Dish parse_from_json(Json::Value dish);

@@ -12,7 +12,7 @@
 #include "../pantry/Product.h"
 
 
-enum restaurant_exception{DishCurrentlyInOrder, EmployeeCurrentlyWithOrder, ProductCurrentlyInDish, NotEnoughtProductInPantry};
+enum restaurant_exception{DishCurrentlyInOrder, EmployeeCurrentlyWithOrder, ProductCurrentlyInDish, NotEnoughtProductInPantry, NotEnoughDishType};
 
 class Restaurant{
 
@@ -217,10 +217,7 @@ class Restaurant{
         }
     }
 
-
-
-    /*
-    void generate_lunch_menu()
+    void generate_lunch_menu(Database<Dish> * dishes)
     {
         ofstream file;
         file.open ("lunch.txt");
@@ -228,19 +225,27 @@ class Restaurant{
         std::tm* now = std::localtime(&t);
         file << "Lunch menu - " << (now->tm_year + 1900) << '.'
         << (now->tm_mon + 1) << '.' <<  now->tm_mday << "\n";
-        vector<size_t> types;
-        for (size_t i = 1; i < dishes.size(); i++)
-        {
-            if(dishes[i].get_enum_dish_type() != dishes[i-1].get_enum_dish_type())
-                types.push_back(i);
-        }
-        types.push_back(dishes.size());
+      
         srand (time(NULL));
-        file << "Przystawka:\n" << dishes[rand() % types[0]].get_name();
-        file << "\nDanie główne:\n" << dishes[rand() % (types[1]-types[0])+types[0]].get_name();
-        file << "\nDeser:\n" << dishes[rand() % (types[2]-types[1])+types[1]].get_name();
+        string starter="", main="", dessert="";
+        int iter = 0;
+        while((starter == "" || main == "" || dessert == "") && iter < 1000)
+        {
+            int random = rand() % dishes->size() + 1001;
+            if (dishes->operator[](random)->get_enum_dish_type() < 2 && starter == "")
+                starter = dishes->operator[](random)->get_name();
+            if (dishes->operator[](random)->get_enum_dish_type() == 2 && main == "")
+                main = dishes->operator[](random)->get_name();
+            if (dishes->operator[](random)->get_enum_dish_type() == 3 && dessert == "")
+                dessert = dishes->operator[](random)->get_name();
+            iter++;
+        }
+        if (iter == 1000) throw NotEnoughDishType;
+        file << "Przystawka / zupa:\n" << starter;
+        file << "\nDanie główne:\n" << main;
+        file << "\nDeser:\n" << dessert;
         file.close();
-    }*/
+    }
 
     //obsługa wejścia z plikó w formacie JSON
     //Json::Value parse_to_json();
