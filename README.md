@@ -92,16 +92,6 @@ Wsród metod dostępne jest także dodanie i usunięcie składniku do listy, a t
 Zdefiniowany został operator wyprowadzający do strumienia cout w postaci pozycji dania do widoku w Menu.
 Za współpracę z plikami odpowiadają metody parsujące do formatu Json:Value oraz tworzące obiekt z wartości tego typu.
 
-### GUI
-Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
-programu z plikami .ui, .cpp i .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI.
-
-UWAGA! Ze względu na brak czasu obsługa wyjątków z poziozmu GUI nie została zaimplamentowana. W związku z tym operacje takie jak:
-- dodanie zamówienia o takim samym id jak zamówienie istniejące
-- dodanie pracownika o takim samym id jak zamówienie istniejące
-- usunięcie ilości produktu do wartości mniejszej niż 0
-spowodują zamknięcie okna programu
-
 ### Orders
 Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
 obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
@@ -111,9 +101,22 @@ Klasa reprezentująca całą restaurację wraz z:
 - spiżarnią
 - menu
 - pracownikami(kucharzami, dostawcami, managerami, kelnerami)
-- aktywnymi zamówieniami(na miejscu i z dostawą)
+- aktywnymi zamówieniami i ich historią
 
-Poszczególne atrybuty i metody klasy zostały opisane w jej definicji. Jest to główna klasa programu.
+Jest to główna klasa programu, która reprentuje całą restaurację i zarządza wszystkimi procesami. Jako pośrednik między użytkownikiem a "bazami danych" dba o intgralność trzymnaych danych
+(np. nie pozwala na usunięcie ze spiżarni składnika będącego aktualnie w daniu) i stale monitoruje ilość zapsów, pomagając przyjmować tylko te zamówienia, które faktycznie mogą zostać zrealizowane.
+
+### Database
+Klasa szablonowa o funkcjonalności bazy danych, umożlwia łatwe i uporządkowane przechowywanie obiektów klas z polem przeznaczonym na unikalne id. Dzięki funkcjoalności takiej jak autmatyczny dobór wolnego id, możliwość łatwego pobierania konkretnego obiektu jak i wszytskich danych idelnie nadaje się do implementacji restauracyjnej spiżarni, listy dań, czy zamówień.
+
+### GUI
+Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
+programu z plikami .ui, .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI.
 
 ### Testy jednostkowe
 Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we frameworku Google test. Staraliśmy się testować zarówno przypadki skrajne, jak i typowe. Ważnym elementem testów jest sprawdzenie zdefiniowanych wyjątków - czy są prawiłowo obsłużone. W przypadku testowania zapisu i odczytu plików json, skupiliśmy się na przetestowaniu ich za pomocą pisania kodu w main.cpp. Zwracanie wartości Json::Value i jej prawidłowe formatowanie umieśliśmy również w Google testach. Sprawne testowanie podstawowych akcji umożliwiło nam także GUI, w którym można było wygodnie obserwować zmiany wprowadzanych wartości.
+
+
+### Podsumowanie
+Oczywiście pomimo wielu naszych wysiłków i starań przezntowany program dalej nie jest kompletny i mógłby podlegać dalszemu rozwojowi. Z pomysłów, które przyszły nam do głowy warto wspomnieć
+chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn, dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele

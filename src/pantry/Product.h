@@ -9,7 +9,7 @@ using namespace std;
 enum units {ml, g, szt, none};
 
 // nie wiem, czy to jesto dobre (na pewno jest tanie :)
-static unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};;
+static unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};
 
 class Product{
 
