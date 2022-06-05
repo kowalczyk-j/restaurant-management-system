@@ -32,6 +32,7 @@ private slots:
 	void on_removeOrder_clicked();
 	void on_addOrderD_clicked();
 	void on_addOrderOS_clicked();
+	void on_markOrderAsDone_clicked();
 
 	void on_pantryList_itemClicked();
 	void on_addProduct_clicked();

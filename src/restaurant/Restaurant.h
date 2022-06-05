@@ -121,18 +121,8 @@ class Restaurant{
     }
 
     unsigned int add_delivery_order(std::vector<unsigned int> ordered_dishes, unsigned int deliverer_id, Addres const& address){
-        try{
-            for(auto dish:ordered_dishes){
-                for(auto ingridient:get_dish(dish)->get_ingredients()){
-                    get_product(ingridient.stock_id)->reserve(ingridient.quantity);
-                }
-            }
-            DeliveryOrder * dor = new DeliveryOrder(ordered_dishes, deliverer_id, address);
-            return active_orders.add_data(dor);
-        }
-        catch(std::invalid_argument & e){
-            throw NotEnoughtProductInPantry;
-        }
+        DeliveryOrder * dor = new DeliveryOrder(ordered_dishes, deliverer_id, address);
+        return active_orders.add_data(dor);
     }
 
     unsigned int add_on_site_order(std::vector<unsigned int> ordered_dishes, unsigned int waiter_id, unsigned int table_id){
@@ -194,6 +184,29 @@ class Restaurant{
         active_orders.remove_data(id);
     }
 
+    //specjalna funckja do usuwanie dań, w celu zapewnienia wystarczającej ilości zapasów
+
+    void add_dish_to_order(unsigned int order_id, int dish_id){
+        BaseOrder * order = get_active_order(order_id);
+        try{
+            for(auto ingridient:get_dish(dish_id)->get_ingredients()){
+                    get_product(ingridient.stock_id)->reserve(ingridient.quantity);
+            }
+            order->add_dish(dish_id);
+        }
+            catch(std::invalid_argument & e){
+            throw NotEnoughtProductInPantry;
+        }
+    }
+
+    void remove_dish_from_order(unsigned int order_id, int position){
+        BaseOrder * order = get_active_order(order_id);
+        for(auto ingridient:get_dish(order->get_ordered_dishes()[position])->get_ingredients()){
+                get_product(ingridient.stock_id)->release(ingridient.quantity);
+        }
+        order->remove_dish(position);
+    }
+
 
 
     //funkcje specjalne
@@ -204,7 +217,7 @@ class Restaurant{
             m += get_dish(order->get_ordered_dishes()[i])->get_price();
         }
         return m;
-    };
+    }
 
     void mark_order_as_done(unsigned int order_id){
         BaseOrder * order = get_active_order(order_id);

@@ -15,6 +15,7 @@
 #include "ui_mainwindow.h"
 #include <QMainWindow>
 #include <QStringList>
+#include <QMessageBox>
 #include <QQuickItem>
 #include <QString>
 #include <QObject>
@@ -123,6 +124,7 @@ void MainWindow::on_moveMenu_clicked(){
     ui->menuStack->setCurrentIndex(1);
 }
 void MainWindow::on_moveOrders_clicked(){
+    ui->orderList->clear();
     for(unsigned int i=0; i<restaurant->get_all_active_orders().size(); i++){
         new QListWidgetItem(QString::fromStdString("#"+to_string(restaurant->get_all_active_orders()[i]->get_id())),
                                                    ui->orderList,
@@ -159,7 +161,7 @@ void MainWindow::on_orderList_itemClicked(){
             ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_dish(order->get_ordered_dishes()[i])->get_name()));
     }
     if(order->get_order_type()==0){
-        //ui->orderDelivery->setText(QString::fromStdString( .to_string()));
+        ui->orderDelivery->setText(QString::fromStdString(order->get_delivery_address().to_string()));
         ui->orderTypeStack->setCurrentIndex(0);
     }
     else{
@@ -171,8 +173,7 @@ void MainWindow::on_orderList_itemClicked(){
 }
 
 void MainWindow::on_modifyDeliveryAddress_clicked(){
-    /*
-    DeliveryOrder * order = ststic_cast<restaurant->get_active_order(current_id)>;
+    BaseOrder * order = restaurant->get_active_order(current_id);
 
     ChangeAddress chaw;
     chaw.set_current_address(
@@ -194,14 +195,14 @@ void MainWindow::on_modifyDeliveryAddress_clicked(){
         order->get_delivery_address().set_postal_code(postal_code);
         ui->orderDelivery->setText(QString::fromStdString(order->get_delivery_address().to_string()));
     }
-    */
 
 }
 
 void MainWindow::on_removeDishOrder_clicked(){
     BaseOrder * order = restaurant->get_active_order(current_id);
     position1 = ui->orderedDishes->currentRow();
-    order->remove_dish(position1);
+    restaurant->remove_dish_from_order(order->get_id(), position1);
+    ui->orderedDishes->clear();
     for(unsigned int i=0; i<order->get_ordered_dishes().size(); i++){
         ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_dish(order->get_ordered_dishes()[i])->get_name()));
     }
@@ -212,11 +213,20 @@ void MainWindow::on_addDishOrder_clicked(){
     BaseOrder * order = restaurant->get_active_order(current_id);
     ad.setModal(true);
     if(ad.exec() == QDialog::Accepted){
-        order->add_dish(ad.get_dish_id());
-        ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_active_order_value(current_id).to_string()));
+        try{
+            restaurant->add_dish_to_order(order->get_id(), ad.get_dish_id());
+            ui->orderTotalPrice->setText(QString::fromStdString(restaurant->get_active_order_value(current_id).to_string()));
             ui->orderedDishes->clear();
-        for(unsigned int i=0; i<order->get_ordered_dishes().size(); i++){
-            ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_dish(order->get_ordered_dishes()[i])->get_name()));
+            for(unsigned int i=0; i<order->get_ordered_dishes().size(); i++){
+                ui->orderedDishes->addItem(QString::fromStdString(restaurant->get_dish(order->get_ordered_dishes()[i])->get_name()));
+            }
+        }
+        catch(restaurant_exception e){
+            QMessageBox msgBox;
+            msgBox.setText("Brak wystarczające ilości składników do realizacji zamówienia");
+            msgBox.setWindowTitle("Nie można dodać!");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
         }
 
     }
@@ -259,6 +269,17 @@ void MainWindow::on_addOrderOS_clicked(){
                                 ui->orderList,
                                 restaurant->get_all_active_orders()[i]->get_id());
         }
+    }
+}
+
+void MainWindow::on_markOrderAsDone_clicked(){
+    restaurant->mark_order_as_done(current_id);
+    ui->orderStack->setCurrentIndex(1);
+    ui->orderList->clear();
+    for(unsigned int i=0; i<restaurant->get_all_active_orders().size(); i++){
+    new QListWidgetItem(QString::fromStdString("#"+to_string(restaurant->get_all_active_orders()[i]->get_id())),
+                        ui->orderList,
+                        restaurant->get_all_active_orders()[i]->get_id());
     }
 }
 
@@ -307,13 +328,22 @@ void MainWindow::on_removeQuantityfromProduct_clicked(){
 }
 
 void MainWindow::on_removeProduct_clicked(){
-    restaurant->remove_product(current_id);
-    ui->pantryStack->setCurrentIndex(1);
-    ui->pantryList->clear();
-    for(unsigned int i=0; i<restaurant->get_all_prodcucts().size(); i++){
-        new QListWidgetItem(QString::fromStdString(restaurant->get_all_prodcucts()[i]->get_name()),
-                                                   ui->pantryList,
-                                                   restaurant->get_all_prodcucts()[i]->get_id());
+    try{
+        restaurant->remove_product(current_id);
+        ui->pantryStack->setCurrentIndex(1);
+        ui->pantryList->clear();
+        for(unsigned int i=0; i<restaurant->get_all_prodcucts().size(); i++){
+            new QListWidgetItem(QString::fromStdString(restaurant->get_all_prodcucts()[i]->get_name()),
+                                                    ui->pantryList,
+                                                    restaurant->get_all_prodcucts()[i]->get_id());
+        }
+    }
+    catch(restaurant_exception e){
+            QMessageBox msgBox;
+            msgBox.setText("Produkt znajduje się w co najmniej jednym daniu w menu!");
+            msgBox.setWindowTitle("Nie można usunąć!");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
     }
 }
 
@@ -456,13 +486,22 @@ void MainWindow::on_modifySalary_clicked(){
 }
 
 void MainWindow::on_removeEmployee_clicked(){
-    restaurant->remove_employee(current_id);
-    ui->employeeStack->setCurrentIndex(1);
-    ui->employeeList->clear();
-    for(unsigned int i=0; i<restaurant->get_all_employees().size(); i++){
-        new QListWidgetItem(QString::fromStdString(restaurant->get_all_employees()[i]->get_name() + " " + restaurant->get_all_employees()[i]->get_surname() + " (" + to_string(restaurant->get_all_employees()[i]->get_id()) + ")"),
-                                                   ui->employeeList,
-                                                   restaurant->get_all_employees()[i]->get_id());
+    try{
+        restaurant->remove_employee(current_id);
+        ui->employeeStack->setCurrentIndex(1);
+        ui->employeeList->clear();
+        for(unsigned int i=0; i<restaurant->get_all_employees().size(); i++){
+            new QListWidgetItem(QString::fromStdString(restaurant->get_all_employees()[i]->get_name() + " " + restaurant->get_all_employees()[i]->get_surname() + " (" + to_string(restaurant->get_all_employees()[i]->get_id()) + ")"),
+                                                    ui->employeeList,
+                                                    restaurant->get_all_employees()[i]->get_id());
+        }
+    }
+    catch(restaurant_exception){
+            QMessageBox msgBox;
+            msgBox.setText("Pracownik zajmuje się obecnie zamówieniem.");
+            msgBox.setWindowTitle("Nie można usunąć!");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
     }
 }
 
@@ -544,13 +583,22 @@ void MainWindow::on_addMenuDish_clicked(){
 }
 
 void MainWindow::on_removeMenuDish_clicked(){
-    restaurant->remove_dish(current_id);
-    ui->menuStack->setCurrentIndex(1);
-    ui->menuList->clear();
-    for(unsigned int i=0; i<restaurant->get_all_dishes().size() ; i++){
-        new QListWidgetItem(QString::fromStdString(restaurant->get_all_dishes()[i]->get_name()),
-                                                   ui->menuList,
-                                                   restaurant->get_all_dishes()[i]->get_id());
+    try{
+        restaurant->remove_dish(current_id);
+        ui->menuStack->setCurrentIndex(1);
+        ui->menuList->clear();
+        for(unsigned int i=0; i<restaurant->get_all_dishes().size() ; i++){
+            new QListWidgetItem(QString::fromStdString(restaurant->get_all_dishes()[i]->get_name()),
+                                                    ui->menuList,
+                                                    restaurant->get_all_dishes()[i]->get_id());
+        }
+    }
+    catch(restaurant_exception e){
+            QMessageBox msgBox;
+            msgBox.setText("Danie znajduje się w zamówieniu (aktywnym bądź w historii)");
+            msgBox.setWindowTitle("Nie można usunąć!");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.exec();
     }
 }
 

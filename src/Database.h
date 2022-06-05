@@ -44,7 +44,7 @@ class Database
     }
 
     void add_data_with_id(T* data_to_add){
-        if(data.find(data_to_add->get_id()) == data.end()){
+        if(data.find(data_to_add->get_id()) != data.end()){
             throw NotUniqueKey;
         }
         data[data_to_add->get_id()] = data_to_add;

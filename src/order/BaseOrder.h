@@ -20,7 +20,7 @@ class BaseOrder{
     unsigned int get_id() {return order_id;}
     unsigned int get_employee_id(){return served_employee_id;}
     unsigned int get_order_type(){return order_type;}
-    //virtual Addres & get_delivery_addres(){}
+    virtual Addres & get_delivery_address(){Addres a = Addres(); Addres &ar = a; return ar;}
 
 
     //gettery
