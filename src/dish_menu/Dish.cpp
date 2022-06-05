@@ -1,33 +1,35 @@
 #include "Dish.h"
 
-Dish::Dish(std::string n, dish_type t, Money pr,
-bool veg, std::vector<Ingredient> ingr, set<std::string> allerg) :
-name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
+Dish::Dish(unsigned int id, std::string n, dish_type t, Money pr,
+bool veg, std::vector<Ingredient> ingr, set<std::string> allergs, 
+Database<Product> *products) :
+dish_id(id), name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
 {
-    allergens = allerg;
-    /*
-    for (const auto& value : ingredients)
-    {
-        if (value.get_allergen() != "")
-            allerg.insert(value.get_allergen());
+    if(products != nullptr){
+        for (size_t i=0; i< ingr.size(); i++){
+            auto allerg = products->operator[](ingr[i].stock_id)->get_allergen();
+            if (allerg != "")
+                allergs.insert(allerg);
+        }
     }
-    allergens = allerg;
-    */
+    allergens = allergs;
 }
 
-/*
-void Dish::remove_ingridient(int position)
+std::string Dish::get_string_allergens() const
 {
-    if(position < 0) throw NegativeIndex;
-    if(position > (int)ingredients.size()) throw IndexOutOfBounds;
-    ingredients.erase(ingredients.begin() + position);
+    std::string outcome = "";
+    for (const auto& allergen : allergens)
+    {
+        outcome = outcome + allergen + '\n';
+    }
+    return outcome;
 }
 
 void Dish::print_ingredients() const
 {
      std::cout << "Lista składników - " << name << ": \n";
      for (const auto& value : ingredients) {
-         std::cout << value.get_name() << " - " << value.get_quantity() << ' ' << value.get_unit() << "; ";
+         std::cout << "Id składniku: " << value.stock_id << " Ilość: " << value.quantity << "; ";
      std::cout << "\n";
      }
 }
@@ -42,10 +44,12 @@ void Dish::print_allergens() const
     std::cout << "\n";
 }
 
-Json::Value Dish::parse_dish_to_json(){
+
+Json::Value Dish::parse_to_json(){
     Json::Value dish;
     Json::Value products (Json::arrayValue);
     Json::Value allergs (Json::arrayValue);
+    dish["id"] = dish_id;
     dish["name"] = name;
     dish["type"] = type;
     dish["price"] = price.get_in_cents();
@@ -54,23 +58,26 @@ Json::Value Dish::parse_dish_to_json(){
         allergs.append(value);
     }
     for(const auto& value : ingredients){
-        products.append(value.parse_to_json());
+        Json::Value ingredient;
+        ingredient["stock_id"] = value.stock_id;
+        ingredient["quantity"] = value.quantity;
+        products.append(ingredient);
     }
     dish["allergens"] = allergs;
     dish["products"]=products;
     return dish;
 }
 
-Dish Dish::parse_dish_from_json(Json::Value dish)
+Dish Dish::parse_from_json(Json::Value dish)
 {
-    std::vector<Product> ingr;
+    std::vector<Ingredient> ingr;
     std::set<string> allerg;
     for(auto it = dish["products"].begin(); it != dish["products"].end(); it++){
-        ingr.push_back(Product::json_to_product(*it));
+        auto obj = *it;
+        ingr.push_back(Ingredient(obj["stock_id"].asUInt(), obj["quantity"].asInt()));
     }
     for(auto it = dish["allergens"].begin(); it != dish["allergens"].end(); it++){
         allerg.insert(it->asString());
     }
-    return Dish(dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
+    return Dish(dish["id"].asUInt(), dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
 }
-*/

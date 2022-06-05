@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <json/json.h>
+#include <unordered_map>
 #include <exception>
 
 using namespace std;

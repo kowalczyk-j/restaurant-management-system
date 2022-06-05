@@ -8,15 +8,15 @@ Stworzyliśmy program, który pomoże menadżerowi sieci restauracji w zarządza
 W skład naszego projektu wchodzą następujące foldery:
 - *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
 - *rsc*, zawierający grafiki wykorzystywane przez GUI
-- *lib*, zawierający zestaw bibiotek zewnętrznych niezbędnych do uruchoeminia GUI
+- *lib*, zawierający zestaw bibiotek zewnętrznych niezbędnych do uruchomienia GUI
 - *src*
-    - *dish_menu*: klasy Dish oraz Menu
-    - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter, oraz klasa szablonowa Staff
+    - *dish_menu*: klasa Dish
+    - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter
     - *order*: klasa bazowa Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
-    - *pantry*: klasy Pantry oraz Product
+    - *pantry*: klasa Product
     - *restaurant*: klasa Restaurant
     - *utils*: klasy Money oraz Addres, wykorzystywane w definicji powyższych klas
-
+- klasa szablonowa *Database.h*, służąca jako baza danych do obiektów konkretnego typu
 ## Uruchaminie
 
 UWAGA Plik wykonywalny guiApp został wyjątkowo dodany w celu prezentacji działania GUI.
@@ -76,25 +76,19 @@ Każda z klas dziedziczących po Employee ma zdefiniowany operator << oraz metod
     - zawierają dodatkowe pola: *tips* oraz *orders_to_serve* oraz metodę *new_tip(double tip)*, dodającą wartość tip do pola tips.
 - ***Manager***
 
-### Staff
-Klasa szablonowa Staff przechowuje dane na temat jednego typu pracowników w wektorze *staff*.
-Zawiera dwa konstruktory:
-- przyjmujący jako argument wektor staff
-- przyjmujący jako argument dane z pliku JSON (typ argumentu: Json::Value)
+### Dish
+Klasa przechowująca informacje o daniu, a konkretnie:
+- *id dania* służące do identyfikacji go w menu;
+- *nazwa dania*;
+- *typ dania* wybierany z klasy enum jako przystawka, zupa, danie główne, deser lub napój;
+- *informacja vege* służy do oznaczania dań dla wegetarian;
+- *składniki* jako wektor struktury Ingredient która przechowuje id produktu i jego potrzebną ilość do wykonania dania;
+- *alergeny* jako set, aby uniknąć powtarzania się tych samych pozycji;
 
-Oraz metody:
-- ***gettery***:
-    - *get_staff()*, zwracająca wektor staff
-    - *size()*, zwracająca ilość zatrudnionych pracowników
-- *operator[]*, zwracający pracownika na danej pozycji (size_t) w wektorze staff
-- *fire(size_t position)*, usuwająca z wektora staff pracownika o danym indeksie. Wyrzuca wyjątek *PositionOutOfBounds*, gdy indeks jest większy niż ilość elementów w wektorze staff
-- *employ(const T& employee)*, dodaje pracownika do staff. Rzuca wyjątek *AlreadyStaffMember*, jeśli pracownik *employee* znajduje się już w kolekcji staff
-- *parse_to_json()*, zwracająca dane o każdym pracowniku (Json::Value)
-
-Zdefiniowane są również funkcje:
-- *parse_staff_from_json(string path)*, odczytująca plik JSON i zwracająca obiekt typu Json::Value
-- *save_staff_to_json(Json::Value staff, string path)*, zapisująca dane do pliku JSON.
-
+Klasa posiada konstuktor domyślny, przyjmujący także wskazanie na danę bazych produktów, aby umożliwić automatyczne pobranie listy alergenów ze składników.
+Wsród metod dostępne jest także dodanie i usunięcie składniku do listy, a także wyprintowanie składników czy alergenów.
+Zdefiniowany został operator wyprowadzający do strumienia cout w postaci pozycji dania do widoku w Menu.
+Za współpracę z plikami odpowiadają metody parsujące do formatu Json:Value oraz tworzące obiekt z wartości tego typu.
 
 ### GUI
 Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
@@ -111,7 +105,7 @@ Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy 
 obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
 
 ### Restaurant
-Klasa reprexentująca całą restaurację wraz z:
+Klasa reprezentująca całą restaurację wraz z:
 - spiżarnią
 - menu
 - pracownikami(kucharzami, dostawcami, managerami, kelnerami)
@@ -120,4 +114,4 @@ Klasa reprexentująca całą restaurację wraz z:
 Poszczególne atrybuty i metody klasy zostały opisane w jej definicji. Jest to główna klasa programu.
 
 ### Testy jednostkowe
-Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały w frameworku Google test. Staraliśmy się testować zarówno przypadki skrajne, jak i typowe. Ważnym elementem testów jest sprawdzenie zdefiniowanych wyjątków - czy są prawiłowo obsłużone. W przypadku testowania zapisu i odczytu plików json, skupiliśmy się na przetestowaniu ich za pomocą pisania kodu w main.cpp. Zwracanie wartości Json::Value i jej prawidłowe formatowanie umieśliśmy również w Google testach.
+Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we frameworku Google test. Staraliśmy się testować zarówno przypadki skrajne, jak i typowe. Ważnym elementem testów jest sprawdzenie zdefiniowanych wyjątków - czy są prawiłowo obsłużone. W przypadku testowania zapisu i odczytu plików json, skupiliśmy się na przetestowaniu ich za pomocą pisania kodu w main.cpp. Zwracanie wartości Json::Value i jej prawidłowe formatowanie umieśliśmy również w Google testach. Sprawne testowanie podstawowych akcji umożliwiło nam także GUI, w którym można było wygodnie obserwować zmiany wprowadzanych wartości.
