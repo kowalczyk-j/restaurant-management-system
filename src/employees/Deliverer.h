@@ -6,7 +6,6 @@ class Deliverer : public Employee
 {
 private:
     Money tips;
-    std::vector<int> orders_to_serve;
 
 public:
     Deliverer(std::string fname, std::string lname, Addres a, Money sal) :
@@ -16,13 +15,13 @@ public:
     Deliverer(Json::Value deliverer_from_json) : Employee(deliverer_from_json) {};
 
     void new_tip(Money tip) {tips += tip;}
-/*
+
     Json::Value parse_to_json()
     {
         Json::Value deliverer = Employee::parse_to_json();
-        deliverer["position"] = "deliverer";
+        deliverer["tips"] = tips.get_in_cents();
         return deliverer;
-    }*/
+    }
 
     virtual void print(std::ostream& os) const
     {

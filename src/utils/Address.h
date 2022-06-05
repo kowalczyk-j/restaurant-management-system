@@ -3,9 +3,10 @@
 #pragma once
 
 class Addres{
-    /*
-     *  Klasa reprezntująca adres. W przyszłości planowane jest dodanie poprawności sprawdzania.
-    */
+
+/*
+ *  Klasa reprezntująca adres. W przyszłości planowane jest dodanie sprawdzania poprawności.
+*/
 
     std::string country;        //kraj
     std::string region;         //region (województwo)

@@ -1,7 +1,5 @@
 #pragma once
-#include <iomanip>
 #include <iostream>
-#include <fstream>
 #include <json/json.h>
 #include <unordered_map>
 #include <exception>
@@ -10,32 +8,34 @@ using namespace std;
 
 enum units {ml, g, szt, none};
 
+// nie wiem, czy to jesto dobre (na pewno jest tanie :)
+static unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};;
+
 class Product{
 
-    unsigned int product_id=0;
-    string name;
-    units unit;
-    string allergen;
-    int quantity;
-    int available_quantity;
+    unsigned int product_id=0;      //id produktu
+    string name;                    //nazwa produktu
+    units unit;                     //jednostka
+    string allergen;                //alergeny
+    int quantity;                   //ilość na magazynie
+    int available_quantity;         //dostępna ilość uwzględniająca przyjęte zamówienia
 
     public:
+
     //konstruktor
-    Product(string n = "", units u = none, string a = "", int q=0):
+    Product(string n = "", units u = none, string a = "", int q=0, int aq=-1):
     name(n), unit(u), allergen(a){
+        if(aq == -1){available_quantity=q;}
+        else if(aq < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         if(q < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         quantity = q;
-        available_quantity = q;
     }
 
     //gettery
-    string get_name() const{return name;}
-    string get_unit() const{
-        unordered_map<units, string> units_map = {{ml, "ml"},{szt, "szt"},{g, "g"}, {none, "none"}};
-        return units_map[unit];
-    }
+    string get_name() const& {return name;}
+    string get_unit() & {return units_map[unit];}
     units get_enum_unit() const{return unit;}
-    string get_allergen() const {return allergen;}
+    string get_allergen() const& {return allergen;}
     unsigned int get_id() const{return product_id;}
     int get_quantity() const {return quantity;}
     int get_available_quantity() const {return available_quantity;}
@@ -46,17 +46,12 @@ class Product{
     void set_id(unsigned int id){product_id = id;}
 
 
-
-    void set_quantity(int q){
-        if(q < 0){throw std::invalid_argument("Quantity cannot be negative!");}
-        quantity = q;
-    }
+    //manipulatory ilością produktu
 
     void operator+=(int quantity_to_add){
         if(quantity + quantity_to_add < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         quantity += quantity_to_add;
     }
-
 
     void operator-=(int quantity_to_sub){
         *this += (-quantity_to_sub);
@@ -72,25 +67,21 @@ class Product{
         available_quantity += quantity;
     }
 
-    /*
+
+    //konwertery do formtu JSON
     Json::Value parse_to_json() const{
-        Json::Value add;
-        add["name"] = name;
-        add["unit"] = this->get_enum_unit();
-        add["allergen"] = allergen;
-        return add;
+        Json::Value product;
+        product["id"] = product_id;
+        product["name"] = name;
+        product["unit"] = this->get_enum_unit();
+        product["allergen"] = allergen;
+        product["quantity"] = quantity;
+        product ["available_quantity"] = available_quantity;
+        return product;
     }
 
     static Product json_to_product(Json::Value obj){
-        return  Product(obj["name"].asString(), (units)obj["unit"].asUInt(), obj["allergen"].asString());
-    }*/
-
-    void print_product(){
-        cout << "Nazwa: " << name << endl;
-     //   cout << "Ilość: " << quantity << " " << unit << endl;
-        cout << "Alergen: " << allergen << endl;
-        cout << "\n\n";
+        return  Product(obj["name"].asString(), (units)obj["unit"].asUInt(), obj["allergen"].asString(), obj["quantity"].asInt(), obj["available_quantity"].asInt());
     }
-
 
 };

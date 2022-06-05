@@ -1,7 +1,7 @@
 #include "Dish.h"
 
 Dish::Dish(unsigned int id, std::string n, dish_type t, Money pr,
-bool veg, std::vector<Ingredient> ingr, set<std::string> allergs, 
+bool veg, std::vector<Ingredient> ingr, set<std::string> allergs,
 Database<Product> *products) :
 dish_id(id), name(n), type(t), price(pr), is_vegan(veg), ingredients(ingr)
 {

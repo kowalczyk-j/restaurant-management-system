@@ -225,7 +225,18 @@ class Restaurant{
     }
 
     //obsługa wejścia z plikó w formacie JSON
-    //Json::Value parse_to_json();
+    Json::Value parse_to_json(){
+        Json::Value restaurant;
+        restaurant["id"] = restaurant_id;
+        restaurant["name"] = name;
+        restaurant["address"] = address.parse_to_json();
+        restaurant["pantry"] = pantry.parse_to_json();
+        restaurant["menu"] = menu.parse_to_json();
+        restaurant["employees"] = employee_database.parse_to_json();
+        restaurant["active_orders"] = active_orders.parse_to_json();
+        restaurant["order_history"] = orders_history.parse_to_json();
+        return restaurant;
+    }
     //static Restaurant parse_from_json(Json::Value restaurant);
 
 };

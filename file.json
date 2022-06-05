@@ -1,155 +1,44 @@
 {
+   "active_orders" : [],
    "address" : {
-      "building" : "1",
+      "building" : "8",
       "city" : "Warszawa",
       "coordinates" : {
-         "latitude" : 52.216183999999998,
-         "longitude" : 20.239073000000001
+         "latitude" : 102,
+         "longitude" : 35
       },
       "country" : "Polska",
       "postal_code" : "00-000",
       "region" : "Mazowieckie",
       "street" : "Plac Politechniki"
    },
-   "employees" : {
-      "cooks" : [
-         {
-            "address" : {
-               "building" : "1",
-               "city" : "Warszawa",
-               "coordinates" : {
-                  "latitude" : 52.220154000000001,
-                  "longitude" : 21.011968
-               },
-               "country" : "Polska",
-               "postal_code" : "00-000",
-               "region" : "Mazowieckie",
-               "street" : "Plac Politechniki"
-            },
-            "id" : 1,
-            "ischef" : false,
-            "name" : "Adam",
-            "position" : "cook",
-            "salary" : 800000,
-            "surname" : "Wiśniewski"
-         }
-      ],
-      "deliverers" : [],
-      "managers" : [
-         {
-            "address" : {
-               "building" : "1",
-               "city" : "Warszawa",
-               "coordinates" : {
-                  "latitude" : 52.220154000000001,
-                  "longitude" : 21.011968
-               },
-               "country" : "Polska",
-               "postal_code" : "00-000",
-               "region" : "Mazowieckie",
-               "street" : "Plac Politechniki"
-            },
-            "id" : 4,
-            "name" : "Jan",
-            "position" : "manager",
-            "salary" : 800000,
-            "surname" : "Nowak"
-         }
-      ],
-      "waiters" : [
-         {
-            "address" : {
-               "building" : "1",
-               "city" : "Warszawa",
-               "coordinates" : {
-                  "latitude" : 52.220154000000001,
-                  "longitude" : 21.011968
-               },
-               "country" : "Polska",
-               "postal_code" : "00-000",
-               "region" : "Mazowieckie",
-               "street" : "Plac Politechniki"
-            },
-            "id" : 2,
-            "name" : "Alicja",
-            "position" : "waiter",
-            "salary" : 800000,
-            "surname" : "Polska"
-         }
-      ]
-   },
-   "id" : 2,
+   "employees" : [],
+   "id" : 0,
    "menu" : [
       {
-         "is_vegan" : true,
-         "name" : "zupa pomidorowa",
-         "price" : 500,
+         "allergens" : [ "wd" ],
+         "id" : 1001,
+         "is_vegan" : false,
+         "name" : "dwd",
+         "price" : 1300,
          "products" : [
             {
-               "allergen" : "",
-               "name" : "Jabłko",
-               "quantity" : 670,
-               "unit" : 1
+               "quantity" : 34,
+               "stock_id" : 1001
             }
          ],
-         "type" : 1
+         "type" : 0
       }
    ],
-   "name" : "Różana",
-   "orders" : {
-      "delivery" : [
-         {
-            "deliverer_id" : 10,
-            "delivery_address" : {
-               "building" : "1",
-               "city" : "Warszawa",
-               "coordinates" : {
-                  "latitude" : 52.220154000000001,
-                  "longitude" : 21.011968
-               },
-               "country" : "Polska",
-               "postal_code" : "00-000",
-               "region" : "Mazowieckie",
-               "street" : "Plac Politechniki"
-            },
-            "dishes" : [
-               {
-                  "is_vegan" : true,
-                  "name" : "zupa pomidorowa",
-                  "price" : 500,
-                  "products" : [
-                     {
-                        "allergen" : "",
-                        "name" : "Jabłko",
-                        "quantity" : 670,
-                        "unit" : 1
-                     }
-                  ],
-                  "type" : 1
-               }
-            ],
-            "id" : 1
-         }
-      ],
-      "on_site" : []
-   },
+   "name" : "Magnoliowa",
+   "order_history" : [],
    "pantry" : [
       {
-         "allergen" : "",
-         "name" : "Jabłko",
-         "quantity" : 6,
-         "unit" : 1
-      },
-      {
-         "allergen" : "",
-         "name" : "Mięso",
-         "quantity" : 500,
-         "unit" : 1
-      },
-      {
-         "allergen" : "",
-         "name" : "Sok Jabłkowy",
-         "quantity" : 200,
+         "allergen" : "wd",
+         "available_quantity" : 120,
+         "id" : 1001,
+         "name" : "mleko",
+         "quantity" : 120,
          "unit" : 0
       }
    ]

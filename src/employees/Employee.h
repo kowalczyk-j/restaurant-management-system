@@ -22,6 +22,8 @@ public:
                  employee_id=0;
              };
     Employee(Json::Value employee_from_json);
+
+    //destruktor (wymagany ze względu na abstrakcyjnosć klasy)
     virtual ~Employee(){};
 
     //gettery
@@ -40,8 +42,8 @@ public:
     void set_address(Addres new_address) {address = new_address;}
 
     //konwertery do formatu JSON
-    /*
     virtual Json::Value parse_to_json();
+    /*
     void save_to_json(std::string path);
     */
 

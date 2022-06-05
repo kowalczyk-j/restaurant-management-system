@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <functional>
+#include <json/json.h>
 
 enum exception {KeyNotFound, NotUniqueKey};
 
@@ -80,6 +81,14 @@ class Database
 
     void free_up_id(unsigned int free_id){
         next_id = free_id;
+    }
+
+    Json::Value parse_to_json(){
+        Json::Value database(Json::arrayValue);;
+        for(typename std::map<unsigned int, T*>::iterator it = data.begin(); it != data.end(); ++it) {
+            database.append(it->second->parse_to_json());
+        }
+        return database;
     }
 
 };

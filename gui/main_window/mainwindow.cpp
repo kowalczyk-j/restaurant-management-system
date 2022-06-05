@@ -605,7 +605,7 @@ void MainWindow::on_removeMenuDish_clicked(){
 void MainWindow::closeEvent(QCloseEvent *event) {
 
     event->accept();
-    /*
+
     std::ofstream file;
     file.open("file.json");
 
@@ -615,5 +615,4 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     file << styledWriter.write(res);
 
     file.close();
-    */
 }
