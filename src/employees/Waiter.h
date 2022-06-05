@@ -15,17 +15,23 @@ public:
     Waiter(Json::Value waiter_from_json) : Employee(waiter_from_json) {};
 
     void new_tip(double tip) {tips += tip;}
-/*
+
     Json::Value parse_to_json()
     {
         Json::Value waiter = Employee::parse_to_json();
         waiter["position"] = "waiter";
         return waiter;
-    }*/
+    }
 
     void print(std::ostream& os) const
     {
         this->Employee::print(os);
         os << "\nPosition: Waiter";
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, Waiter const& w)
+    {
+        w.print(os);
+        return os;
     }
 };

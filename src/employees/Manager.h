@@ -9,17 +9,23 @@ public:
                 position_name = "Manager";
             };
     Manager(Json::Value manager_from_json) : Employee(manager_from_json) {};
-/*
+
     Json::Value parse_to_json()
     {
         Json::Value manager = Employee::parse_to_json();
         manager["position"] = "manager";
         return manager;
-    }*/
+    }
 
     void print(std::ostream& os) const
     {
         this->Employee::print(os);
         os << "\nPosition: Manager";
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, Manager const& m)
+    {
+        m.print(os);
+        return os;
     }
 };

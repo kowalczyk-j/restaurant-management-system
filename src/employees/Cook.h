@@ -16,19 +16,24 @@ public:
     void set_chef() {is_chef = true;}
     void remove_chef(){is_chef = false;}
 
-    /*
     Json::Value parse_to_json()
     {
         Json::Value cook = Employee::parse_to_json();
         cook["position"] = "cook";
         cook["ischef"] = is_chef;
         return cook;
-    }*/
+    }
 
     void print(std::ostream& os) const
     {
         this->Employee::print(os);
         os << "\nPosition: ";
         is_chef?(os << "Chef"):(os << "Cook");
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, Cook const& c)
+    {
+        c.print(os);
+        return os;
     }
 };
