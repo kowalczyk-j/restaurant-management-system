@@ -13,7 +13,10 @@ class AddProduct : public QDialog
 {
     Q_OBJECT
 public:
-	AddProduct(QWidget *parent = 0);
+	AddProduct(QWidget *parent = 0): QDialog(parent){
+		ui = new Ui::AddProduct;
+        ui->setupUi(this);
+	};
 	~AddProduct(){delete ui;}
 	QString get_name(){return ui->name->text();}
 	int get_quantity(){return ui->quantity->value();}

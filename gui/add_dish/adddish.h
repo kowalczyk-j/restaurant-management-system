@@ -3,11 +3,9 @@
 #include <QWidget>
 #include <QDialog>
 #include <QString>
-#include <QVector>
 #include <QListWidgetItem>
 #include <iostream>
 #include <string>
-#include <vector>
 #include "../../src/restaurant/Restaurant.h"
 #include "ui_adddish.h"
 

@@ -13,7 +13,10 @@ class ChangeName : public QDialog
 {
     Q_OBJECT
 public:
-	ChangeName(QWidget *parent = 0);
+	ChangeName(QWidget *parent = 0):QDialog(parent){
+        ui = new Ui::ChangeName;
+        ui->setupUi(this);
+	}
 	~ChangeName(){delete ui;}
 	void set_name(QString name){ui->name->setText(name);};
 	QString get_name(){return ui->name->text();}

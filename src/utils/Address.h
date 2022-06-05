@@ -3,6 +3,10 @@
 #pragma once
 
 class Addres{
+    /*
+     *  Klasa reprezntująca adres. W przyszłości planowane jest dodanie poprawności sprawdzania.
+    */
+
     std::string country;        //kraj
     std::string region;         //region (województwo)
     std::string city;           //miasto
@@ -13,8 +17,10 @@ class Addres{
     double longitude;           //długość geograficzna
 
     public:
+
     //konstruktor
-    Addres(std::string ci="", std::string p_c="", std::string s="", std::string b="", std::string co="", std::string r="", double lat=0, double lng=0):
+    Addres(std::string const& ci="", std::string const& p_c="", std::string const& s="", std::string const &b="",
+           std::string const& co="", std::string const& r="", double lat=0, double lng=0):
     country(co), region(r), city(ci), postal_code(p_c), street(s), building(b), latitude(lat), longitude(lng){};
 
     //gettery

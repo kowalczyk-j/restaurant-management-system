@@ -23,7 +23,6 @@ public:
         ui->setupUi(this);
 	}
 	~AddOrder(){delete ui;}
-	QString get_number(){return ui->number->text();}
 	QString get_city(){return ui->city->text();}
 	QString get_street(){return ui->street->text();}
 	QString get_building(){return ui->building->text();}

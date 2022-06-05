@@ -13,7 +13,10 @@ class AddEmployee : public QDialog
 {
     Q_OBJECT
 public:
-	AddEmployee(QWidget *parent = 0);
+	AddEmployee(QWidget *parent = 0): QDialog(parent){
+		ui = new Ui::AddEmployee;
+        ui->setupUi(this);
+	};
 	~AddEmployee(){delete ui;}
 	QString get_name(){return ui->name->text();}
 	QString get_surname(){return ui->surname->text();}
