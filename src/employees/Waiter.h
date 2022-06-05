@@ -6,7 +6,6 @@ class Waiter : public Employee
 {
 private:
     double tips;
-    std::vector<int> orders_to_serve;
 public:
     Waiter(std::string fname, std::string lname, Addres a, Money sal) :
            Employee(fname, lname, a, sal) {
