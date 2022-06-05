@@ -23,9 +23,15 @@ public:
         return deliverer;
     }
 
-    virtual void print(std::ostream& os) const
+    void print(std::ostream& os) const
     {
         this->Employee::print(os);
         os << "\nPosition: Deliverer";
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, Deliverer const& d)
+    {
+        d.print(os);
+        return os;
     }
 };

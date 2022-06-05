@@ -29,4 +29,10 @@ public:
         os << "\nPosition: ";
         is_chef?(os << "Chef"):(os << "Cook");
     }
+
+    friend std::ostream& operator<<(std::ostream& os, Cook const& c)
+    {
+        c.print(os);
+        return os;
+    }
 };

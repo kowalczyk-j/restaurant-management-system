@@ -27,4 +27,10 @@ public:
         this->Employee::print(os);
         os << "\nPosition: Waiter";
     }
+
+    friend std::ostream& operator<<(std::ostream& os, Waiter const& w)
+    {
+        w.print(os);
+        return os;
+    }
 };

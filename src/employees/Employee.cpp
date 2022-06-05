@@ -22,7 +22,6 @@ void Employee::print(std::ostream& os) const
     os << "\nName: " << name << "\nSurname: " << surname << "\nID: " << employee_id;
 }
 
-
 Json::Value Employee::parse_to_json()
 {
     Json::Value employee;
@@ -46,4 +45,4 @@ Json::Value parse_employee_from_json(std::string path)
     reader.parse(file, employee);
     return employee;
 }
-*/
+

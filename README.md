@@ -4,21 +4,7 @@
 ## Tematyka projektu oraz krótki opis
 Stworzyliśmy program, który pomoże menadżerowi sieci restauracji w zarządzaniu lokalami i personelem. Całość została przedstawiona w przyjaznym dla użytkownika GUI. Za jego pomocą można wprowadzać do systemu nowe zamówienia, modyfikować menu danej restauracji, ustalać nowe pensje pracowników, zmieniać skład kadry czy chociażby kontrolować stan spiżarni.
 
-## Struktura
-W skład naszego projektu wchodzą następujące foldery:
-- *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
-- *rsc*, zawierający grafiki wykorzystywane przez GUI
-- *lib*, zawierający zestaw bibiotek zewnętrznych niezbędnych do uruchomienia GUI
-- *src*
-    - *dish_menu*: klasa Dish
-    - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter
-    - *order*: klasa bazowa Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
-    - *pantry*: klasa Product
-    - *restaurant*: klasa Restaurant
-    - *utils*: klasy Money oraz Addres, wykorzystywane w definicji powyższych klas
-- klasa szablonowa *Database.h*, służąca jako baza danych do obiektów konkretnego typu
 ## Uruchaminie
-
 UWAGA Plik wykonywalny guiApp został wyjątkowo dodany w celu prezentacji działania GUI.
 Zbudowanie tego pliku może nie być możliwe, umieszczono jednak CMakeList użyty do tego celu - jest on dostępny pod nazwą CMakeListGUI.txt .
 
@@ -35,12 +21,27 @@ export LD_LIBRARY_PATH={ścieżka_do_projeku}/lib/lib/ && ./guiApp
 W każdym z powyższych przypadków {ścieżka_do_projektu} powinno zostać zastąpione pełną ścieżką do projektu.
 
 
+## Struktura
+W skład naszego projektu wchodzą następujące foldery:
+- *gui*, w którym składowane są pliki wykorzystywane przez interfejs graficzny
+- *rsc*, zawierający grafiki wykorzystywane przez GUI
+- *lib*, zawierający zestaw bibiotek zewnętrznych niezbędnych do uruchomienia GUI
+- *src*
+    - *dish_menu*: klasa Dish
+    - *employees*: klasy Employee oraz dziedziczące: Cook, Deliverer, Manager, Waiter
+    - *order*: klasa bazowa Order oraz dziedziczące: DeliveryOrder oraz OnSiteOrder
+    - *pantry*: klasa Product
+    - *restaurant*: klasa Restaurant
+    - *utils*: klasy Money oraz Addres, wykorzystywane w definicji powyższych klas
+- klasa szablonowa *Database.h*, służąca jako baza danych do obiektów konkretnego typu
+
 
 ### Employee
-Klasa bazowa pracownika. Zawiera pola:
+Abstrakcyjna klasa pracownika. Zawiera pola:
 - (unsigned int) *employee_id*;
 - (string) *name*;
 - (string) *surname*;
+- (string) *position_name*;
 - (Addres) *address*;
 - (Money) *salary*;
 
@@ -55,10 +56,11 @@ Oraz metody:
     - *get_employee_id()*, zwracająca identyfikator pracownika (unsigned int)
     - *get_salary()*, zwracająca pensję pracownika (Money)
     - *get_address()*, zwracająca adres pracownika (Addres)
+    - *get_position()*, zwracająca stanowisko, na którym pracuje
 - ***settery***
     - *set_name(string name)*, ustawiająca imię
     - *set_surname(string surname)*, ustawiająca nazwisko
-    - *set_employee_id(unsigned int id)*, ustawiająca identyfikator pracownika
+    - *set_id(unsigned int id)*, ustawiająca identyfikator pracownika
     - *set_salary(Money salary)*, ustawiająca pensję pracownika
     - *set_address(Addres address)*, ustawiająca adres pracownika
 - *parse_to_json()*, wirtualna funkcja zwracająca dane pracownika przekonwertowane do formatu JSON (Json::Value)
@@ -73,7 +75,7 @@ Każda z klas dziedziczących po Employee ma zdefiniowany operator << oraz metod
     - zawiera dodatkowe pole: *is_chef*, wskazujące czy dany kucharz jest również szefem kuchni.
     - dodatkowe gettery i settery: *get_ischef()*, *set_ischef()*, zmieniająca wartość *is_chef* na *true* oraz *remove_ischef()*, zmieniająca wartość *is_chef* na *false*
 - ***Deliverer*** i ***Waiter***
-    - zawierają dodatkowe pola: *tips* oraz *orders_to_serve* oraz metodę *new_tip(double tip)*, dodającą wartość tip do pola tips.
+    - zawierają dodatkowe pola: *tips* oraz metodę *new_tip(double tip)*, dodającą wartość tip do pola tips.
 - ***Manager***
 
 ### Dish

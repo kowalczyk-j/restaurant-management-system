@@ -32,7 +32,7 @@ public:
     unsigned int get_id() const {return employee_id;}
     Money const& get_salary() const {return salary;}
     Addres const& get_address() const {return address;}
-    std::string const& get_position() {return position_name;}
+    std::string const& get_position() const {return position_name;}
 
     //settery
     void set_name(std::string name) {this->name = name;}
@@ -45,7 +45,6 @@ public:
     virtual Json::Value parse_to_json();
     /*
     void save_to_json(std::string path);
-    */
 
     bool operator==(Employee * other) const {return (employee_id == other->employee_id);}
 
