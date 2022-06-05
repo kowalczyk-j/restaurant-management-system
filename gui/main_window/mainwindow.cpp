@@ -570,7 +570,7 @@ void MainWindow::on_addMenuDish_clicked(){
 
     AddMenuDish amd(*restaurant);
     if(amd.exec() == QDialog::Accepted){
-        restaurant->add_dish(amd.get_name().toStdString(), (dish_type) amd.get_category(), Money(amd.get_zlotys().toInt(), amd.get_grosze().toInt()), amd.get_vegan(), amd.get_ing());
+        restaurant->add_dish(0, amd.get_name().toStdString(), (dish_type) amd.get_category(), Money(amd.get_zlotys().toInt(), amd.get_grosze().toInt()), amd.get_vegan(), amd.get_ing());
         ui->menuStack->setCurrentIndex(1);
         ui->menuList->clear();
         for(unsigned int i=0; i<restaurant->get_all_dishes().size() ; i++){

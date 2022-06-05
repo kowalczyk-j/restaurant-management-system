@@ -13,7 +13,6 @@ public:
                position_name = "Kelner";
            };
     Waiter(Json::Value waiter_from_json) : Employee(waiter_from_json) {};
-    ~Waiter(){};
 
     void new_tip(double tip) {tips += tip;}
 /*

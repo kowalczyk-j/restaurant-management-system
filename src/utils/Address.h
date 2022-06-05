@@ -18,28 +18,28 @@ class Addres{
     country(co), region(r), city(ci), postal_code(p_c), street(s), building(b), latitude(lat), longitude(lng){};
 
     //gettery
-    std::string get_city(){return city;}
-    std::string get_postal_code(){return postal_code;}
-    std::string get_street(){return street;}
-    std::string get_building(){return building;}
-    std::string get_country(){return country;}
-    std::string get_region(){return region;}
-    double get_latitude(){return latitude;}
-    double get_longitude(){return longitude;}
+    std::string const& get_city() const {return city;}
+    std::string const& get_postal_code() const {return postal_code;}
+    std::string const& get_street() const {return street;}
+    std::string const& get_building() const {return building;}
+    std::string const& get_country() const {return country;}
+    std::string const& get_region() const {return region;}
+    double get_latitude() const {return latitude;}
+    double get_longitude() const {return longitude;}
 
     //settery
-    void set_city(std::string c){city = c;}
-    void set_postal_code(std::string p_c){postal_code = p_c;}
-    void set_street(std::string s){street = s;}
-    void set_building(std::string b){building = b;}
-    void set_country(std::string c){country = c;}
-    void set_region(std::string r){region = r;}
+    void set_city(std::string const& c){city = c;}
+    void set_postal_code(std::string const& p_c){postal_code = p_c;}
+    void set_street(std::string const& s){street = s;}
+    void set_building(std::string const& b){building = b;}
+    void set_country(std::string const& c){country = c;}
+    void set_region(std::string const& r){region = r;}
     void set_latitude(double lat){latitude = lat;}
     void set_longitude(double lng){longitude = lng;}
 
 
 
-    std::string to_string(){
+    std::string to_string() const{
         std::string res;
         res = "ul." + street +" "+ building+", "+ postal_code + " "+city;
         return res;

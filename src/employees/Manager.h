@@ -9,7 +9,6 @@ public:
                 position_name = "Manager";
             };
     Manager(Json::Value manager_from_json) : Employee(manager_from_json) {};
-    ~Manager(){};
 /*
     Json::Value parse_to_json()
     {

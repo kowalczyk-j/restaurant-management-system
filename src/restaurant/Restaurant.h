@@ -52,42 +52,6 @@ class Restaurant{
     int get_dishes_number(){return menu.size();}
     int get_products_number(){return pantry.size();}
 
-    /*
-    std::vector<Employee *> get_all_cooks(){
-        std::vector<Employee *> cooks = employee_database.get_full_data();
-        for(std::vector<Employee *>::iterator it = cooks.begin(); it!= cooks.end(); it++){
-            std::cout << (*it)->get_position();
-            if((*it)->get_position().compare("Kucharz") != 0) it = cooks.erase(it);
-        }
-        return cooks;
-    }
-
-    std::vector<Employee *> get_all_deliverers(){
-        std::vector<Employee *> deliverers = employee_database.get_full_data();
-        for(std::vector<Employee *>::iterator it = deliverers.begin(); it!= deliverers.end(); it++){
-            if((*it)->get_position().compare("Dostawca") != 0) it = deliverers.erase(it);
-        }
-        return deliverers;
-    }
-
-    std::vector<Employee *> get_all_managers(){
-        std::vector<Employee *> managers = employee_database.get_full_data();
-        for(std::vector<Employee *>::iterator it = managers.begin(); it!= managers.end(); it++){
-            std::string s1 = typeid(*it).name();
-            if((*it)->get_position().compare("Manager") != 0) it = managers.erase(it);
-        }
-        return managers;
-    }
-
-    std::vector<Employee *> get_all_waiters(){
-        std::vector<Employee *> waiters = employee_database.get_full_data();
-        for(std::vector<Employee *>::iterator it = waiters.begin(); it!= waiters.end(); it++){
-            std::string s1 = typeid(*it).name();
-            if((*it)->get_position().compare("Kelner") != 0) it = waiters.erase(it);
-        }
-        return waiters;
-    }
-    */
 
     //dodawanie elementów do baz danych
     unsigned int add_product(std::string const& name, units unit, std::string const& allergens, unsigned int quantity){
@@ -96,7 +60,7 @@ class Restaurant{
     }
 
     unsigned int add_dish(unsigned int id, std::string const& name, dish_type type, Money const& price, bool is_vegan, std::vector<Ingredient> & ingredients){
-        Dish * d = new Dish(id, name, type, price, is_vegan, ingredients);
+        Dish * d = new Dish(id, name, type, price, is_vegan, ingredients, {}, &(this->pantry));
         return menu.add_data(d);
     }
 
@@ -238,7 +202,7 @@ class Restaurant{
         std::tm* now = std::localtime(&t);
         file << "Lunch menu - " << (now->tm_year + 1900) << '.'
         << (now->tm_mon + 1) << '.' <<  now->tm_mday << "\n";
-      
+
         srand (time(NULL));
         string starter="", main="", dessert="";
         int iter = 0;

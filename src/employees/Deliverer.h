@@ -14,7 +14,6 @@ public:
                   position_name = "Dostawca";
               };
     Deliverer(Json::Value deliverer_from_json) : Employee(deliverer_from_json) {};
-    ~Deliverer(){};
 
     void new_tip(Money tip) {tips += tip;}
 /*

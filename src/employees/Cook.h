@@ -11,7 +11,6 @@ public:
              position_name = "Kucharz";
          };
     Cook(Json::Value cook_from_json) : Employee(cook_from_json), is_chef(cook_from_json["ischef"].asBool()) {};
-    ~Cook(){};
 
     bool get_ischef() {return is_chef;}
     void set_chef() {is_chef = true;}
