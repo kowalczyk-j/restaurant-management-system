@@ -34,15 +34,3 @@ Json::Value Employee::parse_to_json()
     return employee;
 }
 
-
-/*
-
-Json::Value parse_employee_from_json(std::string path)
-{
-    std::ifstream file(path);
-    Json::Reader reader;
-    Json::Value employee;
-    reader.parse(file, employee);
-    return employee;
-}
-*/

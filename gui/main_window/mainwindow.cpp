@@ -134,6 +134,12 @@ void MainWindow::on_moveOrders_clicked(){
     ui->orderStack->setCurrentIndex(1);
 }
 
+void MainWindow::on_generateMenu_clicked(){
+    if(restaurant->get_dishes_number() > 3){
+        restaurant->generate_lunch_menu();
+    }
+}
+
 void MainWindow::on_orderType_currentIndexChanged(){
         position1 = ui->orderType->currentIndex();
         ui->orderStack->setCurrentIndex(1);
@@ -256,6 +262,12 @@ void MainWindow::on_addOrderD_clicked(){
                                 restaurant->get_all_active_orders()[i]->get_id());
         }
     }
+    else{
+        for(auto dish:ao.get_orderedDishes()){
+            for(auto ingredient:restaurant->get_dish(dish)->get_ingredients())
+                restaurant->get_product(ingredient.stock_id)->release(ingredient.quantity);
+        }
+    }
 }
 
 void MainWindow::on_addOrderOS_clicked(){
@@ -268,6 +280,12 @@ void MainWindow::on_addOrderOS_clicked(){
             new QListWidgetItem(QString::fromStdString("#"+to_string(restaurant->get_all_active_orders()[i]->get_id())),
                                 ui->orderList,
                                 restaurant->get_all_active_orders()[i]->get_id());
+        }
+    }
+    else{
+        for(auto dish:ao.get_orderedDishes()){
+            for(auto ingredient:restaurant->get_dish(dish)->get_ingredients())
+                restaurant->get_product(ingredient.stock_id)->release(ingredient.quantity);
         }
     }
 }
@@ -607,7 +625,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
     event->accept();
 
     std::ofstream file;
-    file.open("file.json");
+    file.open("rsc/restaurants.json");
 
     Json::Value res;
     res = restaurant->parse_to_json();

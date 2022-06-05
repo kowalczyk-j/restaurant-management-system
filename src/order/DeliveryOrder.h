@@ -16,13 +16,4 @@ class DeliveryOrder : public BaseOrder{
         return Delivery;
     }
 
-    /*
-    static DeliveryOrder parse_from_JSON(Json::Value dor) {
-        vector<Dish> ordered_dishes;
-        for(auto it = dor["dishes"].begin(); it != dor["dishes"].end(); it++){
-            Dish d_order = Dish::parse_dish_from_json(*it);
-            ordered_dishes.push_back(d_order);
-        }
-        return DeliveryOrder(dor["id"].asInt(), ordered_dishes, Addres::parse_from_json(dor["delivery_address"]), dor["deliverer_id"].asInt());
-    }*/
 };

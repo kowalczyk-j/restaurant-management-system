@@ -23,6 +23,7 @@ private slots:
 	void on_moveEmployee_clicked();
 	void on_moveMenu_clicked();
 	void on_moveOrders_clicked();
+	void on_generateMenu_clicked();
 
 	void on_orderType_currentIndexChanged();
 	void on_orderList_itemClicked();

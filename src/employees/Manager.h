@@ -21,7 +21,6 @@ public:
         this->Employee::print(os);
         os << "\nPosition: Manager";
     }
-
     friend std::ostream& operator<<(std::ostream& os, Manager const& m)
     {
         m.print(os);

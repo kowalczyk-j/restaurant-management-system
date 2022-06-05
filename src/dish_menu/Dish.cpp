@@ -68,7 +68,7 @@ Json::Value Dish::parse_to_json(){
     return dish;
 }
 
-Dish Dish::parse_from_json(Json::Value dish)
+Dish * Dish::parse_from_json(Json::Value dish)
 {
     std::vector<Ingredient> ingr;
     std::set<string> allerg;
@@ -79,5 +79,5 @@ Dish Dish::parse_from_json(Json::Value dish)
     for(auto it = dish["allergens"].begin(); it != dish["allergens"].end(); it++){
         allerg.insert(it->asString());
     }
-    return Dish(dish["id"].asUInt(), dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
+    return new Dish(dish["id"].asUInt(), dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
 }

@@ -32,10 +32,10 @@ class Product{
     }
 
     //gettery
-    string get_name() const& {return name;}
-    string get_unit() & {return units_map[unit];}
+    string const& get_name() const& {return name;}
+    string const& get_unit() & {return units_map[unit];}
     units get_enum_unit() const{return unit;}
-    string get_allergen() const& {return allergen;}
+    string const& get_allergen() const& {return allergen;}
     unsigned int get_id() const{return product_id;}
     int get_quantity() const {return quantity;}
     int get_available_quantity() const {return available_quantity;}
@@ -49,23 +49,42 @@ class Product{
     //manipulatory ilością produktu
 
     void operator+=(int quantity_to_add){
+        // dodaje pewną ilość produktu na stan zwiększająć jednocześnie ilość dostępngo produktu
         if(quantity + quantity_to_add < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         quantity += quantity_to_add;
+        available_quantity += quantity_to_add;
     }
 
     void operator-=(int quantity_to_sub){
+        // zabiera produkt redukując jednocześnie ilość dostępngo produktu
+        // w przyszłości należałoby lepiej sprawdzać, czy po zabraniu ilość porduktu nie jest zbyt mała do realizajci zamówień
         *this += (-quantity_to_sub);
     }
 
     void reserve(int quantity){
+        // rezerwuje produkt (zmniejsza ilość dostępnego produktu) na poczet zamówienia
         if(available_quantity - quantity < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         available_quantity -= quantity;
     }
 
     void release(int quantity){
+        // zwalnia produkt (zwiększa ilość dostępnego produktu) po usunięciu z zamówienia
         if(available_quantity + quantity < 0){throw std::invalid_argument("Quantity cannot be negative!");}
         available_quantity += quantity;
     }
+
+    void use_product(int quantity_to_take){
+        // odejmuje wykorzystaną ilość produktu po faktycnzym zrealizowaniu zamówienia
+        quantity -= quantity_to_take;
+    }
+
+    void print_product(){
+        cout << "Nazwa: " << name << endl;
+        cout << "Ilość: " << quantity << " " << unit << endl;
+        cout << "Alergen: " << allergen << endl;
+        cout << "\n\n";
+    }
+
 
 
     //konwertery do formtu JSON
@@ -80,8 +99,5 @@ class Product{
         return product;
     }
 
-    static Product json_to_product(Json::Value obj){
-        return  Product(obj["name"].asString(), (units)obj["unit"].asUInt(), obj["allergen"].asString(), obj["quantity"].asInt(), obj["available_quantity"].asInt());
-    }
 
 };

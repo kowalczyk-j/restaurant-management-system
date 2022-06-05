@@ -43,12 +43,11 @@ public:
 
     //konwertery do formatu JSON
     virtual Json::Value parse_to_json();
-    /*
-    void save_to_json(std::string path);
 
     bool operator==(Employee * other) const {return (employee_id == other->employee_id);}
-*/
+
     virtual void print(std::ostream& os) const = 0;
+
 };
 
-Json::Value parse_employee_from_json(std::string path);
+

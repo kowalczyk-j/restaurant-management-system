@@ -16,7 +16,7 @@ set(MENU src/dish_menu/Dish.h src/dish_menu/Dish.cpp)
 set(EMPLOYEES src/employees/Employee.h src/employees/Employee.cpp src/employees/Cook.h src/employees/Deliverer.h src/employees/Manager.h  src/employees/Waiter.h)
 set(ORDER src/order/BaseOrder.h src/order/DeliveryOrder.h src/order/OnSiteOrder.h)
 set(PANTRY src/pantry/Product.h)
-set(RESTAURANT src/restaurant/Restaurant.h)
+set(RESTAURANT src/restaurant/Restaurant.h src/restaurant/Restaurant.cpp)
 set(UTILS src/utils/Address.h src/utils/Money.h src/utils/Money.cpp)
 
 set(MAINWINDOW gui/main_window/mainwindow.cpp gui/main_window/mainwindow.h)

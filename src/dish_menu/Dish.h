@@ -53,7 +53,6 @@ public:
     void set_price(Money p) { price=p; }
     void set_is_vegan(bool veg) { is_vegan=veg; }
     void set_ingredients(std::vector<Ingredient> ingr) {ingredients=ingr;}
-    // void add_allergens(Database<Product> *products);
 
     void add_ingiridnet(Ingredient ingr){ingredients.push_back(ingr);}
     void remove_ingridient(int position){
@@ -66,7 +65,7 @@ public:
     void print_allergens() const;
 
     Json::Value parse_to_json();
-    static Dish parse_from_json(Json::Value dish);
+    static Dish * parse_from_json(Json::Value dish);
 
     friend std::ostream& operator<<(std::ostream& os, Dish const& dish){return os << dish.name << "\t" << dish.price << "\n";}
 };

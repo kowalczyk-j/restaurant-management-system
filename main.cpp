@@ -56,7 +56,7 @@ int main(){
     Json::Value dish;
     reader.parse(ofile, dish);
     cout << Dish::parse_from_json(dish);
-    Dish::parse_from_json(dish).print_ingredients();
+    Dish::parse_from_json(dish)->print_ingredients();
     pantry[1001]->print_product();
-    r1.generate_lunch_menu(&menu);
+    r1.generate_lunch_menu();
 }
