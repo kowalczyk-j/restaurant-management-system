@@ -101,18 +101,18 @@ Klasa przechowująca infomracje o danym produkcie, na którą składają się po
 - int quantity – ilość produktu aktualnie znajdującego się w spiżarni
 - int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
 Klasę tworzą metody: 
-•	Gettery:
-o	 Get_name();
-o	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
-o	Get_enum_unit() – zwraca jednostkę w postaci enuma;
-o	Get_allrgen();
-o	Get_id();
-o	Get_quantity();
-o	Get_avaliable_qunatity();
-•	Setery:
-o	Set_name()
-o	Set_allergen()
-o	Set_id()
+- ***	Gettery: ***
+-	 Get_name();
+-	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
+-	Get_enum_unit() – zwraca jednostkę w postaci enuma;
+-	Get_allrgen();
+-	Get_id();
+-	Get_quantity();
+-	Get_avaliable_qunatity();
+- ***	Setery: ***
+-	Set_name()
+-	Set_allergen()
+-	Set_id()
 -	operator+=(int quantity_to_add) – jako argument przyjmuje quantity_to_add, dodaje pewną ilość produktu(quantity to add) na stan zwiększając jednocześnie ilość dostępnego produktu;
 -	operator-=(int quantity_to_sub) – jako argument przyjmuje ilość produktu do usunięcia ze spiżarni; redukuje jednocześnie ilość dostępnego produktu(avaliable_quantity);
 -	reserve(int quantity) – jako argument przyjmuje ilość produktu do zarezerwowania na poczet zamówienia; rezerwacja produktu objawia się obniżeniem available_qunatity danego produktu;
