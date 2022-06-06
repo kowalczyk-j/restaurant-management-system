@@ -115,6 +115,8 @@ Klasę tworzą metody:
     -	Set_name()
     -	Set_allergen()
     -	Set_id()
+
+
 -	operator+=(int quantity_to_add) – jako argument przyjmuje quantity_to_add, dodaje pewną ilość produktu(quantity to add) na stan zwiększając jednocześnie ilość dostępnego produktu;
 -	operator-=(int quantity_to_sub) – jako argument przyjmuje ilość produktu do usunięcia ze spiżarni; redukuje jednocześnie ilość dostępnego produktu(avaliable_quantity);
 -	reserve(int quantity) – jako argument przyjmuje ilość produktu do zarezerwowania na poczet zamówienia; rezerwacja produktu objawia się obniżeniem available_qunatity danego produktu;
