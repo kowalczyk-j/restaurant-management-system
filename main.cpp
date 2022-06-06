@@ -31,7 +31,7 @@ int main(){
     Dish * d1 = new Dish(1001, "kotlet1", danie_glowne, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
     Dish * d2 = new Dish(1002, "przystawka", przystawka, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
     Dish * d3 = new Dish(1003, "zupa", zupa, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
-   Dish * d4 = new Dish(1004, "deser", deser, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
+    Dish * d4 = new Dish(1004, "deser", deser, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
     Database<Dish> menu;
     menu.add_data(d1);
     menu.add_data(d2);
@@ -53,5 +53,4 @@ int main(){
     cout << Dish::parse_from_json(dish);
     Dish::parse_from_json(dish)->print_ingredients();
     pantry[1001]->print_product();
-    r1.generate_lunch_menu();
 }
