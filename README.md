@@ -13,10 +13,12 @@ Komilacja programu dokonywana jest poprzez program CMake. W folderze projektu z 
     cmake --build {ścieżka_do_projektu}/build --config Debug --target app -j 6 --
 (przykładowy program, wypiszę kilka rzeczy na ekranie)
 lub
+
     cmake --build {ścieżka_do_projektu}/build --config Debug --target tests -j 6 --
 (testy jednostkowe do wybranych klas).
 
-Aby uruchomić aplikację w trybie z interfejsem graficznym należy wywołać następującą komende:
+Aby uruchomić aplikację w trybie z interfejsem graficznym należy wywołać następującą komendę:
+
     export LD_LIBRARY_PATH={ścieżka_do_projeku}/lib/lib/ && ./guiApp
 
 W każdym z powyższych przypadków {ścieżka_do_projektu} powinno zostać zastąpione pełną ścieżką do projektu.
