@@ -14,31 +14,16 @@
    },
    "employees" : [],
    "id" : 0,
-   "menu" : [
-      {
-         "allergens" : [],
-         "id" : 1001,
-         "is_vegan" : false,
-         "name" : "danie1",
-         "price" : 1200,
-         "products" : [
-            {
-               "quantity" : 50,
-               "stock_id" : 1001
-            }
-         ],
-         "type" : 0
-      }
-   ],
+   "menu" : [],
    "name" : "Magnoliowa",
    "order_history" : [],
    "pantry" : [
       {
-         "allergen" : "",
-         "available_quantity" : 160,
+         "allergen" : "qq",
+         "available_quantity" : 100,
          "id" : 1001,
-         "name" : "melko",
-         "quantity" : 160,
+         "name" : "mleko",
+         "quantity" : 100,
          "unit" : 0
       }
    ]

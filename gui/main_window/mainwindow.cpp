@@ -563,7 +563,7 @@ void MainWindow::on_addIngridient_clicked(){
     ac.setModal(true);
     Dish * dish = restaurant->get_dish(current_id);
     if(ac.exec() == QDialog::Accepted){
-        dish->add_ingiridnet(ac.get_ing());
+        dish->add_ingredient(ac.get_ing());
         ui->DishIngrdidients->clear();
         for(size_t i=0; i<dish->get_ingredients().size(); i++){
             ui->DishIngrdidients->addItem(QString::fromStdString(restaurant->get_product(dish->get_ingredients()[i].stock_id)->get_name()+" ("+to_string(dish->get_ingredients()[i].quantity)+restaurant->get_product(dish->get_ingredients()[i].stock_id)->get_unit() +")"));
@@ -575,7 +575,7 @@ void MainWindow::on_removeIngridient_clicked(){
     position1 = ui->DishIngrdidients->currentRow();
     Dish * dish = restaurant->get_dish(current_id);
     if(position1 != -1){
-        dish->remove_ingridient(position1);
+        dish->remove_ingredient(position1);
         ui->DishIngrdidients->setCurrentRow(-1);
         ui->DishIngrdidients->clear();
         for(size_t i=0; i<dish->get_ingredients().size(); i++){

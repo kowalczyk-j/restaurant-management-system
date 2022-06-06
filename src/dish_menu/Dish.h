@@ -54,8 +54,8 @@ public:
     void set_is_vegan(bool veg) { is_vegan=veg; }
     void set_ingredients(std::vector<Ingredient> ingr) {ingredients=ingr;}
 
-    void add_ingiridnet(Ingredient ingr){ingredients.push_back(ingr);}
-    void remove_ingridient(int position){
+    void add_ingredient(Ingredient ingr){ingredients.push_back(ingr);}
+    void remove_ingredient(int position){
         if(position < 0) throw NegativeIndex;
         if(position >= (int)ingredients.size()) throw IndexOutOfBounds;
         ingredients.erase(ingredients.begin() + position);

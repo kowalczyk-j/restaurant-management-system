@@ -102,7 +102,7 @@ Zawiera klasę bazową Product, na którą składają się pola:
 -    int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
 
 
-Klasę tworzą metody: 
+Klasę tworzą metody:
 -	Gettery:
     -	 Get_name();
     -	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
@@ -153,4 +153,4 @@ Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we framework
 
 ### Podsumowanie
 Oczywiście pomimo wielu naszych wysiłków i starań przezntowany program dalej nie jest kompletny i mógłby podlegać dalszemu rozwojowi. Z pomysłów, które przyszły nam do głowy warto wspomnieć
-chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn, dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele
+chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn, dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele.

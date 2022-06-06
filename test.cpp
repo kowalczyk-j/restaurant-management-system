@@ -331,7 +331,7 @@ TEST(dish, add_ingredient)
     Ingredient p1(1, 2);
     Ingredient p2(2, 200);
     Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
-    d1.add_ingiridnet(p2);
+    d1.add_ingredient(p2);
     EXPECT_EQ(d1.get_ingredients().size(), 2);
     EXPECT_EQ(d1.get_ingredients()[0].stock_id, p1.stock_id);
     EXPECT_EQ(d1.get_ingredients()[0].quantity, p1.quantity);
@@ -344,11 +344,11 @@ TEST(dish, remove_ingredient)
     Ingredient p1(1, 2);
     Ingredient p2(2, 200);
     Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
-    d1.remove_ingridient(1);
+    d1.remove_ingredient(1);
     EXPECT_EQ(d1.get_ingredients().size(), 1);
     EXPECT_EQ(d1.get_ingredients()[0].stock_id, p1.stock_id);
     EXPECT_EQ(d1.get_ingredients()[0].quantity, p1.quantity);
-    d1.remove_ingridient(0);
+    d1.remove_ingredient(0);
     EXPECT_EQ(d1.get_ingredients().size(), 0);
 }
 
@@ -357,8 +357,8 @@ TEST(dish, remove_ingredient_errors)
     Ingredient p1(1, 2);
     Ingredient p2(2, 200);
     Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
-    EXPECT_THROW(d1.remove_ingridient(2), dish_exceptions);
-    EXPECT_THROW(d1.remove_ingridient(-1), dish_exceptions);
+    EXPECT_THROW(d1.remove_ingredient(2), dish_exceptions);
+    EXPECT_THROW(d1.remove_ingredient(-1), dish_exceptions);
 }
 
 TEST(dish, print_alergens)
