@@ -38,8 +38,8 @@ MainWindow::MainWindow(QWidget *parent) :
     reader.parse(ifs, obj);
     Restaurant r1 = Restaurant::parse_from_json(obj);
 */
-    Restaurant r1(0, "Magnoliowa", Addres("Warszawa", "00-000", "Plac Politechniki", "8", "Polska", "Mazowieckie", 102, 35));
-    Restaurant r2(1, "Różana", Addres("Toruń", "87-100", "Szeroka", "10", "Polska", "Kujawsko-Pomorskie", 23, -34));
+    Restaurant r1(0, "Magnoliowa", Addres("Warszawa", "00-000", "Plac Politechniki", "8", "Polska", "Mazowieckie", 52.2202, 21.0115));
+    Restaurant r2(1, "Różana", Addres("Toruń", "87-100", "Szeroka", "10", "Polska", "Kujawsko-Pomorskie", 53.0105, 18.6066));
     restaurant_list.push_back(r1);
     restaurant_list.push_back(r2);
 

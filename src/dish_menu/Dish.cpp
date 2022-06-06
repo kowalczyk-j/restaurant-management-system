@@ -25,6 +25,15 @@ std::string Dish::get_string_allergens() const
     return outcome;
 }
 
+void Dish::add_ingredient(Ingredient ingr, Database<Product> * products){
+        ingredients.push_back(ingr);
+        if(products != nullptr){
+            auto allerg = products->operator[](ingr.stock_id)->get_allergen();
+            if (allerg != "")
+                allergens.insert(allerg);
+        }
+    }
+
 void Dish::print_ingredients() const
 {
      std::cout << "Lista składników - " << name << ": \n";
@@ -80,4 +89,13 @@ Dish * Dish::parse_from_json(Json::Value dish)
         allerg.insert(it->asString());
     }
     return new Dish(dish["id"].asUInt(), dish["name"].asString(), (dish_type) dish["type"].asInt(), Money(dish["price"].asInt()), dish["is_vegan"].asBool(), ingr, allerg);
+}
+
+std::ostream& operator<<(std::ostream& os, Dish * dish)
+{
+    os << dish->name;
+    if(dish->get_is_vegan())
+        os << "(vege)";
+    os << "\t" << dish->price << "\n";
+    return os;
 }

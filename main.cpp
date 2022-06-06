@@ -28,7 +28,7 @@ int main(){
     Product * p2 = new Product("produkt2", szt, "jaja", 30);
     pantry.add_data(p1);
     pantry.add_data(p2);
-    Dish * d1 = new Dish(1001, "kotlet1", danie_glowne, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
+    Dish * d1 = new Dish(1001, "kotlet roślinny", danie_glowne, Money(15,50), 1,{i1, i2},{"siarka"}, &pantry);
     Dish * d2 = new Dish(1002, "przystawka", przystawka, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
     Dish * d3 = new Dish(1003, "zupa", zupa, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
     Dish * d4 = new Dish(1004, "deser", deser, Money(15,50), 0,{i1, i2},{"siarka"}, &pantry);
