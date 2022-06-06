@@ -178,125 +178,66 @@ TEST(employee, create_waiter_from_json)
 // //-----------------------------PRODUCT/PANTRY testing
 
 
-// TEST(product, create_empty_product)
-// {
-//     Product p;
-//     EXPECT_EQ(p.get_name(), "");
-//     EXPECT_EQ(p.get_quantity(), 0);
-//     EXPECT_EQ(p.get_enum_unit(), none);
-//     EXPECT_EQ(p.get_allergen(), "");
-// }
+TEST(product, create_empty_product)
+{
+    Product p;
+    EXPECT_EQ(p.get_name(), "");
+    EXPECT_EQ(p.get_quantity(), 0);
+    EXPECT_EQ(p.get_enum_unit(), none);
+    EXPECT_EQ(p.get_allergen(), "");
+}
 
 
-// TEST(product, create_product)
-// {
-//     Product p("name", 10, ml, "allergen");
-//     EXPECT_EQ(p.get_name(), "name");
-//     EXPECT_EQ(p.get_quantity(), 10);
-//     EXPECT_EQ(p.get_enum_unit(), ml);
-//     EXPECT_EQ(p.get_allergen(), "allergen");
-// }
+TEST(product, create_product)
+{
+    Product p("name", 10, ml, "allergen");
+    EXPECT_EQ(p.get_name(), "name");
+    EXPECT_EQ(p.get_quantity(), 10);
+    EXPECT_EQ(p.get_enum_unit(), ml);
+    EXPECT_EQ(p.get_allergen(), "allergen");
+}
 
 
-// TEST(product, test_setters)
-// {
-//     Product p("name", 10, ml, "allergen");
-//     p.set_name("new name");
-//     p.set_quantity(20);
-//     p.set_allergen("new allergen");
-//     EXPECT_EQ(p.get_name(), "new name");
-//     EXPECT_EQ(p.get_quantity(), 20);
-//     EXPECT_EQ(p.get_allergen(), "new allergen");
-// }
+TEST(product, test_setters)
+{
+    Product p("name", 10, ml, "allergen");
+    p.set_name("new name");
+    p.set_quantity(20);
+    p.set_allergen("new allergen");
+    EXPECT_EQ(p.get_name(), "new name");
+    EXPECT_EQ(p.get_quantity(), 20);
+    EXPECT_EQ(p.get_allergen(), "new allergen");
+}
 
-// TEST(product, quantity_operators)
-// {
-//     Product p("name", 10, ml, "allergen");
-//     p += 10;
-//     EXPECT_EQ(p.get_quantity(), 20);
-//     p -= 10;
-//     EXPECT_EQ(p.get_quantity(), 10);
-//     p -= 10;
-//     EXPECT_EQ(p.get_quantity(), 0);
+TEST(product, quantity_operators)
+{
+    Product p("name", 10, ml, "allergen");
+    p += 10;
+    EXPECT_EQ(p.get_quantity(), 20);
+    p -= 10;
+    EXPECT_EQ(p.get_quantity(), 10);
+    p -= 10;
+    EXPECT_EQ(p.get_quantity(), 0);
 
-// }
+}
 
-// TEST(product, throw_exception_while_adding_negative_quantity)
-// {
-//     // this tests _that_ the expected exception is thrown
-//     EXPECT_THROW({
-//         try
-//         {
-//             Product p("name", 10, ml, "allergen");
-//             p += -20;
-//             }
-//         catch( const invalid_argument& e )
-//         {
-//             // and this tests that it has the correct message
-//             EXPECT_STREQ( "Quantity cannot be negative!", e.what() );
-//             throw;
-//         }
-//     }, invalid_argument);
-// }
-
-// // TEST(pantry, create_empty_pantry)
-// // {
-// //     Pantry p;
-// //     EXPECT_EQ(p.get_all_products().size(), 0);
-// // }
-
-// // TEST(pantry, add_product)
-// // {
-// //     Pantry p;
-// //     Product p1("name", 10, ml, "allergen");
-// //     p.add_product(p1);
-// //     EXPECT_EQ(p.get_all_products().size(), 1);
-// // }
-
-// // TEST(pantry, add_quantity)
-// // {
-// //     Pantry p;
-// //     Product p1("name", 10, ml, "allergen");
-// //     p.add_product(p1);
-// //     p.add_quantity("name", 10);
-// //     EXPECT_EQ(p.get_all_products().size(), 1);
-// //     EXPECT_EQ(p.get_product("name").get_quantity(), 20);
-// // }
-
-// // TEST(pantry, remove_quantity)
-// // {
-// //     Pantry p;
-// //     Product p1("name", 10, ml, "allergen");
-// //     p.add_product(p1);
-// //     p.remove_quantity("name", 10);
-// //     EXPECT_EQ(p.get_all_products().size(), 1);
-// //     EXPECT_EQ(p.get_product("name").get_quantity(), 0);
-// // }
-
-// // TEST(pantry, add_product_object)
-// // {
-// //     Pantry p;
-// //     Product p1("name", 10, ml, "allergen");
-// //     p.add_product(p1);
-// //     EXPECT_EQ(p.get_all_products().size(), 1);
-// // }
-
-// // TEST(pantry, add_product_manually)
-// // {
-// //     Pantry p;
-// //     p.add_product("name", 10, ml, "allergen");
-// //     EXPECT_EQ(p.get_all_products().size(), 1);
-
-// // }
-
-// // TEST(pantry, remove_product_by_name)
-// // {
-// //     Pantry p;
-// //     Product p1("name", 10, ml, "allergen");
-// //     p.add_product(p1);
-// //     p.remove_product("name");
-// //     EXPECT_EQ(p.get_all_products().size(), 0);
-// // }
+TEST(product, throw_exception_while_adding_negative_quantity)
+{
+    // this tests _that_ the expected exception is thrown
+    EXPECT_THROW({
+        try
+        {
+            Product p("name", 10, ml, "allergen");
+            p += -20;
+            }
+        catch( const invalid_argument& e )
+        {
+            // and this tests that it has the correct message
+            EXPECT_STREQ( "Quantity cannot be negative!", e.what() );
+            throw;
+        }
+    }, invalid_argument);
+}
 
 // //-----------------------------DISH testing
 
