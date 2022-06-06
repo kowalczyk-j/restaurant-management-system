@@ -92,6 +92,35 @@ Wsród metod dostępne jest także dodanie i usunięcie składniku do listy, a t
 Zdefiniowany został operator wyprowadzający do strumienia cout w postaci pozycji dania do widoku w Menu.
 Za współpracę z plikami odpowiadają metody parsujące do formatu Json:Value oraz tworzące obiekt z wartości tego typu.
 
+### Product
+Klasa przechowująca infomracje o danym produkcie, na którą składają się pola:
+-unsigned int product_id=0 – id produktu, o domyślnej wartości 0;
+-string name – nazwa produktu
+-units unit – jednostka, w  której ma być przechowany produkt
+-string alergen –  alergeny
+-int quantity – ilość produktu aktualnie znajdującego się w spiżarni
+-int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
+Klasę tworzą metody: 
+•	Gettery:
+o	 Get_name();
+o	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
+o	Get_enum_unit() – zwraca jednostkę w postaci enuma;
+o	Get_allrgen();
+o	Get_id();
+o	Get_quantity();
+o	Get_avaliable_qunatity();
+•	Setery:
+o	Set_name()
+o	Set_allergen()
+o	Set_id()
+-	operator+=(int quantity_to_add) – jako argument przyjmuje quantity_to_add, dodaje pewną ilość produktu(quantity to add) na stan zwiększając jednocześnie ilość dostępnego produktu;
+-	operator-=(int quantity_to_sub) – jako argument przyjmuje ilość produktu do usunięcia ze spiżarni; redukuje jednocześnie ilość dostępnego produktu(avaliable_quantity);
+-	reserve(int quantity) – jako argument przyjmuje ilość produktu do zarezerwowania na poczet zamówienia; rezerwacja produktu objawia się obniżeniem available_qunatity danego produktu;
+-	release(int quantity) – jako argument przyjmuje quantity, ilość produktu, który należy zwolnić, czyt. dodać do quantity; produkt zostaje zwolniony po usunięciu zamówienia;
+-	use_product(int quantity_to_take) – jako argument przyjmuje quantity_to_take, czyt. wykorzystana ilość produktu; metoda odejmuje wykorzystaną ilość produktu po faktycznym zrealizowaniu zamówienia
+-	print_product() – wypisuje informacje o produkcie;
+-	parse_to_json() – konwertuje informacje o produkcie do formatu json;
+
 ### Orders
 Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
 obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
