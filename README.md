@@ -9,14 +9,17 @@ UWAGA Plik wykonywalny guiApp został wyjątkowo dodany w celu prezentacji dzia�
 Zbudowanie tego pliku może nie być możliwe, umieszczono jednak CMakeList użyty do tego celu - jest on dostępny pod nazwą CMakeListGUI.txt .
 
 Komilacja programu dokonywana jest poprzez program CMake. W folderze projektu z konsoli należy wywołać
-cmake --build {ścieżka_do_projektu}/build --config Debug --target app -j 6 --
+
+    cmake --build {ścieżka_do_projektu}/build --config Debug --target app -j 6 --
 (przykładowy program, wypiszę kilka rzeczy na ekranie)
 lub
-cmake --build {ścieżka_do_projektu}/build --config Debug --target tests -j 6 --
+
+    cmake --build {ścieżka_do_projektu}/build --config Debug --target tests -j 6 --
 (testy jednostkowe do wybranych klas).
 
-Aby uruchomić aplikację w trybie z interfejsem graficznym należy wywołać następującą komende:
-export LD_LIBRARY_PATH={ścieżka_do_projeku}/lib/lib/ && ./guiApp
+Aby uruchomić aplikację w trybie z interfejsem graficznym należy wywołać następującą komendę:
+
+    export LD_LIBRARY_PATH={ścieżka_do_projeku}/lib/lib/ && ./guiApp
 
 W każdym z powyższych przypadków {ścieżka_do_projektu} powinno zostać zastąpione pełną ścieżką do projektu.
 
@@ -144,8 +147,7 @@ Jest to główna klasa programu, która reprentuje całą restaurację i zarząd
 Klasa szablonowa o funkcjonalności bazy danych, umożlwia łatwe i uporządkowane przechowywanie obiektów klas z polem przeznaczonym na unikalne id. Dzięki funkcjoalności takiej jak autmatyczny dobór wolnego id, możliwość łatwego pobierania konkretnego obiektu jak i wszytskich danych idelnie nadaje się do implementacji restauracyjnej spiżarni, listy dań, czy zamówień.
 
 ### GUI
-Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno
-programu z plikami .ui, .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI.
+Graficzny interfejs uzytkownika został wykonany z wykorzystaniem bibilioteki Qt w wersji 5.15. Katalog gui zawiera 14 folderów z których każdy reprezentuje jedno okno programu z plikami .ui, .h (w tym okno główne). Ponadto w folderze znajduje się plik main.cpp uruchamiający GUI. Ze znanych problemów mogących potencjalnie powodować niepoprawne działanie programu wymienić należy odejmowanie ilości produktu, gdy jest on w aktywnym zamówieniu. 
 
 ### Testy jednostkowe
 Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we frameworku Google test. Staraliśmy się testować zarówno przypadki skrajne, jak i typowe. Ważnym elementem testów jest sprawdzenie zdefiniowanych wyjątków - czy są prawiłowo obsłużone. W przypadku testowania zapisu i odczytu plików json, skupiliśmy się na przetestowaniu ich za pomocą pisania kodu w main.cpp. Zwracanie wartości Json::Value i jej prawidłowe formatowanie umieśliśmy również w Google testach. Sprawne testowanie podstawowych akcji umożliwiło nam także GUI, w którym można było wygodnie obserwować zmiany wprowadzanych wartości.
@@ -153,4 +155,4 @@ Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we framework
 
 ### Podsumowanie
 Oczywiście pomimo wielu naszych wysiłków i starań przezntowany program dalej nie jest kompletny i mógłby podlegać dalszemu rozwojowi. Z pomysłów, które przyszły nam do głowy warto wspomnieć
-chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn, dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele.
+chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn (z uwzględnieniem daty ważności), dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele.
