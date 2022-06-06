@@ -100,6 +100,8 @@ Zawiera klasę bazową Product, na którą składają się pola:
 -    string alergen –  alergeny
 -    int quantity – ilość produktu aktualnie znajdującego się w spiżarni
 -    int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
+
+
 Klasę tworzą metody: 
     -	Gettery:
     -	 Get_name();
