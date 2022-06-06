@@ -103,7 +103,7 @@ Zawiera klasę bazową Product, na którą składają się pola:
 
 
 Klasę tworzą metody: 
-    -	Gettery:
+-	Gettery:
     -	 Get_name();
     -	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
     -	Get_enum_unit() – zwraca jednostkę w postaci enuma;
