@@ -102,7 +102,7 @@ Klasa przechowująca infomracje o danym produkcie, na którą składają się po
 - int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
 Klasę tworzą metody: 
 - gettery:
-- - wdd
+     - wdd
 
 ### Orders
 Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
