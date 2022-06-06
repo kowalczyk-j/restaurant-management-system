@@ -94,12 +94,12 @@ Za współpracę z plikami odpowiadają metody parsujące do formatu Json:Value 
 
 ### Product
 Klasa przechowująca infomracje o danym produkcie, na którą składają się pola:
--unsigned int product_id=0 – id produktu, o domyślnej wartości 0;
--string name – nazwa produktu
--units unit – jednostka, w  której ma być przechowany produkt
--string alergen –  alergeny
--int quantity – ilość produktu aktualnie znajdującego się w spiżarni
--int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
+- unsigned int product_id=0 – id produktu, o domyślnej wartości 0;
+- string name – nazwa produktu
+- units unit – jednostka, w  której ma być przechowany produkt
+- string alergen –  alergeny
+- int quantity – ilość produktu aktualnie znajdującego się w spiżarni
+- int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
 Klasę tworzą metody: 
 •	Gettery:
 o	 Get_name();
