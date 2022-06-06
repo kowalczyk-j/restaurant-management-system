@@ -101,25 +101,8 @@ Klasa przechowująca infomracje o danym produkcie, na którą składają się po
 - int quantity – ilość produktu aktualnie znajdującego się w spiżarni
 - int available_quantity – dostępna ilość uwzględniająca przyjęte zamówienia
 Klasę tworzą metody: 
-- ***	Gettery: ***
--	 Get_name();
--	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
--	Get_enum_unit() – zwraca jednostkę w postaci enuma;
--	Get_allrgen();
--	Get_id();
--	Get_quantity();
--	Get_avaliable_qunatity();
-- ***	Setery: ***
--	Set_name()
--	Set_allergen()
--	Set_id()
--	operator+=(int quantity_to_add) – jako argument przyjmuje quantity_to_add, dodaje pewną ilość produktu(quantity to add) na stan zwiększając jednocześnie ilość dostępnego produktu;
--	operator-=(int quantity_to_sub) – jako argument przyjmuje ilość produktu do usunięcia ze spiżarni; redukuje jednocześnie ilość dostępnego produktu(avaliable_quantity);
--	reserve(int quantity) – jako argument przyjmuje ilość produktu do zarezerwowania na poczet zamówienia; rezerwacja produktu objawia się obniżeniem available_qunatity danego produktu;
--	release(int quantity) – jako argument przyjmuje quantity, ilość produktu, który należy zwolnić, czyt. dodać do quantity; produkt zostaje zwolniony po usunięciu zamówienia;
--	use_product(int quantity_to_take) – jako argument przyjmuje quantity_to_take, czyt. wykorzystana ilość produktu; metoda odejmuje wykorzystaną ilość produktu po faktycznym zrealizowaniu zamówienia
--	print_product() – wypisuje informacje o produkcie;
--	parse_to_json() – konwertuje informacje o produkcie do formatu json;
+- gettery:
+- - wdd
 
 ### Orders
 Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
