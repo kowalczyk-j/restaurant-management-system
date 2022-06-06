@@ -57,7 +57,7 @@ public:
     void add_ingiridnet(Ingredient ingr){ingredients.push_back(ingr);}
     void remove_ingridient(int position){
         if(position < 0) throw NegativeIndex;
-        if(position > (int)ingredients.size()) throw IndexOutOfBounds;
+        if(position >= (int)ingredients.size()) throw IndexOutOfBounds;
         ingredients.erase(ingredients.begin() + position);
     }
 
@@ -67,5 +67,5 @@ public:
     Json::Value parse_to_json();
     static Dish * parse_from_json(Json::Value dish);
 
-    friend std::ostream& operator<<(std::ostream& os, Dish const& dish){return os << dish.name << "\t" << dish.price << "\n";}
+    friend std::ostream& operator<<(std::ostream& os, Dish * dish){return os << dish->name << "\t" << dish->price << "\n";}
 };

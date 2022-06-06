@@ -80,7 +80,7 @@ class Product{
 
     void print_product(){
         cout << "Nazwa: " << name << endl;
-        cout << "Ilość: " << quantity << " " << unit << endl;
+        cout << "Ilość: " << quantity << " " << units_map[unit] << endl;
         cout << "Alergen: " << allergen << endl;
         cout << "\n\n";
     }

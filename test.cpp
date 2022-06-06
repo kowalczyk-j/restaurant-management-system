@@ -69,7 +69,7 @@ TEST(employee, json_cook)
     EXPECT_EQ(employee["surname"], "last name");
     EXPECT_EQ(employee["id"], (unsigned int)0);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
-    EXPECT_EQ(employee["position"], "cook");
+    EXPECT_EQ(employee["position"], "Kucharz");
     EXPECT_EQ(employee["ischef"], false);
 }
 
@@ -81,7 +81,7 @@ TEST(employee, json_chef)
     EXPECT_EQ(employee["surname"], "last name");
     EXPECT_EQ(employee["id"], (unsigned int)0);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
-    EXPECT_EQ(employee["position"], "cook");
+    EXPECT_EQ(employee["position"], "Kucharz");
     EXPECT_EQ(employee["ischef"], true);
 }
 
@@ -93,7 +93,7 @@ TEST(employee, json_deliverer)
     EXPECT_EQ(employee["surname"], "last name");
     EXPECT_EQ(employee["id"], (unsigned int)0);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
-    EXPECT_EQ(employee["position"], "deliverer");
+    EXPECT_EQ(employee["position"], "Dostawca");
 }
 
 TEST(employee, json_waiter)
@@ -104,7 +104,7 @@ TEST(employee, json_waiter)
     EXPECT_EQ(employee["surname"], "last name");
     EXPECT_EQ(employee["id"], (unsigned int)0);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
-    EXPECT_EQ(employee["position"], "waiter");
+    EXPECT_EQ(employee["position"], "Kelner");
 }
 
 TEST(employee, json_manager)
@@ -115,7 +115,7 @@ TEST(employee, json_manager)
     EXPECT_EQ(employee["surname"], "last name");
     EXPECT_EQ(employee["id"], (unsigned int)0);
     EXPECT_EQ(employee["salary"], (unsigned int)10000);
-    EXPECT_EQ(employee["position"], "manager");
+    EXPECT_EQ(employee["position"], "Manager");
 }
 
 TEST(employee, create_cook_from_json)
@@ -175,135 +175,137 @@ TEST(employee, create_waiter_from_json)
     EXPECT_EQ(w2.get_surname(), "surname");
 }
 
-//-----------------------------PRODUCT/PANTRY testing
+// //-----------------------------PRODUCT/PANTRY testing
 
 
-TEST(product, create_empty_product)
-{
-    Product p;
-    EXPECT_EQ(p.get_name(), "");
-    EXPECT_EQ(p.get_quantity(), 0);
-    EXPECT_EQ(p.get_enum_unit(), none);
-    EXPECT_EQ(p.get_allergen(), "");
-}
+// TEST(product, create_empty_product)
+// {
+//     Product p;
+//     EXPECT_EQ(p.get_name(), "");
+//     EXPECT_EQ(p.get_quantity(), 0);
+//     EXPECT_EQ(p.get_enum_unit(), none);
+//     EXPECT_EQ(p.get_allergen(), "");
+// }
 
 
-TEST(product, create_product)
-{
-    Product p("name", 10, ml, "allergen");
-    EXPECT_EQ(p.get_name(), "name");
-    EXPECT_EQ(p.get_quantity(), 10);
-    EXPECT_EQ(p.get_enum_unit(), ml);
-    EXPECT_EQ(p.get_allergen(), "allergen");
-}
+// TEST(product, create_product)
+// {
+//     Product p("name", 10, ml, "allergen");
+//     EXPECT_EQ(p.get_name(), "name");
+//     EXPECT_EQ(p.get_quantity(), 10);
+//     EXPECT_EQ(p.get_enum_unit(), ml);
+//     EXPECT_EQ(p.get_allergen(), "allergen");
+// }
 
 
-TEST(product, test_setters)
-{
-    Product p("name", 10, ml, "allergen");
-    p.set_name("new name");
-    p.set_quantity(20);
-    p.set_allergen("new allergen");
-    EXPECT_EQ(p.get_name(), "new name");
-    EXPECT_EQ(p.get_quantity(), 20);
-    EXPECT_EQ(p.get_allergen(), "new allergen");
-}
+// TEST(product, test_setters)
+// {
+//     Product p("name", 10, ml, "allergen");
+//     p.set_name("new name");
+//     p.set_quantity(20);
+//     p.set_allergen("new allergen");
+//     EXPECT_EQ(p.get_name(), "new name");
+//     EXPECT_EQ(p.get_quantity(), 20);
+//     EXPECT_EQ(p.get_allergen(), "new allergen");
+// }
 
-TEST(product, quantity_operators)
-{
-    Product p("name", 10, ml, "allergen");
-    p += 10;
-    EXPECT_EQ(p.get_quantity(), 20);
-    p -= 10;
-    EXPECT_EQ(p.get_quantity(), 10);
-    p -= 10;
-    EXPECT_EQ(p.get_quantity(), 0);
+// TEST(product, quantity_operators)
+// {
+//     Product p("name", 10, ml, "allergen");
+//     p += 10;
+//     EXPECT_EQ(p.get_quantity(), 20);
+//     p -= 10;
+//     EXPECT_EQ(p.get_quantity(), 10);
+//     p -= 10;
+//     EXPECT_EQ(p.get_quantity(), 0);
 
-}
+// }
 
-TEST(product, throw_exception_while_adding_negative_quantity)
-{
-    // this tests _that_ the expected exception is thrown
-    EXPECT_THROW({
-        try
-        {
-            Product p("name", 10, ml, "allergen");
-            p += -20;
-            }
-        catch( const invalid_argument& e )
-        {
-            // and this tests that it has the correct message
-            EXPECT_STREQ( "Quantity cannot be negative!", e.what() );
-            throw;
-        }
-    }, invalid_argument);
-}
+// TEST(product, throw_exception_while_adding_negative_quantity)
+// {
+//     // this tests _that_ the expected exception is thrown
+//     EXPECT_THROW({
+//         try
+//         {
+//             Product p("name", 10, ml, "allergen");
+//             p += -20;
+//             }
+//         catch( const invalid_argument& e )
+//         {
+//             // and this tests that it has the correct message
+//             EXPECT_STREQ( "Quantity cannot be negative!", e.what() );
+//             throw;
+//         }
+//     }, invalid_argument);
+// }
 
-TEST(pantry, create_empty_pantry)
-{
-    Pantry p;
-    EXPECT_EQ(p.get_all_products().size(), 0);
-}
+// // TEST(pantry, create_empty_pantry)
+// // {
+// //     Pantry p;
+// //     EXPECT_EQ(p.get_all_products().size(), 0);
+// // }
 
-TEST(pantry, add_product)
-{
-    Pantry p;
-    Product p1("name", 10, ml, "allergen");
-    p.add_product(p1);
-    EXPECT_EQ(p.get_all_products().size(), 1);
-}
+// // TEST(pantry, add_product)
+// // {
+// //     Pantry p;
+// //     Product p1("name", 10, ml, "allergen");
+// //     p.add_product(p1);
+// //     EXPECT_EQ(p.get_all_products().size(), 1);
+// // }
 
-TEST(pantry, add_quantity)
-{
-    Pantry p;
-    Product p1("name", 10, ml, "allergen");
-    p.add_product(p1);
-    p.add_quantity("name", 10);
-    EXPECT_EQ(p.get_all_products().size(), 1);
-    EXPECT_EQ(p.get_product("name").get_quantity(), 20);
-}
+// // TEST(pantry, add_quantity)
+// // {
+// //     Pantry p;
+// //     Product p1("name", 10, ml, "allergen");
+// //     p.add_product(p1);
+// //     p.add_quantity("name", 10);
+// //     EXPECT_EQ(p.get_all_products().size(), 1);
+// //     EXPECT_EQ(p.get_product("name").get_quantity(), 20);
+// // }
 
-TEST(pantry, remove_quantity)
-{
-    Pantry p;
-    Product p1("name", 10, ml, "allergen");
-    p.add_product(p1);
-    p.remove_quantity("name", 10);
-    EXPECT_EQ(p.get_all_products().size(), 1);
-    EXPECT_EQ(p.get_product("name").get_quantity(), 0);
-}
+// // TEST(pantry, remove_quantity)
+// // {
+// //     Pantry p;
+// //     Product p1("name", 10, ml, "allergen");
+// //     p.add_product(p1);
+// //     p.remove_quantity("name", 10);
+// //     EXPECT_EQ(p.get_all_products().size(), 1);
+// //     EXPECT_EQ(p.get_product("name").get_quantity(), 0);
+// // }
 
-TEST(pantry, add_product_object)
-{
-    Pantry p;
-    Product p1("name", 10, ml, "allergen");
-    p.add_product(p1);
-    EXPECT_EQ(p.get_all_products().size(), 1);
-}
+// // TEST(pantry, add_product_object)
+// // {
+// //     Pantry p;
+// //     Product p1("name", 10, ml, "allergen");
+// //     p.add_product(p1);
+// //     EXPECT_EQ(p.get_all_products().size(), 1);
+// // }
 
-TEST(pantry, add_product_manually)
-{
-    Pantry p;
-    p.add_product("name", 10, ml, "allergen");
-    EXPECT_EQ(p.get_all_products().size(), 1);
+// // TEST(pantry, add_product_manually)
+// // {
+// //     Pantry p;
+// //     p.add_product("name", 10, ml, "allergen");
+// //     EXPECT_EQ(p.get_all_products().size(), 1);
 
-}
+// // }
 
-TEST(pantry, remove_product_by_name)
-{
-    Pantry p;
-    Product p1("name", 10, ml, "allergen");
-    p.add_product(p1);
-    p.remove_product("name");
-    EXPECT_EQ(p.get_all_products().size(), 0);
-}
+// // TEST(pantry, remove_product_by_name)
+// // {
+// //     Pantry p;
+// //     Product p1("name", 10, ml, "allergen");
+// //     p.add_product(p1);
+// //     p.remove_product("name");
+// //     EXPECT_EQ(p.get_all_products().size(), 0);
+// // }
+
+// //-----------------------------DISH testing
 
 TEST(dish, create_dish)
 {
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0);
 
     testing::internal::CaptureStdout();
-    std::cout << d1;
+    std::cout << &d1;
     std::string output = testing::internal::GetCapturedStdout();
     std::string expected = "Kaszanka\t6,00zł\n";
     EXPECT_EQ(output, expected);
@@ -311,77 +313,77 @@ TEST(dish, create_dish)
 
 TEST(dish, json_dish)
 {
-    Product p1("cebula", 1, szt);
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
+    Ingredient p1(1, 2);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
 
-    Json::Value dish = d1.parse_dish_to_json();
+    Json::Value dish = d1.parse_to_json();
+    EXPECT_EQ(dish["id"], (unsigned int)1);
     EXPECT_EQ(dish["name"], "Kaszanka");
     EXPECT_EQ(dish["type"], (int)2);
     EXPECT_EQ(dish["price"], (unsigned int)600);
     EXPECT_EQ(dish["is_vegan"], (bool)0);
-    std::string allergens = dish["allergens"][0].asString();
-    EXPECT_EQ(allergens, "alergen");
-    std::string product_name = dish["products"][0]["name"].asString();
-    int product_quantity = dish["products"][0]["quantity"].asInt();
-    int product_unit = dish["products"][0]["unit"].asInt();
-    EXPECT_EQ(dish["products"][0]["name"], product_name);
-    EXPECT_EQ(dish["products"][0]["quantity"], product_quantity);
-    EXPECT_EQ(dish["products"][0]["unit"], product_unit);
+    EXPECT_EQ(dish["products"][0]["stock_id"], (unsigned int)1);
+    EXPECT_EQ(dish["products"][0]["quantity"], (int)2);
 }
 
 TEST(dish, add_ingredient)
 {
-    Product p1("cebula", 1, szt);
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
-    Product p2("sos", 30, ml);
+    Ingredient p1(1, 2);
+    Ingredient p2(2, 200);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1}, {"alergen"});
     d1.add_ingiridnet(p2);
     EXPECT_EQ(d1.get_ingredients().size(), 2);
-    EXPECT_EQ(d1.get_ingredients()[0].get_name(), p1.get_name());
-    EXPECT_EQ(d1.get_ingredients()[1].get_name(), p2.get_name());
+    EXPECT_EQ(d1.get_ingredients()[0].stock_id, p1.stock_id);
+    EXPECT_EQ(d1.get_ingredients()[0].quantity, p1.quantity);
+    EXPECT_EQ(d1.get_ingredients()[1].stock_id, p2.stock_id);
+    EXPECT_EQ(d1.get_ingredients()[1].quantity, p2.quantity);
 }
 
 TEST(dish, remove_ingredient)
 {
-    Product p1("cebula", 1, szt);
-    Product p2("sos", 30, ml);
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
-    d1.remove_ingridient(2);
+    Ingredient p1(1, 2);
+    Ingredient p2(2, 200);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
+    d1.remove_ingridient(1);
     EXPECT_EQ(d1.get_ingredients().size(), 1);
-    EXPECT_EQ(d1.get_ingredients()[0].get_name(), p1.get_name());
+    EXPECT_EQ(d1.get_ingredients()[0].stock_id, p1.stock_id);
+    EXPECT_EQ(d1.get_ingredients()[0].quantity, p1.quantity);
+    d1.remove_ingridient(0);
+    EXPECT_EQ(d1.get_ingredients().size(), 0);
 }
 
 TEST(dish, remove_ingredient_errors)
 {
-    Product p1("cebula", 1, szt);
-    Product p2("sos", 30, ml);
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
-    EXPECT_THROW(d1.remove_ingridient(3), dish_exceptions);
+    Ingredient p1(1, 2);
+    Ingredient p2(2, 200);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen"});
+    EXPECT_THROW(d1.remove_ingridient(2), dish_exceptions);
     EXPECT_THROW(d1.remove_ingridient(-1), dish_exceptions);
 }
 
 TEST(dish, print_alergens)
 {
-    Product p1("cebula", 1, szt, "alergen1");
-    Product p2("sos", 30, ml, "alergen2");
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen", "alergen1"});
+    Ingredient p1(1, 2);
+    Ingredient p2(2, 200);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen1, alergen2"});
 
     testing::internal::CaptureStdout();
     d1.print_allergens();
     std::string output = testing::internal::GetCapturedStdout();
-    std::string expected = "Alergeny: alergen, alergen1, alergen2\n";
+    std::string expected = "Alergeny: alergen1, alergen2\n";
     EXPECT_EQ(output, expected);
 }
 
 TEST(dish, print_ingredients)
 {
-    Product p1("cebula", 1, szt, "alergen1");
-    Product p2("sos", 30, ml, "alergen2");
-    Dish d1("Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen", "alergen1"});
+    Ingredient p1(1, 2);
+    Ingredient p2(2, 200);
+    Dish d1(1, "Kaszanka", danie_glowne, Money(600), 0, {p1, p2}, {"alergen1, alergen2"});
 
     testing::internal::CaptureStdout();
     d1.print_ingredients();
     std::string output = testing::internal::GetCapturedStdout();
-    std::string expected = "Lista składników - Kaszanka: \ncebula - 1 szt; \nsos - 30 ml; \n";
+    std::string expected = "Lista składników - Kaszanka: \nId składniku: 1 Ilość: 2; \nId składniku: 2 Ilość: 200; \n";
     EXPECT_EQ(output, expected);
 }
 
