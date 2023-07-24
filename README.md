@@ -1,5 +1,5 @@
-# projekt_PROI_restauracja (Z05)
-*Kajetan Rożej, Kinga Świderek, Magdalena Dudek, Jakub Kowalczyk*
+# Projekt systemu zarządzania restauracją
+*Kajetan Rożej (autor GUI), Jakub Kowalczyk, Kinga Świderek, Magdalena Dudek*
 
 ## Tematyka projektu oraz krótki opis
 Stworzyliśmy program, który pomoże menadżerowi sieci restauracji w zarządzaniu lokalami i personelem. Całość została przedstawiona w przyjaznym dla użytkownika GUI. Za jego pomocą można wprowadzać do systemu nowe zamówienia, modyfikować menu danej restauracji, ustalać nowe pensje pracowników, zmieniać skład kadry czy chociażby kontrolować stan spiżarni.
@@ -11,7 +11,7 @@ Zbudowanie tego pliku może nie być możliwe, umieszczono jednak CMakeList uży
 Komilacja programu dokonywana jest poprzez program CMake. W folderze projektu z konsoli należy wywołać
 
     cmake --build {ścieżka_do_projektu}/build --config Debug --target app -j 6 --
-(przykładowy program, wypiszę kilka rzeczy na ekranie)
+(przykładowy program, wypisze kilka rzeczy na ekranie)
 lub
 
     cmake --build {ścieżka_do_projektu}/build --config Debug --target tests -j 6 --
@@ -53,19 +53,7 @@ Zdefiniowane są dwa konstruktory:
 - przyjmujący jako argument wartości odczytane z pliku JSON (typ argumentu: Json::Value)
 
 Oraz metody:
-- ***gettery***
-    - *get_name()*, zwracająca imię (string)
-    - *get_surname()*, zwracająca nazwisko (string)
-    - *get_employee_id()*, zwracająca identyfikator pracownika (unsigned int)
-    - *get_salary()*, zwracająca pensję pracownika (Money)
-    - *get_address()*, zwracająca adres pracownika (Addres)
-    - *get_position()*, zwracająca stanowisko, na którym pracuje
-- ***settery***
-    - *set_name(string name)*, ustawiająca imię
-    - *set_surname(string surname)*, ustawiająca nazwisko
-    - *set_id(unsigned int id)*, ustawiająca identyfikator pracownika
-    - *set_salary(Money salary)*, ustawiająca pensję pracownika
-    - *set_address(Addres address)*, ustawiająca adres pracownika
+- *odpowiednie gettery i settery*
 - *parse_to_json()*, wirtualna funkcja zwracająca dane pracownika przekonwertowane do formatu JSON (Json::Value)
 - *save_to_json(string path)*, zapisująca dane pracownika do pliku JSON (void)
 - *print(ostream& os)* wirtualna funkcja wysyłająca do strumienia dane o pracowniku
@@ -76,7 +64,6 @@ Ponadto, w pliku Employee.h zdefiniowana jest funkcja *parse_employee_from_json(
 Każda z klas dziedziczących po Employee ma zdefiniowany operator << oraz metodę *parse_to_json()*. Obie dodają informację na temat stanowiska.
 - ***Cook***
     - zawiera dodatkowe pole: *is_chef*, wskazujące czy dany kucharz jest również szefem kuchni.
-    - dodatkowe gettery i settery: *get_ischef()*, *set_ischef()*, zmieniająca wartość *is_chef* na *true* oraz *remove_ischef()*, zmieniająca wartość *is_chef* na *false*
 - ***Deliverer*** i ***Waiter***
     - zawierają dodatkowe pola: *tips* oraz metodę *new_tip(double tip)*, dodającą wartość tip do pola tips.
 - ***Manager***
@@ -97,7 +84,7 @@ Za współpracę z plikami odpowiadają metody parsujące do formatu Json:Value 
 
 ### Product
 Zawiera klasę bazową Product, na którą składają się pola:
-- unsigned int product_id=0 – id produktu, o domyślnej wartości 0;
+-    unsigned int product_id=0 – id produktu, o domyślnej wartości 0;
 -    string name – nazwa produktu
 -    units unit – jednostka, w  której ma być przechowany produkt
 -    string alergen –  alergeny
@@ -106,20 +93,7 @@ Zawiera klasę bazową Product, na którą składają się pola:
 
 
 Klasę tworzą metody:
--	Gettery:
-    -	 Get_name();
-    -	Get_unit() – zwraca jednostkę w postaci stringa, po odnalezieniu jej w units_map;
-    -	Get_enum_unit() – zwraca jednostkę w postaci enuma;
-    -	Get_allrgen();
-    -	Get_id();
-    -	Get_quantity();
-    -	Get_avaliable_qunatity();
--	Setery:
-    -	Set_name()
-    -	Set_allergen()
-    -	Set_id()
-
-
+-	odpowiednie gettery i settery
 -	operator+=(int quantity_to_add) – jako argument przyjmuje quantity_to_add, dodaje pewną ilość produktu(quantity to add) na stan zwiększając jednocześnie ilość dostępnego produktu;
 -	operator-=(int quantity_to_sub) – jako argument przyjmuje ilość produktu do usunięcia ze spiżarni; redukuje jednocześnie ilość dostępnego produktu(avaliable_quantity);
 -	reserve(int quantity) – jako argument przyjmuje ilość produktu do zarezerwowania na poczet zamówienia; rezerwacja produktu objawia się obniżeniem available_qunatity danego produktu;
@@ -130,18 +104,16 @@ Klasę tworzą metody:
 
 
 ### Orders
-Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia
-obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
+Klasa bazowa odpowiadająca zamówieniu w restauracji. Dwie dziedziczące klasy DeliveryOrders i OnSiteOrders reprezentują odpowiednio zamówienia z dostawą i zamówienia obsługiwane na miejscu. Opis atrybutów każdej z klas znajduje się przy jej definicji.
 
 ### Restaurant
 Klasa reprezentująca całą restaurację wraz z:
 - spiżarnią
 - menu
-- pracownikami(kucharzami, dostawcami, managerami, kelnerami)
+- pracownikami (kucharzami, dostawcami, managerami, kelnerami)
 - aktywnymi zamówieniami i ich historią
 
-Jest to główna klasa programu, która reprentuje całą restaurację i zarządza wszystkimi procesami. Jako pośrednik między użytkownikiem a "bazami danych" dba o intgralność trzymnaych danych
-(np. nie pozwala na usunięcie ze spiżarni składnika będącego aktualnie w daniu) i stale monitoruje ilość zapsów, pomagając przyjmować tylko te zamówienia, które faktycznie mogą zostać zrealizowane.
+Jest to główna klasa programu, która reprentuje całą restaurację i zarządza wszystkimi procesami. Jako pośrednik między użytkownikiem a "bazami danych" dba o integralność przechowywanych danych (np. nie pozwala na usunięcie ze spiżarni składnika będącego aktualnie w daniu) i stale monitoruje ilość zapasów, pomagając przyjmować tylko te zamówienia, które faktycznie mogą zostać zrealizowane.
 
 ### Database
 Klasa szablonowa o funkcjonalności bazy danych, umożlwia łatwe i uporządkowane przechowywanie obiektów klas z polem przeznaczonym na unikalne id. Dzięki funkcjoalności takiej jak autmatyczny dobór wolnego id, możliwość łatwego pobierania konkretnego obiektu jak i wszytskich danych idelnie nadaje się do implementacji restauracyjnej spiżarni, listy dań, czy zamówień.
@@ -154,5 +126,4 @@ Testy jednostkowe klas (w pliku *test.cpp*) przeprowadzone zostały we framework
 
 
 ### Podsumowanie
-Oczywiście pomimo wielu naszych wysiłków i starań przezntowany program dalej nie jest kompletny i mógłby podlegać dalszemu rozwojowi. Z pomysłów, które przyszły nam do głowy warto wspomnieć
-chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn (z uwzględnieniem daty ważności), dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele.
+Oczywiście pomimo wielu naszych wysiłków i starań przezntowany program dalej nie jest kompletny i mógłby podlegać dalszemu rozwojowi. Z pomysłów, które przyszły nam do głowy warto wspomnieć chociażby o rozróżnianiu poszczególnych partii produktów "wchodzących" na magazyn (z uwzględnieniem daty ważności), dodanie weryfikacji poszczególnych pól klasy adresownej, czy, bardzo potrzebne, wczytywnaie restauacji z pliku JSON. Graficzny interfejs użytkownika również w wielu aspektach powinien zostać dopracowany, aby korzytanie z aplikacji było łatwe i przyjemne. Mamy jednak nadzieję, że pomimo tak licznych możliwości rozwoju nasz program spełnia podstawowe postawione przed nim cele.

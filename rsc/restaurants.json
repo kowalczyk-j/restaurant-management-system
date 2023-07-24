@@ -1,53 +1,21 @@
 {
    "active_orders" : [],
    "address" : {
-      "building" : "8",
-      "city" : "Warszawa",
+      "building" : "10",
+      "city" : "Toruń",
       "coordinates" : {
-         "latitude" : 52.220199999999998,
-         "longitude" : 21.011500000000002
+         "latitude" : 23,
+         "longitude" : -34
       },
       "country" : "Polska",
-      "postal_code" : "00-000",
-      "region" : "Mazowieckie",
-      "street" : "Plac Politechniki"
+      "postal_code" : "87-100",
+      "region" : "Kujawsko-Pomorskie",
+      "street" : "Szeroka"
    },
    "employees" : [],
-   "id" : 0,
-   "menu" : [
-      {
-         "allergens" : [],
-         "id" : 1001,
-         "is_vegan" : false,
-         "name" : "kotlet",
-         "price" : 12000,
-         "products" : [
-            {
-               "quantity" : 122,
-               "stock_id" : 1001
-            }
-         ],
-         "type" : 0
-      }
-   ],
-   "name" : "Magnoliowa",
+   "id" : 1,
+   "menu" : [],
+   "name" : "Różana",
    "order_history" : [],
-   "pantry" : [
-      {
-         "allergen" : "",
-         "available_quantity" : 122,
-         "id" : 1001,
-         "name" : "melko",
-         "quantity" : 122,
-         "unit" : 0
-      },
-      {
-         "allergen" : "",
-         "available_quantity" : 122,
-         "id" : 1002,
-         "name" : "maśło",
-         "quantity" : 122,
-         "unit" : 1
-      }
-   ]
+   "pantry" : []
 }
